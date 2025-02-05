@@ -12,18 +12,18 @@ const Header = () => {
             <Image
               src="/headerlogo.png"
               alt="スクチャIT"
-              width={110}
+              width={115}
               height={40}
               priority
             />
           </Link>
-          <div className="text-gray-400 text-xs">
+          <div className="text-gray-500 text-xs">
             IT系スクールの口コミを探すなら
           </div>
         </div>
 
         {/* メニュー */}
-        <nav className="flex space-x-6 text-sm">
+        <nav className="flex space-x-6 text-sm font-semibold tracking-wide">
           <Link href="/sign-up" className="text-gray-500 hover:text-gray-700">
             ユーザー登録
           </Link>
