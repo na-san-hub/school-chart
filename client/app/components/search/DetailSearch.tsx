@@ -1,43 +1,43 @@
-import { Briefcase, Code, Video, BarChart } from "lucide-react";
+import { Banknote, UserCog, Laptop, Clock } from "lucide-react";
 
-const CareerSearch = () => {
+const DetailSearch = () => {
   return (
     <section className="w-full max-w-screen-lg mx-auto text-center py-8 px-8">
       <h2 className="text-xl font-semibold text-gray-700 mb-5">
-        「なりたい」から探す
+        「こだわり」から探す
       </h2>
 
       {/* ボタンリスト */}
       <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-        {/* WEBデザイナー */}
-        <button className="flex flex-col items-center justify-center p-4 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">
-          <Briefcase className="w-7 h-7 text-gray-700" />
+        {/* 給付金対象コースあり */}
+        <button className="flex flex-col items-center justify-center p-4 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition ">
+          <Banknote className="w-7 h-7 text-gray-700" />
           <span className="mt-2 text-gray-700 text-sm font-semibold">
-            WEBデザイナー
+            給付金対象あり
           </span>
         </button>
 
-        {/* ソフトウェアエンジニア */}
+        {/* フリーランスを目指せる */}
         <button className="flex flex-col items-center justify-center p-4 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">
-          <Code className="w-7 h-7 text-gray-700" />
+          <UserCog className="w-7 h-7 text-gray-700" />
           <span className="mt-2 text-gray-700 text-sm font-semibold">
-            エンジニア
+            フリーを目指せる
           </span>
         </button>
 
-        {/* 動画クリエイター */}
+        {/* リモート受講可能 */}
         <button className="flex flex-col items-center justify-center p-4 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">
-          <Video className="w-7 h-7 text-gray-700" />
+          <Laptop className="w-7 h-7 text-gray-700" />
           <span className="mt-2 text-gray-700 text-sm font-semibold">
-            動画クリエイター
+            リモート受講可能
           </span>
         </button>
 
-        {/* WEBマーケター */}
+        {/* 働きながら学べる */}
         <button className="flex flex-col items-center justify-center p-4 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">
-          <BarChart className="w-7 h-7 text-gray-700" />
+          <Clock className="w-7 h-7 text-gray-700" />
           <span className="mt-2 text-gray-700 text-sm font-semibold">
-            WEBマーケター
+            働きながら学べる
           </span>
         </button>
       </div>
@@ -46,4 +46,4 @@ const CareerSearch = () => {
   );
 };
 
-export default CareerSearch;
+export default DetailSearch;
