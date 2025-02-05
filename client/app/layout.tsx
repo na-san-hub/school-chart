@@ -1,5 +1,5 @@
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 
 export default function RootLayout({
   children,
@@ -8,9 +8,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="bg-gray-100">
+      <body className="bg-white">
         <Header />
-        <main className="max-w-6xl mx-auto p-4">{children}</main>
+        <main className="w-full mx-auto">{children}</main>
       </body>
     </html>
   );
