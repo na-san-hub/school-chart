@@ -1,7 +1,7 @@
-import HeroSection from "./components/layout/HeroSection";
+import HeroSection from "./components/HeroSection";
 import CareerSearch from "./components/search/CareerSearch";
 import SearchForm from "./components/search/SearchForm";
-import DetailSearch from "@/components/search/DetailSearch";
+import DetailSearch from "@/(top)/components/search/DetailSearch";
 
 export default function Home() {
   return (
