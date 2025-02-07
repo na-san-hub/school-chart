@@ -1,11 +1,12 @@
 import React from "react";
 import SchoolHeader from "../components/SchoolHeader";
 
-const SchoolPage = () => {
+const SchoolPage = ({ params }: { params?: { id?: string } }) => {
+  const schoolId = params?.id || "1"; // IDが取得できなかったら "1" をデフォルトにする 開発用
   return (
     <SchoolHeader
       school={{
-        id: "1",
+        id: schoolId,
         name: "DMMプログラミングスクール",
         description:
           "未経験からITエンジニアへ。目指すキャリアによってコースが選べる。転職成功率は98.8％",

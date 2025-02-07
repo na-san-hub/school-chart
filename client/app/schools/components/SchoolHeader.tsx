@@ -4,8 +4,8 @@ import MenuTabs from "./MenuTabs";
 
 export default function SchoolHeader({ school }: { school: School }) {
   return (
-    <section className="relative w-full h-[250px] bg-gray-100">
-      <div className="flex max-full mx-auto items-center space-x-6 p-4 ">
+    <section className="relative w-full h-[270px] bg-gray-100">
+      <div className="flex max-w-4xl mx-auto items-center space-x-6 px-6 py-9 ">
         {/* 左側: ロゴ */}
         <div className="flex items-center justify-center w-24 h-24">
           <Image
@@ -37,7 +37,7 @@ export default function SchoolHeader({ school }: { school: School }) {
           </div>
 
           {/* 説明 */}
-          <p className="mt-2 text-gray-600 font-md">{school.description}</p>
+          <p className="mt-2 text-gray-600 text-sm">{school.description}</p>
         </div>
       </div>
       <div className="absolute bottom-0 w-full">
