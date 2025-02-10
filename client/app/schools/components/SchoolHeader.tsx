@@ -4,7 +4,7 @@ import MenuTabs from "./MenuTabs";
 
 export default function SchoolHeader({ school }: { school: School }) {
   return (
-    <section className="relative w-full h-[270px] bg-gray-100">
+    <section className="relative w-full h-[210px] bg-gray-100">
       <div className="flex max-w-4xl mx-auto items-center space-x-6 px-6 py-9 ">
         {/* 左側: ロゴ */}
         <div className="flex items-center justify-center w-24 h-24">
@@ -41,7 +41,7 @@ export default function SchoolHeader({ school }: { school: School }) {
         </div>
       </div>
       <div className="absolute bottom-0 w-full">
-        <MenuTabs />
+        <MenuTabs schoolID={school.id} />
       </div>
     </section>
   );
