@@ -1,19 +1,20 @@
 import SchoolHeader from "../components/SchoolHeader";
 import { getSchoolById } from "@/lib/school";
 
-export default async function SchoolLayout({
-  params,
-  children,
-}: {
+export default async function SchoolLayout(props: {
   params: { id: string };
   children: React.ReactNode;
 }) {
-  const school = await getSchoolById(params.id);
+  // props.params を await してから利用する
+  const resolvedParams = await props.params;
+  const id = resolvedParams.id;
+
+  const school = await getSchoolById(id);
 
   return (
     <div>
       <SchoolHeader school={school} />
-      <main>{children}</main>
+      <main>{props.children}</main>
     </div>
   );
 }

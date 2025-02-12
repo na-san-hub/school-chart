@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { School } from "@/types/school";
 import MenuTabs from "./MenuTabs";
+import StarRating from "./StarRating";
 
 export default function SchoolHeader({ school }: { school: School }) {
   return (
@@ -23,18 +24,7 @@ export default function SchoolHeader({ school }: { school: School }) {
           <h1 className="text-2xl font-bold text-gray-700">{school.name}</h1>
 
           {/* 星評価 */}
-          <div className="flex">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <span
-                key={index}
-                className={
-                  index < school.rating ? "text-yellow-400" : "text-gray-300"
-                }
-              >
-                ★
-              </span>
-            ))}
-          </div>
+          <StarRating rating={school.rating} size={"md"} />
 
           {/* 説明 */}
           <p className="mt-2 text-gray-600 text-sm">{school.description}</p>
