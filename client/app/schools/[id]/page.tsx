@@ -1,20 +1,18 @@
-import React from "react";
-import SchoolHeader from "../components/SchoolHeader";
+import ChartSection from "@/schools/[id]/components/ChartSection";
+import { getRadarChartData } from "@/lib/schoolData";
+import { getSchoolById } from "@/lib/school";
 
-const SchoolPage = ({ params }: { params?: { id?: string } }) => {
-  const schoolId = params?.id || "1"; // IDが取得できなかったら "1" をデフォルトにする 開発用
+export default async function SchoolPage(props: { params: { id: string } }) {
+  // props.params を await してから利用する
+  const resolvedParams = await props.params;
+  const id = resolvedParams.id;
+
+  const chartData = await getRadarChartData(id);
+  const school = await getSchoolById(id);
+
   return (
-    <SchoolHeader
-      school={{
-        id: schoolId,
-        name: "DMMプログラミングスクール",
-        description:
-          "未経験からITエンジニアへ。目指すキャリアによってコースが選べる。転職成功率は98.8％",
-        logo: "",
-        rating: 5,
-      }}
-    />
+    <div className="border-t border-t-gray-400">
+      <ChartSection chartData={chartData} rating={school.rating} />
+    </div>
   );
-};
-
-export default SchoolPage;
+}
