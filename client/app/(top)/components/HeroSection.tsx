@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const HeroSection = () => {
   return (
     <section className="relative w-full h-[350px] bg-gray-100 flex items-center px-16">

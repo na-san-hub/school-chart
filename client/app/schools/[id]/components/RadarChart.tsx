@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Radar,
   RadarChart,
@@ -23,9 +22,11 @@ const CustomTick = ({
 }: {
   x: number;
   y: number;
-  payload: any;
+  payload: { value: string };
   data: RadarChartProps["data"];
 }) => {
+  if (!payload || typeof payload.value !== "string") return null;
+
   const subject = payload.value;
   const value = data.find((d) => d.subject === subject)?.value ?? "-"; // `data` から `subject` に対応する `value` を取得
 
