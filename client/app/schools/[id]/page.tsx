@@ -2,7 +2,9 @@ import ChartSection from "@/schools/[id]/components/ChartSection";
 import { getRadarChartData } from "@/lib/schoolData";
 import { getSchoolById } from "@/lib/school";
 
-export default async function SchoolPage(props: { params: { id: string } }) {
+export default async function SchoolPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   // props.params を await してから利用する
   const resolvedParams = await props.params;
   const id = resolvedParams.id;
