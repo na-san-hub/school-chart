@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { School } from "@/types/school";
+import { SchoolHeaderData } from "@/types/school";
 import MenuTabs from "./MenuTabs";
 import StarRating from "./StarRating";
 
-export default function SchoolHeader({ school }: { school: School }) {
+export default function SchoolHeader({ school }: { school: SchoolHeaderData }) {
   return (
     <section className="relative w-full h-[210px] bg-gray-100">
       <div className="flex max-w-4xl mx-auto items-center space-x-6 px-6 py-9 ">
