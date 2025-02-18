@@ -46,28 +46,34 @@ const CustomTick = ({
 
 export default function RadarChartComponent({ data }: RadarChartProps) {
   return (
-    <ResponsiveContainer width="100%" height={320}>
-      <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
-        <PolarGrid gridType="polygon" />
-        {/* ✅ `CustomTick` に `data` を渡す */}
-        <PolarAngleAxis
-          dataKey="subject"
-          tick={(props) => <CustomTick {...props} data={data} />}
-        />
-        <PolarRadiusAxis
-          domain={[0, 5]}
-          tick={false}
-          axisLine={false}
-          tickCount={6}
-        />
-        <Radar
-          name="評価"
-          dataKey="value"
-          stroke="currentColor"
-          fill="currentColor"
-          fillOpacity={0.6}
-        />
-      </RadarChart>
-    </ResponsiveContainer>
+    <div className="w-full h-auto min-h-[300px] flex justify-center">
+      <ResponsiveContainer
+        width="100%"
+        aspect={1.3}
+        minWidth={300}
+        minHeight={300}
+      >
+        <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
+          <PolarGrid gridType="polygon" />
+          <PolarAngleAxis
+            dataKey="subject"
+            tick={(props) => <CustomTick {...props} data={data} />}
+          />
+          <PolarRadiusAxis
+            domain={[0, 5]}
+            tick={false}
+            axisLine={false}
+            tickCount={6}
+          />
+          <Radar
+            name="評価"
+            dataKey="value"
+            stroke="currentColor"
+            fill="currentColor"
+            fillOpacity={0.6}
+          />
+        </RadarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
