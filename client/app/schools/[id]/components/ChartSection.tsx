@@ -8,7 +8,7 @@ interface ChartSectionProps {
 
 export default function ChartSection({ chartData, rating }: ChartSectionProps) {
   return (
-    <section className="mt-5 py-4 max-w-lg md:max-w-xl lg:max-w flex justify-center items-center rounded-md border border-gray-200">
+    <section className="my-5 ml-5 py-3 flex justify-center items-center rounded-md border border-gray-200">
       {/* チャートエリア */}
       <div className="w-full text-cyan-600">
         <RadarChartComponent data={chartData} />

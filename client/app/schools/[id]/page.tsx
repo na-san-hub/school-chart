@@ -14,9 +14,11 @@ export default async function SchoolPage(props: {
   const school = await getSchoolWithCourses(id);
 
   return (
-    <div className="border-t border-t-gray-400 flex flex-wrap justify-center">
-      <ChartSection chartData={chartData} rating={school.rating} />
-      <SchoolDetail school={school} />
+    <div className="border-t border-t-gray-400 w-full">
+      <div className="mt-5 flex flex-wrap max-w-5xl mx-auto justify-between items-center">
+        <ChartSection chartData={chartData} rating={school.rating} />
+        <SchoolDetail school={school} />
+      </div>
     </div>
   );
 }
