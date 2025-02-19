@@ -50,7 +50,7 @@ const dummyCourses: CourseData[] = [
   },
   {
     id: "201",
-    school_id: "2",
+    school_id: "1",
     name: "エンジニア転職コース",
     delivery_method: "オンライン",
     location_prefecture: "リモート",

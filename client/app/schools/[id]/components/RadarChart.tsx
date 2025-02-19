@@ -46,14 +46,9 @@ const CustomTick = ({
 
 export default function RadarChartComponent({ data }: RadarChartProps) {
   return (
-    <div className="w-full h-auto min-h-[300px] flex justify-center">
-      <ResponsiveContainer
-        width="100%"
-        aspect={1.3}
-        minWidth={300}
-        minHeight={300}
-      >
-        <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
+    <div className="px-3 h-auto min-h-[300px] justify-center items-center">
+      <ResponsiveContainer width="100%" minWidth={300} minHeight={300}>
+        <RadarChart cx="52%" cy="55%" outerRadius="73%" data={data}>
           <PolarGrid gridType="polygon" />
           <PolarAngleAxis
             dataKey="subject"

@@ -1,4 +1,4 @@
-import SchoolHeader from "../components/SchoolHeader";
+import SchoolHeader from "./components/SchoolHeader";
 import { getSchoolHeader } from "@/lib/school";
 
 export default async function SchoolLayout(props: {
