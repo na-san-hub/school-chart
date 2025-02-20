@@ -5,12 +5,16 @@ const KeywordSearch = () => {
         {/* キーワード入力 */}
         <input
           type="text"
+          id="keyword"
           placeholder="スクール名・資格などで検索"
           className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full"
         />
 
         {/* 都道府県選択 */}
-        <select className="text-gray-500 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full">
+        <select
+          id="prefecture"
+          className="text-gray-500 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full"
+        >
           <option value="">都道府県を選択</option>
           <option value="remote">リモート</option>
           <option value="hokkaido">北海道</option>
