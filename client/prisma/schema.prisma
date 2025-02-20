@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,149 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") 
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  
+  reviews   Review[]
+}
+
+model School {
+  id          String   @id @default(uuid())
+  name        String
+  address     String?
+  website     String?
+  logo        String?
+  description String?
+  rating      Decimal  @default(0.0)
+  createdAt   DateTime @default(now())
+
+  courses     Course[]
+  ratings     Rating[]
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  schoolId  String
+  category  String
+  score Int @db.SmallInt
+
+  createdAt DateTime @default(now())
+
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id                String   @id @default(uuid())
+  schoolId          String
+  name              String
+  description       String?
+  deliveryMethod    DeliveryMethod @default(ONLINE)
+  locationPrefecture String
+  locationAddress   String?
+  price            Int?
+  duration         String?
+  createdAt        DateTime @default(now())
+
+  school           School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  reviews         Review[]
+  courseSkills    CourseSkill[]
+  courseFeatures  CourseFeature[]
+  courseCategories CourseCategory[]
+}
+
+enum DeliveryMethod {
+  IN_PERSON  // 対面
+  ONLINE     // オンライン
+  HYBRID     // ハイブリッド
+}
+
+model Review {
+  id               String   @id @default(uuid())
+  userId           String
+  courseId         String
+  ratingCurriculum Int
+  ratingInstructor Int
+  ratingCost       Int
+  ratingSupport    Int
+  ratingCommunity  Int
+  comment          String?
+  createdAt        DateTime @default(now())
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model Skill {
+  id   String  @id @default(uuid())
+  name String  @unique
+
+  courseSkills CourseSkill[]
+}
+
+model Profession {
+  id   String  @id @default(uuid())
+  name String  @unique
+
+  categoryProfessions CategoryProfession[]
+}
+
+model Feature {
+  id   String  @id @default(uuid())
+  name String  @unique
+
+  courseFeatures CourseFeature[]
+}
+
+model Category {
+  id   String  @id @default(uuid())
+  name String  @unique
+
+  courseCategories CourseCategory[]
+  categoryProfessions CategoryProfession[]
+}
+
+model CourseSkill {
+  courseId String
+  skillId  String
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  skill  Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, skillId])
+}
+
+model CourseFeature {
+  courseId  String
+  featureId String
+
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, featureId])
+}
+
+model CourseCategory {
+  courseId   String
+  categoryId String
+
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, categoryId])
+}
+
+model CategoryProfession {
+  id          String @id @default(uuid())
+  categoryId  String
+  professionId String
+
+  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  profession Profession @relation(fields: [professionId], references: [id], onDelete: Cascade)
 }
