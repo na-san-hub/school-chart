@@ -10,7 +10,7 @@ import {
 
 // `data` の型定義
 interface RadarChartProps {
-  data: { subject: string; value: number; fullMark: number }[];
+  data: { category: string; score: number }[];
 }
 
 //  カスタム Tick コンポーネント
@@ -27,18 +27,18 @@ const CustomTick = ({
 }) => {
   if (!payload || typeof payload.value !== "string") return null;
 
-  const subject = payload.value;
-  const value = data.find((d) => d.subject === subject)?.value ?? "-"; // `data` から `subject` に対応する `value` を取得
+  const category = payload.value;
+  const score = data.find((d) => d.category === category)?.score ?? "-";
 
   return (
     <g transform={`translate(${x},${y})`}>
-      {/* subject のラベル */}
+      {/* category のラベル */}
       <text x={0} y={0} dy={-8} textAnchor="middle" fontSize={14} fill="#555">
-        {subject}
+        {category}
       </text>
       {/* value のラベル */}
       <text x={0} y={0} dy={12} textAnchor="middle" fontSize={14} fill="#888">
-        {value}
+        {score}
       </text>
     </g>
   );
@@ -51,7 +51,7 @@ export default function RadarChartComponent({ data }: RadarChartProps) {
         <RadarChart cx="52%" cy="55%" outerRadius="73%" data={data}>
           <PolarGrid gridType="polygon" />
           <PolarAngleAxis
-            dataKey="subject"
+            dataKey="category"
             tick={(props) => <CustomTick {...props} data={data} />}
           />
           <PolarRadiusAxis
@@ -62,7 +62,7 @@ export default function RadarChartComponent({ data }: RadarChartProps) {
           />
           <Radar
             name="評価"
-            dataKey="value"
+            dataKey="score"
             stroke="currentColor"
             fill="currentColor"
             fillOpacity={0.6}

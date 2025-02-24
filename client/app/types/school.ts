@@ -1,35 +1,48 @@
-export interface CourseData {
-  id: string;
-  school_id: string; // どのスクールのコースかを識別
-  name: string;
-  delivery_method: string;
-  location_prefecture: string;
-  category: string;
-  features: string[];
-  skills: string[];
-}
-
+// スクール情報の型
 export interface SchoolData {
   id: string;
   name: string;
-  website: string;
-  description: string;
-  logo: string;
+  address?: string | null;
+  website?: string | null;
+  logo?: string | null;
+  description?: string | null;
   rating: number;
 }
 
-export interface SchoolWithCourses extends SchoolData {
-  courses: CourseData[];
-  locations: string[]; // スクールに紐づく location_prefecture の一覧
-  categories: string[]; // スクールに紐づく categories の一覧
-  features: string[]; // スクール全体の特徴（全コースから重複削除して統合）
-  skills: string[]; // スクール全体で学べるスキル（全コースから重複削除して統合）
+// コース情報の型（変更点あり）
+export interface CourseData {
+  id: string;
+  name: string;
+  description: string;
+  price?: number | null;
+  duration?: string | null;
+  deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
+  locationPrefecture: string;
+  locationAddress?: string | null;
+  category: { id: string; name: string }[]; // 🔹 オブジェクトの配列に変更
+  features: { id: string; name: string }[];
+  skills: { id: string; name: string }[];
 }
 
+// `SchoolWithCourses` の型（`categories` などを変更）
+export interface SchoolWithCourses extends SchoolData {
+  courses: CourseData[];
+  locations: string[];
+  categories: string[];
+  features: string[];
+  skills: string[];
+}
+// スクールページヘッダー用データの型
 export interface SchoolHeaderData {
   id: string;
   name: string;
-  logo: string;
+  logo: string | null;
   rating: number;
-  description: string;
+  description: string | null;
+}
+
+// レーダーチャート用データの型
+export interface RadarChartData {
+  schoolRating: number;
+  categories: { category: string; score: number }[];
 }
