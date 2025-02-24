@@ -3,6 +3,7 @@ import {
   SchoolHeaderData,
   RadarChartData,
   CourseSummary,
+  CourseAllData,
 } from "@/types/school";
 
 import { prisma } from "./prisma";
@@ -29,9 +30,11 @@ export async function getSchoolWithCourses(
       throw new Error("スクールが見つかりません");
     }
 
+    const courses: CourseAllData[] = school.courses as CourseAllData[];
+
     return {
       ...school,
-      courses: school.courses.map(
+      courses: courses.map(
         (course): CourseSummary => ({
           id: course.id,
           deliveryMethod: course.deliveryMethod,
@@ -42,12 +45,12 @@ export async function getSchoolWithCourses(
         })
       ),
 
-      // 🔹 受講エリアの重複を排除
+      // 受講エリアの重複を排除
       locations: Array.from(
         new Set(school.courses.map((c) => c.locationPrefecture))
       ),
 
-      // 🔹 カテゴリの重複を排除（スクール全体）
+      // カテゴリの重複を排除（スクール全体）
       categories: Array.from(
         new Map(
           school.courses.flatMap((c) =>
@@ -56,7 +59,7 @@ export async function getSchoolWithCourses(
         ).values()
       ),
 
-      // 🔹 特徴の重複を排除（スクール全体）
+      // 特徴の重複を排除（スクール全体）
       features: Array.from(
         new Map(
           school.courses.flatMap((c) =>
@@ -65,7 +68,7 @@ export async function getSchoolWithCourses(
         ).values()
       ),
 
-      // 🔹 スキルの重複を排除（スクール全体）
+      // スキルの重複を排除（スクール全体）
       skills: Array.from(
         new Map(
           school.courses.flatMap((c) =>

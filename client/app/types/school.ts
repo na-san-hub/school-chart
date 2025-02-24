@@ -9,7 +9,26 @@ export interface SchoolData {
   rating: number;
 }
 
-// コース情報の型（変更点あり）
+// データベースから取得したコースの生データの型
+export interface CourseAllData {
+  id: string;
+  schoolId: string;
+  name: string;
+  description: string;
+  deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
+  locationPrefecture: string;
+  locationAddress?: string | null;
+  price?: number | null;
+  duration?: string | null;
+  createdAt: Date;
+
+  // リレーション情報
+  courseCategories: { category: { id: string; name: string } }[];
+  courseFeatures: { feature: { id: string; name: string } }[];
+  courseSkills: { skill: { id: string; name: string } }[];
+}
+
+// 使いたいコースのサマリー型（不要なフィールドは除外）
 export interface CourseSummary {
   id: string;
   deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
