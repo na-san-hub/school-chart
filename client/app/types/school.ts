@@ -10,23 +10,18 @@ export interface SchoolData {
 }
 
 // コース情報の型（変更点あり）
-export interface CourseData {
+export interface CourseSummary {
   id: string;
-  name: string;
-  description: string;
-  price?: number | null;
-  duration?: string | null;
   deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
   locationPrefecture: string;
-  locationAddress?: string | null;
-  category: { id: string; name: string }[]; // 🔹 オブジェクトの配列に変更
+  category: { id: string; name: string }[];
   features: { id: string; name: string }[];
   skills: { id: string; name: string }[];
 }
 
 // `SchoolWithCourses` の型（`categories` などを変更）
 export interface SchoolWithCourses extends SchoolData {
-  courses: CourseData[];
+  courses: CourseSummary[];
   locations: string[];
   categories: string[];
   features: string[];

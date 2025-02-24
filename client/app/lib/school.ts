@@ -6,7 +6,7 @@ import {
 
 import { prisma } from "./prisma";
 
-// スクール詳細情報を取得（`courses` あり）
+// スクール詳細情報を取得（`courses` の一部あり）
 export async function getSchoolWithCourses(
   id: string
 ): Promise<SchoolWithCourses> {
@@ -16,19 +16,14 @@ export async function getSchoolWithCourses(
       include: {
         courses: {
           include: {
-            courseCategories: {
-              include: { category: true },
-            },
-            courseFeatures: {
-              include: { feature: true },
-            },
-            courseSkills: {
-              include: { skill: true },
-            },
+            courseCategories: { include: { category: true } },
+            courseFeatures: { include: { feature: true } },
+            courseSkills: { include: { skill: true } },
           },
         },
       },
     });
+
     if (!school) {
       throw new Error("スクールが見つかりません");
     }
@@ -36,34 +31,44 @@ export async function getSchoolWithCourses(
     return {
       ...school,
       courses: school.courses.map((course) => ({
-        ...course,
-        category: course.courseCategories.map((cc) => cc.category),
-        features: course.courseFeatures.map((cf) => cf.feature),
-        skills: course.courseSkills.map((cs) => cs.skill),
+        id: course.id,
+        deliveryMethod: course.deliveryMethod,
+        locationPrefecture: course.locationPrefecture,
+        category: course.courseCategories.map((cc) => cc.category), // そのまま取得
+        features: course.courseFeatures.map((cf) => cf.feature), // そのまま取得
+        skills: course.courseSkills.map((cs) => cs.skill), // そのまま取得
       })),
+
+      // 🔹 受講エリアの重複を排除
       locations: Array.from(
         new Set(school.courses.map((c) => c.locationPrefecture))
       ),
+
+      // 🔹 カテゴリの重複を排除（スクール全体）
       categories: Array.from(
-        new Set(
+        new Map(
           school.courses.flatMap((c) =>
-            c.courseCategories.map((cc) => cc.category.name)
+            c.courseCategories.map((cc) => [cc.category.id, cc.category.name])
           )
-        )
+        ).values()
       ),
+
+      // 🔹 特徴の重複を排除（スクール全体）
       features: Array.from(
-        new Set(
+        new Map(
           school.courses.flatMap((c) =>
-            c.courseFeatures.map((cf) => cf.feature.name)
+            c.courseFeatures.map((cf) => [cf.feature.id, cf.feature.name])
           )
-        )
+        ).values()
       ),
+
+      // 🔹 スキルの重複を排除（スクール全体）
       skills: Array.from(
-        new Set(
+        new Map(
           school.courses.flatMap((c) =>
-            c.courseSkills.map((cs) => cs.skill.name)
+            c.courseSkills.map((cs) => [cs.skill.id, cs.skill.name])
           )
-        )
+        ).values()
       ),
     };
   } catch {
