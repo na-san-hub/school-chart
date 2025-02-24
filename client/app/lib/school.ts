@@ -47,13 +47,13 @@ export async function getSchoolWithCourses(
 
       // 受講エリアの重複を排除
       locations: Array.from(
-        new Set(school.courses.map((c) => c.locationPrefecture))
+        new Set(school.courses.map((c: CourseAllData) => c.locationPrefecture))
       ),
 
       // カテゴリの重複を排除（スクール全体）
       categories: Array.from(
         new Map(
-          school.courses.flatMap((c) =>
+          school.courses.flatMap((c: CourseAllData) =>
             c.courseCategories.map((cc) => [cc.category.id, cc.category.name])
           )
         ).values()
@@ -62,7 +62,7 @@ export async function getSchoolWithCourses(
       // 特徴の重複を排除（スクール全体）
       features: Array.from(
         new Map(
-          school.courses.flatMap((c) =>
+          school.courses.flatMap((c: CourseAllData) =>
             c.courseFeatures.map((cf) => [cf.feature.id, cf.feature.name])
           )
         ).values()
@@ -71,7 +71,7 @@ export async function getSchoolWithCourses(
       // スキルの重複を排除（スクール全体）
       skills: Array.from(
         new Map(
-          school.courses.flatMap((c) =>
+          school.courses.flatMap((c: CourseAllData) =>
             c.courseSkills.map((cs) => [cs.skill.id, cs.skill.name])
           )
         ).values()
