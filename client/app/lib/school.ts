@@ -4,6 +4,7 @@ import {
   RadarChartData,
   CourseSummary,
   CourseAllData,
+  RatingData,
 } from "@/types/school";
 
 import { prisma } from "./prisma";
@@ -131,7 +132,7 @@ export async function getRadarChartData(
 
     const radarChartData: RadarChartData = {
       schoolRating: school.rating,
-      categories: rating.map((rating) => ({
+      categories: rating.map((rating: RatingData) => ({
         category: rating.category,
         score: rating.score,
       })),

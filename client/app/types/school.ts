@@ -60,3 +60,9 @@ export interface RadarChartData {
   schoolRating: number;
   categories: { category: string; score: number }[];
 }
+
+// Rating 型を明示
+export interface RatingData {
+  category: string;
+  score: number;
+}
