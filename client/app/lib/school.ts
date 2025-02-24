@@ -2,6 +2,7 @@ import {
   SchoolWithCourses,
   SchoolHeaderData,
   RadarChartData,
+  CourseSummary,
 } from "@/types/school";
 
 import { prisma } from "./prisma";
@@ -30,14 +31,16 @@ export async function getSchoolWithCourses(
 
     return {
       ...school,
-      courses: school.courses.map((course) => ({
-        id: course.id,
-        deliveryMethod: course.deliveryMethod,
-        locationPrefecture: course.locationPrefecture,
-        category: course.courseCategories.map((cc) => cc.category), // そのまま取得
-        features: course.courseFeatures.map((cf) => cf.feature), // そのまま取得
-        skills: course.courseSkills.map((cs) => cs.skill), // そのまま取得
-      })),
+      courses: school.courses.map(
+        (course): CourseSummary => ({
+          id: course.id,
+          deliveryMethod: course.deliveryMethod,
+          locationPrefecture: course.locationPrefecture,
+          category: course.courseCategories.map((cc) => cc.category),
+          features: course.courseFeatures.map((cf) => cf.feature),
+          skills: course.courseSkills.map((cs) => cs.skill),
+        })
+      ),
 
       // 🔹 受講エリアの重複を排除
       locations: Array.from(
