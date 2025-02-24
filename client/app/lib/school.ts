@@ -1,6 +1,4 @@
 import {
-  SchoolData,
-  CourseData,
   SchoolWithCourses,
   SchoolHeaderData,
   RadarChartData,
@@ -68,7 +66,7 @@ export async function getSchoolWithCourses(
         )
       ),
     };
-  } catch (error) {
+  } catch {
     throw new Error("スクール情報の取得に失敗しました");
   }
 }
@@ -92,7 +90,7 @@ export async function getSchoolHeader(id: string): Promise<SchoolHeaderData> {
     }
 
     return school;
-  } catch (error) {
+  } catch {
     throw new Error("スクールの情報の取得に失敗しました");
   }
 }
@@ -129,7 +127,7 @@ export async function getRadarChartData(
     };
 
     return radarChartData;
-  } catch (error) {
+  } catch {
     throw new Error("スクールの情報の取得に失敗しました");
   }
 }
