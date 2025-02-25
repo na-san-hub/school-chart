@@ -12,7 +12,7 @@ export default function ChartSection({
   return (
     <section className="my-5 ml-5 py-3 flex justify-center items-center rounded-md border border-gray-200">
       {/* チャートエリア */}
-      <div className="w-full text-cyan-600">
+      <div className="text-cyan-600">
         <RadarChartComponent data={categories} />
       </div>
       {/* スコアエリア */}
