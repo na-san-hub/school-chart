@@ -33,7 +33,7 @@ const CustomTick = ({
   return (
     <g transform={`translate(${x},${y})`}>
       {/* category のラベル */}
-      <text x={0} y={0} dy={-8} textAnchor="middle" fontSize={14} fill="#555">
+      <text x={0} y={0} dy={-8} textAnchor="middle" fontSize={13} fill="#555">
         {category}
       </text>
       {/* value のラベル */}

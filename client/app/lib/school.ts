@@ -130,9 +130,13 @@ export async function getRadarChartData(
       },
     });
 
+    const sortedRating = rating.sort((a, b) =>
+      a.category.localeCompare(b.category, "ja")
+    );
+
     const radarChartData: RadarChartData = {
       schoolRating: school.rating,
-      categories: rating.map((rating: RatingData) => ({
+      categories: sortedRating.map((rating: RatingData) => ({
         category: rating.category,
         score: rating.score,
       })),
