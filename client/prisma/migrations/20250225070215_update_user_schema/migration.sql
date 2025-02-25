@@ -125,7 +125,8 @@ CREATE TABLE "skill" (
 
 -- CreateTable
 CREATE TABLE "user" (
-    "id" UUID NOT NULL DEFAULT auth.uid(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "auth_id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -146,6 +147,9 @@ CREATE UNIQUE INDEX "review_user_id_course_id_key" ON "review"("user_id", "cours
 
 -- CreateIndex
 CREATE UNIQUE INDEX "skill_name_key" ON "skill"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_auth_id_key" ON "user"("auth_id");
 
 -- AddForeignKey
 ALTER TABLE "category_profession" ADD CONSTRAINT "category_profession_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE NO ACTION;

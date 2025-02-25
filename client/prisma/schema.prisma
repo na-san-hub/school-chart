@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -146,7 +146,8 @@ model Skill {
 }
 
 model User {
-  id         String   @id @default(dbgenerated("auth.uid()")) @db.Uuid
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  authId     String   @unique @map("auth_id")
   name       String
   createdAt  DateTime @default(now()) @map("created_at")
   reviews    Review[]
