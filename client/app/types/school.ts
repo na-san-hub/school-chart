@@ -53,6 +53,7 @@ export interface SchoolHeaderData {
   logo: string | null;
   rating: number;
   description: string | null;
+  reviewsCount: number;
 }
 
 // レーダーチャート用データの型

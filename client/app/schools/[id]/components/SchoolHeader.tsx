@@ -31,7 +31,7 @@ export default function SchoolHeader({ school }: { school: SchoolHeaderData }) {
         </div>
       </div>
       <div className="absolute bottom-0 w-full">
-        <MenuTabs schoolID={school.id} />
+        <MenuTabs schoolID={school.id} reviewsCount={school.reviewsCount} />
       </div>
     </section>
   );
