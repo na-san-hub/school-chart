@@ -7,13 +7,11 @@ export default function SchoolDetail({
 }) {
   // 受講形式を一意に取得（`courses` が存在しない可能性に対応）
   const uniqueDeliveryMethods = school.courses
-    ? Array.from(
-        new Set(school.courses.map((course) => course.delivery_method))
-      )
+    ? Array.from(new Set(school.courses.map((course) => course.deliveryMethod)))
     : [];
 
   return (
-    <div className="py-3 px-1 mr-5 max-w-[470px]">
+    <div className="py-3 px-1 mr-5 max-w-[470px] w-full">
       <h1 className="py-2 text-base font-bold text-gray-700 border-b border-b-gray-300">
         スクール情報
       </h1>
@@ -25,7 +23,7 @@ export default function SchoolDetail({
         </h2>
         <p>
           <a
-            href={school.website}
+            href={school.website ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-600 underline text-sm"
@@ -36,7 +34,7 @@ export default function SchoolDetail({
       </div>
 
       {/* 受講形式 */}
-      <div className="items-center py-2 flex gap-2 border-b border-b-gray-300">
+      <div className="items-center py-2 flex gap-2 border-b border-b-gray-300 min-h-[60px]">
         <h2 className="min-w-20 text-sm font-semibold text-gray-500">
           受講形式
         </h2>
@@ -57,7 +55,7 @@ export default function SchoolDetail({
       </div>
 
       {/* 特徴一覧 */}
-      <div className="items-center py-2 flex gap-2 border-b border-b-gray-300">
+      <div className="items-center py-2 flex gap-2 border-b border-b-gray-300 min-h-[80px]">
         <h2 className="min-w-20 text-sm font-semibold text-gray-500">特徴</h2>
         <div className="flex flex-wrap gap-2 text-sm">
           {school.features?.length ? (
@@ -76,7 +74,7 @@ export default function SchoolDetail({
       </div>
 
       {/* 学べるスキル */}
-      <div className="items-center py-2 flex gap-2 border-b border-b-gray-300">
+      <div className="items-center py-2 flex gap-2 border-b border-b-gray-300 min-h-[80px]">
         <h2 className="min-w-20 text-sm font-semibold text-gray-500">
           学べる <span className="block">スキル</span>
         </h2>

@@ -3,151 +3,159 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL") 
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  
-  reviews   Review[]
+model Category {
+  id                 String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String                 @unique @map("name")
+  categoryProfessions CategoryProfession[]
+  courseCategories    CourseCategory[]
+
+  @@map("category")
+}
+
+model CategoryProfession {
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  categoryId   String     @db.Uuid @map("category_id")
+  professionId String     @db.Uuid @map("profession_id")
+  category     Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  profession   Profession @relation(fields: [professionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("category_profession")
+}
+
+model Course {
+  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolId           String           @db.Uuid @map("school_id")
+  name               String
+  description        String
+  deliveryMethod     DeliveryMethod   @default(ONLINE) @map("delivery_method")
+  locationPrefecture String           @map("location_prefecture")
+  locationAddress    String?          @map("location_address")
+  price             Int?
+  duration          String?
+  createdAt         DateTime          @default(now()) @map("created_at")
+  school            School            @relation(fields: [schoolId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  courseCategories  CourseCategory[]
+  courseFeatures    CourseFeature[]
+  courseSkills      CourseSkill[]
+  reviews           Review[]
+
+  @@map("course")
+}
+
+model CourseCategory {
+  courseId   String   @db.Uuid @map("course_id")
+  categoryId String   @db.Uuid @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([courseId, categoryId])
+  @@map("course_category")
+}
+
+model CourseFeature {
+  courseId  String  @db.Uuid @map("course_id")
+  featureId String  @db.Uuid @map("feature_id")
+  course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  feature   Feature @relation(fields: [featureId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([courseId, featureId])
+  @@map("course_feature")
+}
+
+model CourseSkill {
+  courseId String @db.Uuid @map("course_id")
+  skillId  String @db.Uuid @map("skill_id")
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  skill    Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([courseId, skillId])
+  @@map("course_skill")
+}
+
+model Feature {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String          @unique
+  courseFeatures CourseFeature[]
+
+  @@map("feature")
+}
+
+model Profession {
+  id                  String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String               @unique
+  categoryProfessions CategoryProfession[]
+
+  @@map("profession")
+}
+
+model Rating {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolId  String   @db.Uuid @map("school_id")
+  category  String
+  score     Int      @db.SmallInt
+  createdAt DateTime @default(now()) @map("created_at")
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("rating")
+}
+
+model Review {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String   @db.Uuid @map("user_id")
+  courseId         String   @db.Uuid @map("course_id")
+  ratingCurriculum Int      @map("rating_curriculum")
+  ratingInstructor Int      @map("rating_instructor")
+  ratingCost       Int      @map("rating_cost")
+  ratingSupport    Int      @map("rating_support")
+  ratingCommunity  Int      @map("rating_community")
+  comment          String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([userId, courseId])
+  @@map("review")
 }
 
 model School {
-  id          String   @id @default(uuid())
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
   address     String?
   website     String?
   logo        String?
   description String?
-  rating      Decimal  @default(0.0)
-  createdAt   DateTime @default(now())
-
+  rating      Float    @default(0.0) @db.Real
+  createdAt   DateTime @default(now()) @map("created_at")
   courses     Course[]
   ratings     Rating[]
-}
 
-model Rating {
-  id        String   @id @default(uuid())
-  schoolId  String
-  category  String
-  score Int @db.SmallInt
-
-  createdAt DateTime @default(now())
-
-  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
-}
-
-model Course {
-  id                String   @id @default(uuid())
-  schoolId          String
-  name              String
-  description       String?
-  deliveryMethod    DeliveryMethod @default(ONLINE)
-  locationPrefecture String
-  locationAddress   String?
-  price            Int?
-  duration         String?
-  createdAt        DateTime @default(now())
-
-  school           School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
-  reviews         Review[]
-  courseSkills    CourseSkill[]
-  courseFeatures  CourseFeature[]
-  courseCategories CourseCategory[]
-}
-
-enum DeliveryMethod {
-  IN_PERSON  // 対面
-  ONLINE     // オンライン
-  HYBRID     // ハイブリッド
-}
-
-model Review {
-  id               String   @id @default(uuid())
-  userId           String
-  courseId         String
-  ratingCurriculum Int
-  ratingInstructor Int
-  ratingCost       Int
-  ratingSupport    Int
-  ratingCommunity  Int
-  comment          String?
-  createdAt        DateTime @default(now())
-
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, courseId])
+  @@map("school")
 }
 
 model Skill {
-  id   String  @id @default(uuid())
-  name String  @unique
-
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String       @unique
   courseSkills CourseSkill[]
+
+  @@map("skill")
 }
 
-model Profession {
-  id   String  @id @default(uuid())
-  name String  @unique
+model User {
+  id         String   @id @default(dbgenerated("auth.uid()")) @db.Uuid
+  name       String
+  createdAt  DateTime @default(now()) @map("created_at")
+  reviews    Review[]
 
-  categoryProfessions CategoryProfession[]
+  @@map("user")
 }
 
-model Feature {
-  id   String  @id @default(uuid())
-  name String  @unique
-
-  courseFeatures CourseFeature[]
-}
-
-model Category {
-  id   String  @id @default(uuid())
-  name String  @unique
-
-  courseCategories CourseCategory[]
-  categoryProfessions CategoryProfession[]
-}
-
-model CourseSkill {
-  courseId String
-  skillId  String
-
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  skill  Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
-
-  @@id([courseId, skillId])
-}
-
-model CourseFeature {
-  courseId  String
-  featureId String
-
-  course  Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
-
-  @@id([courseId, featureId])
-}
-
-model CourseCategory {
-  courseId   String
-  categoryId String
-
-  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-
-  @@id([courseId, categoryId])
-}
-
-model CategoryProfession {
-  id          String @id @default(uuid())
-  categoryId  String
-  professionId String
-
-  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  profession Profession @relation(fields: [professionId], references: [id], onDelete: Cascade)
+enum DeliveryMethod {
+  IN_PERSON
+  ONLINE
+  HYBRID
 }

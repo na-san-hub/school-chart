@@ -9,12 +9,29 @@ export default async function SchoolLayout(props: {
   const resolvedParams = await props.params;
   const id = resolvedParams.id;
 
-  const school = await getSchoolHeader(id);
+  let school;
+  let errorMessage = "";
+
+  try {
+    school = await getSchoolHeader(id);
+  } catch (error) {
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+  }
 
   return (
     <div>
-      <SchoolHeader school={school} />
-      <main>{props.children}</main>
+      {school ? (
+        <>
+          <SchoolHeader school={school} />
+          <main>{props.children}</main>
+        </>
+      ) : (
+        <div className="text-center py-10">
+          <p className="text-red-500 font-bold">{errorMessage}</p>
+        </div>
+      )}
     </div>
   );
 }
