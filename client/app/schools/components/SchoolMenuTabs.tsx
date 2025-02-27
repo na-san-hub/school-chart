@@ -5,10 +5,17 @@ import { usePathname } from "next/navigation";
 
 const tabs = [
   { id: "top", label: "TOP", path: "" },
-  { id: "reviews", label: "口コミ", path: "/reviews", count: 310 },
+  { id: "reviews", label: "口コミ", path: "/reviews" },
+  { id: "course", label: "コース一覧", path: "/course" },
 ];
 
-export default function MenuTabs({ schoolID }: { schoolID: string }) {
+export default function SchoolMenuTabs({
+  schoolID,
+  reviewsCount,
+}: {
+  schoolID: string;
+  reviewsCount: number;
+}) {
   const pathname = usePathname();
 
   return (
@@ -25,7 +32,7 @@ export default function MenuTabs({ schoolID }: { schoolID: string }) {
                 : "bg-gray-200 text-cyan-600 shadow-sm"
             }`}
           >
-            {tab.label} {tab.count ? `(${tab.count}件)` : ""}
+            {tab.label} {tab.id === "reviews" ? `(${reviewsCount}件)` : ""}
           </Link>
         );
       })}

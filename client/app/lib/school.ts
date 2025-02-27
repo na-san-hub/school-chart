@@ -94,6 +94,13 @@ export async function getSchoolHeader(id: string): Promise<SchoolHeaderData> {
         logo: true,
         rating: true,
         description: true,
+        courses: {
+          select: {
+            _count: {
+              select: { reviews: true },
+            },
+          },
+        },
       },
     });
 
@@ -101,7 +108,12 @@ export async function getSchoolHeader(id: string): Promise<SchoolHeaderData> {
       throw new Error(`スクールが見つかりません`);
     }
 
-    return school;
+    const reviewsCount = school.courses.reduce(
+      (total, course) => total + course._count.reviews,
+      0
+    );
+
+    return { ...school, reviewsCount };
   } catch {
     throw new Error("スクールの情報の取得に失敗しました");
   }
