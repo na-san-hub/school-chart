@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { id: "top", label: "TOP", path: "" },
   { id: "reviews", label: "口コミ", path: "/reviews" },
+  { id: "course", label: "コース一覧", path: "/course" },
 ];
 
-export default function MenuTabs({
+export default function SchoolMenuTabs({
   schoolID,
   reviewsCount,
 }: {
@@ -31,7 +32,7 @@ export default function MenuTabs({
                 : "bg-gray-200 text-cyan-600 shadow-sm"
             }`}
           >
-            {tab.label} {reviewsCount ? `(${reviewsCount}件)` : ""}
+            {tab.label} {tab.id === "reviews" ? `(${reviewsCount}件)` : ""}
           </Link>
         );
       })}
