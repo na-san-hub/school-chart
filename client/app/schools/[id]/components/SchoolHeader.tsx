@@ -5,7 +5,7 @@ import StarRating from "../../components/StarRating";
 
 export default function SchoolHeader({ school }: { school: SchoolHeaderData }) {
   return (
-    <header className="relative w-full h-[230px] bg-gray-100">
+    <header className="w-full bg-gray-100">
       <div className="flex max-w-4xl mx-auto items-center space-x-6 px-6 py-11 ">
         {/* 左側: ロゴ */}
         <div className="flex items-center justify-center w-26 h-26">
@@ -30,12 +30,7 @@ export default function SchoolHeader({ school }: { school: SchoolHeaderData }) {
           <p className="mt-2 text-gray-600 text-sm">{school.description}</p>
         </div>
       </div>
-      <nav className="absolute bottom-0 w-full">
-        <SchoolMenuTabs
-          schoolID={school.id}
-          reviewsCount={school.reviewsCount}
-        />
-      </nav>
+      <SchoolMenuTabs schoolID={school.id} reviewsCount={school.reviewsCount} />
     </header>
   );
 }
