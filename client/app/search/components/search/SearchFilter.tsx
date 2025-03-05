@@ -1,45 +1,27 @@
 "use client";
-
-import { useState } from "react";
-
 interface SearchFilterProps {
-  type: "skill" | "profession" | "feature";
-  options: { id: string; name: string }[];
-  onChange: (selectedId: string[]) => void;
+  label: string;
+  selectedItems: string[];
+  onOpenModal: () => void;
 }
 
-const SearchFilter = ({ type, options, onChange }: SearchFilterProps) => {
-  const [selectedId, setSelectedId] = useState<string[]>([]);
-
-  const handleSelect = (id: string) => {
-    const newSelected = selectedId.includes(id)
-      ? selectedId.filter((s) => s !== id)
-      : [...selectedId, id];
-    setSelectedId(newSelected);
-    onChange(newSelected);
-  };
-
+const SearchFilter = ({
+  label,
+  selectedItems,
+  onOpenModal,
+}: SearchFilterProps) => {
   return (
-    <div>
-      <h3>
-        {type === "skill" && "学べるスキル"}
-        {type === "profession" && "目指せる職種"}
-        {type === "feature" && "こだわり検索"}
-      </h3>
-
-      <div>
-        {options.map((option) => (
-          <button
-            key={option.id}
-            onClick={() => handleSelect(option.id)}
-            className={`px-3 py-2  border rounded-md ${
-              selectedId.includes(option.id) ? "bg-cyan-600" : "bg-gray-100"
-            }`}
-          >
-            {option.name}
-          </button>
-        ))}
-      </div>
+    <div className="p-4 flex items-center gap-4">
+      <p className="text-sm font-bold">{label}</p>
+      <button
+        className="px-6 py-2 text-sm bg-gray-200 rounded-md"
+        onClick={onOpenModal}
+      >
+        選択する
+      </button>
+      <p className="text-sm text-gray-600">
+        {selectedItems.length > 0 ? selectedItems.join(", ") : "未選択"}
+      </p>
     </div>
   );
 };

@@ -28,7 +28,7 @@ export interface CourseAllData {
   courseSkills: { skill: { id: string; name: string } }[];
 }
 
-// 使いたいコースのサマリー型（不要なフィールドは除外）
+// コースのサマリー型（不要なフィールドは除外）
 export interface CourseSummary {
   id: string;
   deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";

@@ -1,99 +1,73 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import SelectModal from "./SelectModal";
+import SearchFilter from "./SearchFilter";
 
 interface SearchOptionProps {
-  skills: { id: string; name: string }[];
-  professions: { id: string; name: string }[];
-  features: { id: string; name: string }[];
+  skills: { name: string }[];
+  professions: { name: string }[];
+  features: { name: string }[];
 }
 
 const SearchForm = ({ skills, professions, features }: SearchOptionProps) => {
   const router = useRouter();
 
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [selectedProfessions, setSelectedProfessions] = useState<string[]>([]);
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [selectSkills, setSelectSkills] = useState<string[]>([]);
+  const [selectProfessions, setSelectProfessions] = useState<string[]>([]);
+  const [selectFeatures, setSelectFeatures] = useState<string[]>([]);
   const [modalType, setModalType] = useState<
-    "skill" | "profession" | "feature" | null
+    "skills" | "professions" | "features" | null
   >(null);
 
-  // 検索ボタン押下時にクエリパラメータを更新
+  // 検索条件を URL に反映して /search ページに遷移
   const handleSearch = () => {
     const params = new URLSearchParams();
-
-    selectedSkills.forEach((skill) => params.append("skills", skill));
-    selectedProfessions.forEach((profession) =>
+    selectSkills.forEach((skill) => params.append("skills", skill));
+    selectProfessions.forEach((profession) =>
       params.append("professions", profession)
     );
-    selectedFeatures.forEach((feature) => params.append("features", feature));
+    selectFeatures.forEach((feature) => params.append("features", feature));
 
-    router.push(`/search?${params.toString()}`); // 検索結果ページに遷移
+    router.push(`/search?${params.toString()}`);
   };
 
-  const getNamesByIds = (
-    ids: string[],
-    options: { id: string; name: string }[]
-  ) => {
-    return options
-      .filter((option) => ids.includes(option.id))
-      .map((option) => option.name)
-      .join(", ");
+  // モーダルで選択された値を保存
+  const handleSelectionSave = (selected: string[]) => {
+    if (modalType === "skills") {
+      setSelectSkills(selected);
+    } else if (modalType === "professions") {
+      setSelectProfessions(selected);
+    } else if (modalType === "features") {
+      setSelectFeatures(selected);
+    }
+    setModalType(null);
   };
 
-  const filters = [
+  // 各フィルターの設定を配列で管理し、map() で動的にレンダリング
+  const filterOptions = [
+    { key: "skills", label: "学べるスキル", selectedItems: selectSkills },
     {
-      key: "skill",
-      label: "学べるスキル",
-      selected: selectedSkills,
-      setSelected: setSelectedSkills,
-      options: skills,
-    },
-    {
-      key: "profession",
+      key: "professions",
       label: "目指せる職種",
-      selected: selectedProfessions,
-      setSelected: setSelectedProfessions,
-      options: professions,
+      selectedItems: selectProfessions,
     },
-    {
-      key: "feature",
-      label: "こだわり条件",
-      selected: selectedFeatures,
-      setSelected: setSelectedFeatures,
-      options: features,
-    },
-  ];
+    { key: "features", label: "こだわり条件", selectedItems: selectFeatures },
+  ] as const;
 
   return (
     <section className="w-full max-w-4xl mx-auto text-center py-12">
-      <div className="border border-gray-300 bg-white rounded-lg backdrop-blur-sm overflow-hidden">
-        {/* 🔹 各選択ボタン */}
-        <div className="p-4 flex flex-col gap-4">
-          {filters.map(({ key, label, selected, setSelected, options }) => (
-            <div key={key} className="p-4 flex flex-col gap-2">
-              <div className="flex items-center gap-4">
-                <p className="text-sm font-bold">{label}</p>
-                <button
-                  className="px-6 py-2 text-sm bg-gray-200 rounded-md"
-                  onClick={() =>
-                    setModalType(key as "skill" | "profession" | "feature")
-                  }
-                >
-                  選択する
-                </button>
+      <div className="border border-gray-300 bg-white rounded-lg overflow-hidden">
+        {filterOptions.map(({ key, label, selectedItems }) => (
+          <SearchFilter
+            key={key}
+            label={label}
+            selectedItems={selectedItems}
+            onOpenModal={() => setModalType(key)}
+          />
+        ))}
 
-                {selected.length > 0 && (
-                  <p className="text-sm">{getNamesByIds(selected, options)}</p>
-                )}
-              </div>{" "}
-            </div>
-          ))}
-        </div>
-
-        {/* 🔍 検索ボタン */}
         <div className="p-4">
           <button
             onClick={handleSearch}
@@ -104,24 +78,33 @@ const SearchForm = ({ skills, professions, features }: SearchOptionProps) => {
         </div>
       </div>
 
-      {/* 🔹 モーダルの表示 */}
-      {modalType &&
-        (() => {
-          const filter = filters.find((f) => f.key === modalType);
-          if (!filter) return null;
-          return (
-            <SelectModal
-              title={`${filter.label} を選択`}
-              options={filter.options}
-              selected={filter.selected}
-              onClose={() => setModalType(null)}
-              onSave={(items) => {
-                filter.setSelected(items);
-                setModalType(null);
-              }}
-            />
-          );
-        })()}
+      {modalType && (
+        <SelectModal
+          title={
+            modalType === "skills"
+              ? "学べるスキルを選択"
+              : modalType === "professions"
+              ? "目指せる職種を選択"
+              : "こだわり条件を選択"
+          }
+          options={
+            modalType === "skills"
+              ? skills
+              : modalType === "professions"
+              ? professions
+              : features
+          }
+          selectedItems={
+            modalType === "skills"
+              ? selectSkills
+              : modalType === "professions"
+              ? selectProfessions
+              : selectFeatures
+          }
+          onSave={handleSelectionSave}
+          onClose={() => setModalType(null)}
+        />
+      )}
     </section>
   );
 };
