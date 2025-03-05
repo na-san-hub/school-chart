@@ -7,7 +7,7 @@ import {
   RatingData,
 } from "@/types/school";
 
-import { prisma } from "./prisma";
+import { prisma } from "@/lib/prisma";
 
 // スクール詳細情報を取得（`courses` の一部あり）
 export async function getSchoolWithCourses(
