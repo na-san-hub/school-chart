@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Prisma, DeliveryMethod } from "@prisma/client";
 
 // スキルリストを取得
 export async function getSkills() {
@@ -58,7 +59,7 @@ export async function searchSchools(filters: {
     const featureIdList = featureIds.map((f) => f.id);
 
     // Course 関連の条件（すべて Course モデル内のフィールドに対する検索条件）
-    const courseConditions: any[] = [];
+    const courseConditions: Prisma.CourseWhereInput[] = [];
 
     if (skillIdList.length > 0) {
       courseConditions.push({
@@ -93,7 +94,9 @@ export async function searchSchools(filters: {
       });
     }
     if (filters.delivery_method) {
-      courseConditions.push({ deliveryMethod: filters.delivery_method });
+      courseConditions.push({
+        deliveryMethod: filters.delivery_method as DeliveryMethod,
+      });
     }
     if (filters.price_min) {
       const min = parseInt(filters.price_min, 10);
@@ -109,7 +112,7 @@ export async function searchSchools(filters: {
     }
 
     // School（＝スクール）の条件（フリーワード検索）
-    const schoolConditions: any[] = [];
+    const schoolConditions: Prisma.SchoolWhereInput[] = [];
     if (filters.keyword) {
       schoolConditions.push({
         OR: [
@@ -120,7 +123,7 @@ export async function searchSchools(filters: {
     }
 
     // それぞれの条件をまとめる
-    const whereClause: any = {};
+    const whereClause: Prisma.SchoolWhereInput = {};
 
     // Course 関連の条件は、少なくとも1つの Course が条件を満たす必要がある
     if (courseConditions.length > 0) {
