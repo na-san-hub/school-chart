@@ -35,10 +35,10 @@ const SelectModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg w-96">
-        <p className="text-lg font-bold mb-4">{title}</p>
+      <div className="bg-white p-6 rounded-lg w-1/2 h-2/3 overflow-y-auto">
+        <p className="text-lg font-bold mb-4 ">{title}</p>
         {/* 🔹 選択肢リスト */}
-        <div className="flex flex-col gap-2">
+        <div className="gap-2 grid grid-cols-3">
           {options.map((item) => (
             <label key={item.name} className="flex items-center gap-2">
               <input
