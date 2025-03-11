@@ -135,7 +135,7 @@ const SearchForm = ({
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full text-sm py-2 my-2 bg-gray-200 text-gray-700 font-bold"
         >
-          {isExpanded ? "▲ 条件を隠す" : "▼ さらに条件を表示"}
+          {isExpanded ? "▲ 一部の条件を隠す" : "▼ さらに条件を表示"}
         </button>
         <div className={`${isExpanded ? "block" : "hidden"}`}>
           {/* 複数選択フィルタ */}
@@ -166,7 +166,10 @@ const SearchForm = ({
             円
           </div>
           {/* クリアボタン */}
-          <button onClick={handleClear} className="text-sm py-2  font-bold">
+          <button
+            onClick={handleClear}
+            className="text-sm py-2 text-gray-700 font-bold"
+          >
             条件をクリア
           </button>
         </div>
