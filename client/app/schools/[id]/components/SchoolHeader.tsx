@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { SchoolHeaderData } from "@/types/school";
 import SchoolMenuTabs from "../../components/SchoolMenuTabs";
-import StarRating from "../../components/StarRating";
+import StarRating from "../../../components/schoolData/StarRating";
 
 export default function SchoolHeader({ school }: { school: SchoolHeaderData }) {
   return (

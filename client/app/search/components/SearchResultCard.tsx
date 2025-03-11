@@ -1,4 +1,4 @@
-import StarRating from "@/schools/components/StarRating";
+import StarRating from "@/components/schoolData/StarRating";
 import Image from "next/image";
 import Link from "next/link";
 
