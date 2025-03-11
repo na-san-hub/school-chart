@@ -9,23 +9,33 @@ export default async function SearchPage({
 }) {
   const searchParams = await searchParamsPromise;
 
-  const skills =
-    typeof searchParams.skills === "string"
-      ? [searchParams.skills]
-      : searchParams.skills || [];
-  const professions =
-    typeof searchParams.professions === "string"
-      ? [searchParams.professions]
-      : searchParams.professions || [];
-  const features =
-    typeof searchParams.features === "string"
-      ? [searchParams.features]
-      : searchParams.features || [];
+  // クエリパラメータを配列にして取得
+  const getArrayParam = (param: string | string[] | undefined) =>
+    Array.isArray(param) ? param : param ? [param] : [];
 
+  const getStringParam = (param: string | string[] | undefined) =>
+    typeof param === "string" ? param : "";
+
+  // 検索条件
+  const skills = getArrayParam(searchParams.skills);
+  const professions = getArrayParam(searchParams.professions);
+  const features = getArrayParam(searchParams.features);
+  const location_prefectures = getArrayParam(searchParams.location_prefecture);
+  const delivery_method = getStringParam(searchParams.delivery_method);
+  const price_min = getStringParam(searchParams.price_min);
+  const price_max = getStringParam(searchParams.price_max);
+  const keyword = getStringParam(searchParams.keyword);
+
+  // サーバー側で検索実行
   const results: School[] = await searchSchools({
     skills,
     professions,
     features,
+    location_prefectures,
+    delivery_method,
+    price_min,
+    price_max,
+    keyword,
   });
 
   return (
