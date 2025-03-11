@@ -97,6 +97,17 @@ const SearchForm = ({
     { key: "features", label: "こだわり条件", selectedItems: selectFeatures },
   ] as const;
 
+  const handleClear = () => {
+    setSelectSkills([]);
+    setSelectProfessions([]);
+    setSelectFeatures([]);
+    setSelectLocations([]);
+    setKeyword("");
+    setDeliveryMethod("");
+    setPriceMin("");
+    setPriceMax("");
+  };
+
   return (
     <section className="w-full max-w-4xl mx-auto text-center py-10">
       <div className="border border-gray-300 bg-white rounded-lg overflow-hidden">
@@ -122,7 +133,7 @@ const SearchForm = ({
         {/* 🔹 折りたたみ可能な部分 */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full text-sm py-2 bg-gray-200 text-gray-700 font-bold"
+          className="w-full text-sm py-2 my-2 bg-gray-200 text-gray-700 font-bold"
         >
           {isExpanded ? "▲ 条件を隠す" : "▼ さらに条件を表示"}
         </button>
@@ -154,16 +165,19 @@ const SearchForm = ({
             />
             円
           </div>
-        </div>
-        {/* 検索ボタン */}
-        <div className="p-5 ">
-          <button
-            onClick={handleSearch}
-            className="px-6 py-2 bg-cyan-600 text-white rounded-md font-bold"
-          >
-            この条件で検索
+          {/* クリアボタン */}
+          <button onClick={handleClear} className="text-sm py-2  font-bold">
+            条件をクリア
           </button>
         </div>
+
+        {/* 検索ボタン */}
+        <button
+          onClick={handleSearch}
+          className="px-6 py-2 mb-5 mt-2 bg-cyan-600 text-white rounded-md font-bold"
+        >
+          この条件で検索する
+        </button>
       </div>
 
       {modalType && (
