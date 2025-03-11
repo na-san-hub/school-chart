@@ -1,22 +1,24 @@
 import { locations } from "@/lib/staticLists";
+import { searchKeywordAction } from "@/actions/searchKeywordAction";
 const KeywordSearch = () => {
   return (
     <section className="px-8 pb-10">
       <form
-        action="/search"
-        method="GET"
+        action={searchKeywordAction}
         className="flex items-center gap-4 h-12"
       >
         {/* キーワード入力 */}
         <input
           type="text"
           id="keyword"
+          name="keyword"
           placeholder="スクール名・資格などで検索"
           className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full"
         />
 
         {/* 都道府県選択 */}
         <select
+          name="location_prefecture"
           id="prefecture"
           className="text-gray-500 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full"
         >

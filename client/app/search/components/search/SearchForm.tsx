@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import SelectModal from "./SelectModal";
 import SearchFilter from "./SearchFilter";
@@ -26,18 +26,33 @@ const SearchForm = ({
   priceRanges,
 }: SearchOptionProps) => {
   const router = useRouter();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const searchParams = useSearchParams();
 
+  // URLから初期値を取得
+  const initialSelectProfessions = searchParams.getAll("professions");
+  const initialSelectFeatures = searchParams.getAll("features");
+  const initialKeyword = searchParams.get("keyword") || "";
+  const initialSelectLocations = searchParams.getAll("location_prefecture");
+
+  //検索条件用
   const [selectSkills, setSelectSkills] = useState<string[]>([]);
-  const [selectProfessions, setSelectProfessions] = useState<string[]>([]);
-  const [selectFeatures, setSelectFeatures] = useState<string[]>([]);
-  const [selectLocations, setSelectLocations] = useState<string[]>([]);
-  const [keyword, setKeyword] = useState<string>("");
+  const [selectProfessions, setSelectProfessions] = useState<string[]>(
+    initialSelectProfessions
+  );
+  const [selectFeatures, setSelectFeatures] = useState<string[]>(
+    initialSelectFeatures
+  );
+  const [selectLocations, setSelectLocations] = useState<string[]>(
+    initialSelectLocations
+  );
+  const [keyword, setKeyword] = useState<string>(initialKeyword);
   const [deliveryMethod, setDeliveryMethod] = useState<string>("");
   const [priceMin, setPriceMin] = useState<string>("");
   const [priceMax, setPriceMax] = useState<string>("");
 
-  // モーダルを開くための状態（複数選択用）
+  //フォーム折り畳み用
+  const [isExpanded, setIsExpanded] = useState(false);
+  // モーダルを開くための状態
   const [modalType, setModalType] = useState<
     "skills" | "professions" | "features" | "locations" | null
   >(null);
@@ -71,7 +86,7 @@ const SearchForm = ({
     setModalType(null);
   };
 
-  // 既存のフィルターの定義（後で SearchFilters コンポーネントに分ける）
+  // フィルターの定義
   const filterOptions = [
     { key: "skills", label: "学べるスキル", selectedItems: selectSkills },
     {

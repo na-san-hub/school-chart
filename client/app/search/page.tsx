@@ -9,39 +9,22 @@ export default async function SearchPage({
 }) {
   const searchParams = await searchParamsPromise;
 
-  // クエリパラメータを配列に統一
-  const skills = Array.isArray(searchParams.skills)
-    ? searchParams.skills
-    : searchParams.skills
-    ? [searchParams.skills]
-    : [];
-  const professions = Array.isArray(searchParams.professions)
-    ? searchParams.professions
-    : searchParams.professions
-    ? [searchParams.professions]
-    : [];
-  const features = Array.isArray(searchParams.features)
-    ? searchParams.features
-    : searchParams.features
-    ? [searchParams.features]
-    : [];
+  // クエリパラメータを配列にして取得
+  const getArrayParam = (param: string | string[] | undefined) =>
+    Array.isArray(param) ? param : param ? [param] : [];
 
-  // 新たな検索条件の取得
-  const location_prefectures = Array.isArray(searchParams.location_prefecture)
-    ? searchParams.location_prefecture
-    : searchParams.location_prefecture
-    ? [searchParams.location_prefecture]
-    : [];
-  const delivery_method =
-    typeof searchParams.delivery_method === "string"
-      ? searchParams.delivery_method
-      : "";
-  const price_min =
-    typeof searchParams.price_min === "string" ? searchParams.price_min : "";
-  const price_max =
-    typeof searchParams.price_max === "string" ? searchParams.price_max : "";
-  const keyword =
-    typeof searchParams.keyword === "string" ? searchParams.keyword : "";
+  const getStringParam = (param: string | string[] | undefined) =>
+    typeof param === "string" ? param : "";
+
+  // 検索条件
+  const skills = getArrayParam(searchParams.skills);
+  const professions = getArrayParam(searchParams.professions);
+  const features = getArrayParam(searchParams.features);
+  const location_prefectures = getArrayParam(searchParams.location_prefecture);
+  const delivery_method = getStringParam(searchParams.delivery_method);
+  const price_min = getStringParam(searchParams.price_min);
+  const price_max = getStringParam(searchParams.price_max);
+  const keyword = getStringParam(searchParams.keyword);
 
   // サーバー側で検索実行
   const results: School[] = await searchSchools({

@@ -118,6 +118,13 @@ export async function searchSchools(filters: {
         OR: [
           { name: { contains: filters.keyword, mode: "insensitive" } },
           { description: { contains: filters.keyword, mode: "insensitive" } },
+          {
+            courses: {
+              some: {
+                name: { contains: filters.keyword, mode: "insensitive" },
+              },
+            },
+          },
         ],
       });
     }
