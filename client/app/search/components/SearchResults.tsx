@@ -19,7 +19,9 @@ const SearchResults = ({ results }: SearchResultsListProps) => {
       </div>
     </>
   ) : (
-    <p className="text-gray-500 text-center">検索結果がありません</p>
+    <p className="text-gray-500 text-lg text-center my-5">
+      検索結果がありません
+    </p>
   );
 };
 
