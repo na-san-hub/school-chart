@@ -47,7 +47,7 @@ export interface SchoolWithCourses extends SchoolData {
   skills: string[];
 }
 // スクールページヘッダー用データの型
-export interface SchoolHeaderData {
+export interface SchoolCoverData {
   id: string;
   name: string;
   logo: string | null;

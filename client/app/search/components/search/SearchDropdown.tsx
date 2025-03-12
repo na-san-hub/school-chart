@@ -22,7 +22,7 @@ const SearchDropdown = ({
       <select
         value={selectedValue}
         onChange={(e) => setSelectedValue(e.target.value)}
-        className="text-sm px-4 py-2 border rounded-md"
+        className="text-sm px-4 py-2 border rounded-md text-gray-700"
       >
         {" "}
         <option value="">指定しない</option>

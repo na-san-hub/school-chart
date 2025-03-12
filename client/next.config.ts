@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "wbtmslowqxjuemxrtbsq.supabase.co",
+        pathname: "/storage/v1/object/**", // すべてのオブジェクトを許可
+      },
+    ],
+  },
 };
 
 export default nextConfig;

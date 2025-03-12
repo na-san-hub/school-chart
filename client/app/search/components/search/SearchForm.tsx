@@ -110,12 +110,12 @@ const SearchForm = ({
 
   return (
     <section className="w-full max-w-4xl mx-auto text-center py-10">
-      <div className="border border-gray-300 bg-white rounded-lg overflow-hidden">
+      <div className="border border-gray-300 bg-white rounded-md overflow-hidden">
         {/* フリーワード検索 */}
         <SearchKeyword keyword={keyword} setKeyword={setKeyword} />
         {/* エリア検索・受講形式*/}
         <div className="flex items-center gap-2 px-4">
-          <label className="text-sm font-bold mx-2 min-w-[80px]">
+          <label className="text-base font-bold mx-2 min-w-[90px] text-gray-700">
             受講形式
           </label>
           <SearchDropdown
@@ -133,7 +133,7 @@ const SearchForm = ({
         {/* 🔹 折りたたみ可能な部分 */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full text-sm py-2 my-2 bg-gray-200 text-gray-700 font-bold"
+          className="w-full text-sm py-2 my-2 bg-gray-100 text-gray-700 font-bold"
         >
           {isExpanded ? "▲ 一部の条件を隠す" : "▼ さらに条件を表示"}
         </button>
@@ -149,7 +149,7 @@ const SearchForm = ({
           ))}
           {/* 最低価格、最高価格 */}
           <div className="flex items-center gap-2 px-4">
-            <label className="text-sm font-bold mx-2 min-w-[80px]">
+            <label className="text-base text-gray-700 font-bold mx-2 min-w-[90px] ">
               受講料金
             </label>
             <SearchDropdown
@@ -177,7 +177,7 @@ const SearchForm = ({
         {/* 検索ボタン */}
         <button
           onClick={handleSearch}
-          className="px-6 py-2 mb-5 mt-2 bg-cyan-600 text-white rounded-md font-bold"
+          className="px-6 py-3 mb-5 mt-3 bg-cyan-600 text-white rounded-md font-bold"
         >
           この条件で検索する
         </button>

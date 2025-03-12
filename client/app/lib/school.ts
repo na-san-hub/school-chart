@@ -1,6 +1,6 @@
 import {
   SchoolWithCourses,
-  SchoolHeaderData,
+  SchoolCoverData,
   RadarChartData,
   CourseSummary,
   CourseAllData,
@@ -84,7 +84,7 @@ export async function getSchoolWithCourses(
 }
 
 // ヘッダー用のデータを取得（名前・ロゴ・評価・説明のみ）
-export async function getSchoolHeader(id: string): Promise<SchoolHeaderData> {
+export async function getSchoolHeader(id: string): Promise<SchoolCoverData> {
   try {
     const school = await prisma.school.findUnique({
       where: { id },

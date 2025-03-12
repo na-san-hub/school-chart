@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { SchoolHeaderData } from "@/types/school";
+import { SchoolCoverData } from "@/types/school";
 import SchoolMenuTabs from "../../components/SchoolMenuTabs";
 import StarRating from "../../../components/schoolData/StarRating";
 
-export default function SchoolHeader({ school }: { school: SchoolHeaderData }) {
+export default function SchoolHeader({ school }: { school: SchoolCoverData }) {
   return (
     <header className="w-full bg-gray-100">
       <div className="flex max-w-4xl mx-auto items-center space-x-6 px-6 py-11 ">

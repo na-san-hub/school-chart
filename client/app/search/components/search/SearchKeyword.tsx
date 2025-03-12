@@ -9,7 +9,7 @@ interface SearchKeywordProps {
 const SearchKeyword = ({ keyword, setKeyword }: SearchKeywordProps) => {
   return (
     <div className="py-3 px-4 pt-5 flex items-center gap-4">
-      <p className="text-sm font-bold mx-2">フリーワード</p>
+      <p className="text-base text-gray-700 font-bold mx-2">フリーワード</p>
       <input
         type="text"
         value={keyword}
