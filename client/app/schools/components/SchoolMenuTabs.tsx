@@ -29,7 +29,7 @@ export default function SchoolMenuTabs({
             className={`text-sm px-5 py-3 mx-1 rounded-t-lg w-36 text-center ${
               isActive
                 ? "border border-gray-400 bg-white text-gray-700 font-bold border-b-0 mb-[-1px] z-10"
-                : "bg-gray-200 text-cyan-600 shadow-sm"
+                : "bg-gray-200 text-cyan-600 shadow-sm hover:opacity-75"
             }`}
           >
             {tab.label} {tab.id === "reviews" ? `(${reviewsCount}件)` : ""}

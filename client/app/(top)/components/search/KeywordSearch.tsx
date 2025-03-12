@@ -33,7 +33,7 @@ const KeywordSearch = () => {
         {/* 検索ボタン */}
         <button
           type="submit"
-          className="p-3 bg-cyan-600/80 text-white rounded-lg shadow-sm hover:bg-cyan-700 transition "
+          className="p-3 bg-cyan-600 text-white rounded-lg shadow-sm hover:opacity-75 transition "
         >
           検索
         </button>

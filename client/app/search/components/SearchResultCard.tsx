@@ -14,11 +14,11 @@ const SearchResultCard = ({ school }: SearchResultCardProps) => {
         <SchoolCover school={school} />
       </Link>
       <div className="flex justify-center gap-4 bg-gray-100">
-        <button className="flex items-center py-3 px-6 my-4 border text-gray-700 border-gray-300 rounded-md text-sm bg-white">
+        <button className="flex items-center py-3 px-6 my-4 rounded-md  border text-sm text-gray-700 border-gray-300 hover:opacity-70 bg-white">
           <Heart className="text-gray-600 mr-1" size={14} />
           気になるに追加
         </button>
-        <button className="py-3 px-6 my-4 border rounded-md bg-cyan-600 text-white text-sm">
+        <button className="py-3 px-6 my-4 border rounded-md bg-cyan-600 hover:opacity-75 text-white text-sm">
           コース一覧を見る
         </button>
       </div>

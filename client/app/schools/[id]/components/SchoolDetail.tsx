@@ -26,7 +26,7 @@ export default function SchoolDetail({
             href={school.website ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 underline text-sm"
+            className="text-gray-600 underline text-sm hover:opacity-75"
           >
             {school.website}
           </a>
@@ -43,7 +43,7 @@ export default function SchoolDetail({
             uniqueDeliveryMethods.map((method, index) => (
               <button
                 key={index}
-                className="px-2 py-1 rounded-md text-gray-500 border border-gray-500"
+                className="px-2 py-1 rounded-md text-gray-500 border border-gray-500 cursor-default"
               >
                 {method}
               </button>
@@ -62,7 +62,7 @@ export default function SchoolDetail({
             school.features.map((feature, index) => (
               <button
                 key={index}
-                className="px-2 py-1 rounded-md text-gray-500 border border-gray-500"
+                className="px-2 py-1 rounded-md text-gray-500 border border-gray-500 cursor-default"
               >
                 {feature}
               </button>
@@ -83,7 +83,7 @@ export default function SchoolDetail({
             school.skills.map((skill, index) => (
               <button
                 key={index}
-                className="px-2 py-1 rounded-md text-gray-500 border border-gray-500"
+                className="px-2 py-1 rounded-md text-gray-500 border border-gray-500 cursor-default"
               >
                 {skill}
               </button>

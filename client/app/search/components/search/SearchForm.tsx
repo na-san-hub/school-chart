@@ -133,7 +133,7 @@ const SearchForm = ({
         {/* 🔹 折りたたみ可能な部分 */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full text-sm py-2 my-2 bg-gray-100 text-gray-700 font-bold"
+          className="w-full text-sm py-2 my-2 bg-gray-100 text-gray-700 hover:bg-gray-200 font-bold"
         >
           {isExpanded ? "▲ 一部の条件を隠す" : "▼ さらに条件を表示"}
         </button>
@@ -168,7 +168,7 @@ const SearchForm = ({
           {/* クリアボタン */}
           <button
             onClick={handleClear}
-            className="text-sm py-2 text-gray-700 font-bold"
+            className="text-sm py-2 text-gray-700 font-bold hover:opacity-75"
           >
             条件をクリア
           </button>
@@ -177,7 +177,7 @@ const SearchForm = ({
         {/* 検索ボタン */}
         <button
           onClick={handleSearch}
-          className="px-6 py-3 mb-5 mt-3 bg-cyan-600 text-white rounded-md font-bold"
+          className="px-6 py-3 mb-5 mt-3 bg-cyan-600 text-white hover:opacity-75 rounded-md font-bold"
         >
           この条件で検索する
         </button>
