@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { SchoolCoverData } from "@/types/school";
 import { Prisma, DeliveryMethod } from "@prisma/client";
 
 // スキルリストを取得
@@ -150,10 +151,33 @@ export async function searchSchools(filters: {
         logo: true,
         rating: true,
         description: true,
+        courses: {
+          select: {
+            _count: {
+              select: { reviews: true },
+            },
+          },
+        },
       },
     });
 
-    return schools;
+    // 各学校ごとに、紐づくコースのレビュー数の合計を計算して SchoolCoverData に変換
+    const schoolsWithReviewCount: SchoolCoverData[] = schools.map((school) => {
+      const reviewsCount = school.courses.reduce(
+        (sum, course) => sum + course._count.reviews,
+        0
+      );
+      return {
+        id: school.id,
+        name: school.name,
+        logo: school.logo,
+        rating: school.rating,
+        description: school.description,
+        reviewsCount,
+      };
+    });
+
+    return schoolsWithReviewCount;
   } catch (error) {
     console.error("検索エラー:", error);
     return [];

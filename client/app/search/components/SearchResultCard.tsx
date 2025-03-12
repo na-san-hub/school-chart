@@ -1,45 +1,28 @@
-import StarRating from "@/components/schoolData/StarRating";
-import Image from "next/image";
+import SchoolCover from "@/components/schoolData/SchoolCover";
 import Link from "next/link";
+import { SchoolCoverData } from "@/types/school";
+import { Heart } from "lucide-react";
 
 interface SearchResultCardProps {
-  id: string;
-  name: string;
-  logo?: string | null;
-  rating: number;
-  description?: string | null;
+  school: SchoolCoverData;
 }
 
-const SearchResultCard = ({
-  id,
-  name,
-  logo,
-  rating,
-  description,
-}: SearchResultCardProps) => {
+const SearchResultCard = ({ school }: SearchResultCardProps) => {
   return (
-    <Link href={`/schools/${id}`} className="block">
-      <div className="bg-white rounded-lg p-4 flex items-center gap-4">
-        <div className="flex-shrink-0">
-          <Image
-            src={logo || "/defaultLogo.png"}
-            alt={name}
-            width={80}
-            height={80}
-            className="object-cover"
-          />
-        </div>
-        <div className="flex">
-          <h3 className="text-lg font-bold text-gray-800">{name}</h3>
-          <StarRating rating={rating} size="sm" />
-          {description && (
-            <p className="text=sm text-gray-500 mt-1 line-clamp-2">
-              {description}
-            </p>
-          )}
-        </div>
+    <section className="w-full max-w-4xl mx-auto border border-gray-300 rounded-md overflow-hidden">
+      <Link href={`/schools/${school.id}`} className="block">
+        <SchoolCover school={school} />
+      </Link>
+      <div className="flex justify-center gap-4 bg-gray-100">
+        <button className="flex items-center py-3 px-6 my-4 border text-gray-700 border-gray-300 rounded-md text-sm bg-white">
+          <Heart className="text-gray-600 mr-1" size={14} />
+          気になるに追加
+        </button>
+        <button className="py-3 px-6 my-4 border rounded-md bg-cyan-600 text-white text-sm">
+          コース一覧を見る
+        </button>
       </div>
-    </Link>
+    </section>
   );
 };
 

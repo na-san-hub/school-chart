@@ -35,7 +35,7 @@ const SelectModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg w-1/2 h-2/3 overflow-y-auto">
+      <div className="bg-white p-6 rounded-md w-1/2 h-2/3 overflow-y-auto">
         <p className="text-lg font-bold mb-4 ">{title}</p>
         {/* 🔹 選択肢リスト */}
         <div className="gap-2 grid grid-cols-3">
