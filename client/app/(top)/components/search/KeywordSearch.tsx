@@ -1,8 +1,10 @@
 import { locations } from "@/lib/staticLists";
 import { searchKeywordAction } from "@/actions/searchKeywordAction";
+import Link from "next/link";
+
 const KeywordSearch = () => {
   return (
-    <section className="px-8 pb-10">
+    <section className="px-8">
       <form
         action={searchKeywordAction}
         className="flex items-center gap-4 h-12"
@@ -38,6 +40,13 @@ const KeywordSearch = () => {
           検索
         </button>
       </form>
+      <div className="mt-3 mb-5">
+        <Link href="/search">
+          <button className="text-base py-2 px-5 text-gray-700 hover:opacity-75">
+            ▼ 詳しい条件を設定する
+          </button>
+        </Link>
+      </div>
     </section>
   );
 };
