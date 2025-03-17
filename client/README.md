@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# スクチャ IT - IT スクール口コミサイト
 
-## Getting Started
+![スクチャIT](/headerlogo.png)
 
-First, run the development server:
+## 📝 プロジェクト概要
+
+スクチャ IT（Schola IT）は、IT 系スクールの口コミを探せるサービスです。実際の受講生の声をもとに、ユーザーが自分に最適なスクール選びをするためのサポートを提供します。
+
+### 🌟 主な機能
+
+- **詳細検索**: 職種、スキル、こだわり条件など様々な条件からスクールを検索
+- **スクール詳細**: スクールの基本情報、評価チャート、コース一覧など
+- **リアルな口コミ**: 実際の受講生による評価とコメント
+
+## 🛠 技術スタック
+
+- **フロントエンド**: Next.js 15, React 19, TypeScript
+- **スタイリング**: TailwindCSS
+- **データ管理**: Prisma ORM
+- **データベース**: PostgreSQL
+- **UI/UX コンポーネント**: Lucide React（アイコン）, Recharts（グラフ）
+
+## ⚙️ セットアップ
+
+### 前提条件
+
+- Node.js (推奨: v18.18.0 以上)
+- PostgreSQL データベース
+
+### 環境変数
+
+プロジェクトのルートに`.env`ファイルを作成し、以下の環境変数を設定してください：
+
+```
+DATABASE_URL="postgresql://username:password@localhost:5432/db_name"
+DIRECT_URL="postgresql://username:password@localhost:5432/db_name"
+```
+
+### インストール
+
+```bash
+# パッケージをインストール
+npm install
+
+# Prismaクライアントを生成
+npx prisma generate
+```
+
+### 開発サーバーの起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000)をブラウザで開いて、アプリケーションを確認してください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ビルド
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+### 本番環境での起動
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 プロジェクト構造
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/` - Next.js のアプリケーションソースコード
+  - `(top)/` - トップページ関連のコンポーネント
+  - `actions/` - サーバーアクション
+  - `components/` - 共通コンポーネント
+  - `lib/` - ユーティリティ関数
+  - `schools/` - スクール詳細ページ
+  - `search/` - 検索ページ
+  - `types/` - TypeScript の型定義
+- `prisma/` - Prisma スキーマとマイグレーション
+- `public/` - 静的アセット
 
-## Deploy on Vercel
+## 🔍 主要機能の説明
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 検索機能
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **キーワード検索**: スクール名や資格などで検索
+- **なりたいから探す**: WEB デザイナー、エンジニア、動画クリエイターなどの職種カテゴリから検索
+- **こだわりから探す**: 給付金対象、フリーを目指せる、完全リモートなどの特徴から検索
+
+### スクール詳細表示
+
+- **基本情報**: スクール名、ロゴ、説明文
+- **評価チャート**: レーダーチャートによる多角的な評価表示
+- **詳細情報**: 公式サイト、受講形式、特徴、学べるスキル
