@@ -6,7 +6,8 @@ const HeroSection = () => {
         <div
           className="w-1/2 bg-cover bg-center opacity-80"
           style={{
-            backgroundImage: "url('/pc.png')",
+            backgroundImage:
+              "url('https://wbtmslowqxjuemxrtbsq.supabase.co/storage/v1/object/public/top-page//pc.png')",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
