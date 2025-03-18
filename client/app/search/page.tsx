@@ -9,7 +9,6 @@ export default async function SearchPage({
 }) {
   const searchParams = await searchParamsPromise;
 
-  // クエリパラメータを配列にして取得
   const getArrayParam = (param: string | string[] | undefined) =>
     Array.isArray(param) ? param : param ? [param] : [];
 
@@ -25,8 +24,9 @@ export default async function SearchPage({
   const price_min = getStringParam(searchParams.price_min);
   const price_max = getStringParam(searchParams.price_max);
   const keyword = getStringParam(searchParams.keyword);
+  const sort = getStringParam(searchParams.sort);
 
-  // サーバー側で検索実行
+  // サーバー側で検索 & ソート実行
   const results: SchoolCoverData[] = await searchSchools({
     skills,
     professions,
@@ -36,6 +36,7 @@ export default async function SearchPage({
     price_min,
     price_max,
     keyword,
+    sort, // ← 追加
   });
 
   return (

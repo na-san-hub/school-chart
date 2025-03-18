@@ -39,6 +39,7 @@ export async function searchSchools(filters: {
   keyword?: string;
   price_min?: string;
   price_max?: string;
+  sort?: string;
 }) {
   try {
     // 既存の条件：スキル・職種・特徴（DBからID取得）
@@ -142,9 +143,26 @@ export async function searchSchools(filters: {
       Object.assign(whereClause, { AND: schoolConditions });
     }
 
+    // ソート条件の設定
+    let orderBy: Prisma.SchoolOrderByWithRelationInput = {};
+
+    switch (filters.sort) {
+      case "rating":
+        orderBy = { rating: "desc" }; // 評価順（高い順）
+        break;
+      case "newest":
+        orderBy = { createdAt: "desc" }; // 新着順
+        break;
+      default:
+        // デフォルトはおすすめ順（ここではratingをデフォルトとしています）
+        orderBy = { rating: "desc" };
+        break;
+    }
+
     // 検索実行（条件がなければ全件取得）
     const schools = await prisma.school.findMany({
       where: Object.keys(whereClause).length > 0 ? whereClause : {},
+      orderBy, // ソート条件を適用
       select: {
         id: true,
         name: true,
