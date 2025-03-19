@@ -44,6 +44,10 @@ model Course {
   courseSkills      CourseSkill[]
   reviews           Review[]
 
+  @@index([deliveryMethod], name: "idx_course_delivery_method")
+  @@index([locationPrefecture], name: "idx_course_location_prefecture")
+  @@index([price], name: "idx_course_price")
+
   @@map("course")
 }
 
