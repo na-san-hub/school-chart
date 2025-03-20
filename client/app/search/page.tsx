@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { searchSchools } from "@/lib/search";
 import type { SchoolCoverData } from "@/types/school";
 import SearchResults from "./components/SearchResults";
