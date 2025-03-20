@@ -1,4 +1,4 @@
-export default function SearchLoading() {
+export default function Loading() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-start pt-12">
       <div className="max-w-4xl w-full">
