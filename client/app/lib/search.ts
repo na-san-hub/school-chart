@@ -43,24 +43,25 @@ export async function searchSchools(filters: {
 }) {
   try {
     // 既存の条件：スキル・職種・特徴（DBからID取得）
-    const [skillIds, professionIds, featureIds] = await Promise.all([
-      prisma.skill.findMany({
-        where: { name: { in: filters.skills } },
-        select: { id: true },
-      }),
-      prisma.profession.findMany({
-        where: { name: { in: filters.professions } },
-        select: { id: true },
-      }),
-      prisma.feature.findMany({
-        where: { name: { in: filters.features } },
-        select: { id: true },
-      }),
-    ]);
+    const [skillResults, professionResults, featureResults] =
+      await prisma.$transaction([
+        prisma.skill.findMany({
+          where: { name: { in: filters.skills } },
+          select: { id: true },
+        }),
+        prisma.profession.findMany({
+          where: { name: { in: filters.professions } },
+          select: { id: true },
+        }),
+        prisma.feature.findMany({
+          where: { name: { in: filters.features } },
+          select: { id: true },
+        }),
+      ]);
 
-    const skillIdList = skillIds.map((s) => s.id);
-    const professionIdList = professionIds.map((p) => p.id);
-    const featureIdList = featureIds.map((f) => f.id);
+    const skillIdList = skillResults.map((s) => s.id);
+    const professionIdList = professionResults.map((p) => p.id);
+    const featureIdList = featureResults.map((f) => f.id);
 
     // Course 関連の条件（すべて Course モデル内のフィールドに対する検索条件）
     const courseConditions: Prisma.CourseWhereInput[] = [];
@@ -138,11 +139,16 @@ export async function searchSchools(filters: {
 
     // Course 関連の条件は、少なくとも1つの Course が条件を満たす必要がある
     if (courseConditions.length > 0) {
-      whereClause.courses = { some: { AND: courseConditions } };
+      whereClause.courses = {
+        some:
+          courseConditions.length === 1
+            ? courseConditions[0]
+            : { AND: courseConditions },
+      };
     }
     // School 自体の条件（フリーワード検索）がある場合
     if (schoolConditions.length > 0) {
-      Object.assign(whereClause, { AND: schoolConditions });
+      whereClause.OR = schoolConditions;
     }
 
     // ソート条件の設定
@@ -165,7 +171,7 @@ export async function searchSchools(filters: {
     const schools = await prisma.school.findMany({
       where: Object.keys(whereClause).length > 0 ? whereClause : {},
       orderBy, // ソート条件を適用
-      take: 50,
+      take: 20,
       select: {
         id: true,
         name: true,

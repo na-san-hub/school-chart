@@ -14,18 +14,21 @@ export async function getSchoolWithCourses(
   id: string
 ): Promise<SchoolWithCourses> {
   try {
-    const school = await prisma.school.findUnique({
-      where: { id },
-      include: {
-        courses: {
-          include: {
-            courseCategories: { include: { category: true } },
-            courseFeatures: { include: { feature: true } },
-            courseSkills: { include: { skill: true } },
+    // `$transaction()` を使用して 1 回の DB リクエストでデータを取得
+    const [school] = await prisma.$transaction([
+      prisma.school.findUnique({
+        where: { id },
+        include: {
+          courses: {
+            include: {
+              courseCategories: { include: { category: true } },
+              courseFeatures: { include: { feature: true } },
+              courseSkills: { include: { skill: true } },
+            },
           },
         },
-      },
-    });
+      }),
+    ]);
 
     if (!school) {
       throw new Error("スクールが見つかりません");
@@ -34,7 +37,11 @@ export async function getSchoolWithCourses(
     const courses: CourseAllData[] = school.courses as CourseAllData[];
 
     return {
-      ...school,
+      id: school.id,
+      name: school.name,
+      logo: school.logo,
+      rating: school.rating,
+      description: school.description,
       courses: courses.map(
         (course): CourseSummary => ({
           id: course.id,
@@ -45,38 +52,28 @@ export async function getSchoolWithCourses(
           skills: course.courseSkills.map((cs) => cs.skill),
         })
       ),
-
-      // 受講エリアの重複を排除
-      locations: Array.from(
-        new Set(school.courses.map((c: CourseAllData) => c.locationPrefecture))
-      ),
-
-      // カテゴリの重複を排除（スクール全体）
-      categories: Array.from(
-        new Map(
-          school.courses.flatMap((c: CourseAllData) =>
-            c.courseCategories.map((cc) => [cc.category.id, cc.category.name])
+      locations: [...new Set(school.courses.map((c) => c.locationPrefecture))],
+      categories: [
+        ...new Set(
+          school.courses.flatMap((c) =>
+            c.courseCategories.map((cc) => cc.category.name)
           )
-        ).values()
-      ),
-
-      // 特徴の重複を排除（スクール全体）
-      features: Array.from(
-        new Map(
-          school.courses.flatMap((c: CourseAllData) =>
-            c.courseFeatures.map((cf) => [cf.feature.id, cf.feature.name])
+        ),
+      ],
+      features: [
+        ...new Set(
+          school.courses.flatMap((c) =>
+            c.courseFeatures.map((cf) => cf.feature.name)
           )
-        ).values()
-      ),
-
-      // スキルの重複を排除（スクール全体）
-      skills: Array.from(
-        new Map(
-          school.courses.flatMap((c: CourseAllData) =>
-            c.courseSkills.map((cs) => [cs.skill.id, cs.skill.name])
+        ),
+      ],
+      skills: [
+        ...new Set(
+          school.courses.flatMap((c) =>
+            c.courseSkills.map((cs) => cs.skill.name)
           )
-        ).values()
-      ),
+        ),
+      ],
     };
   } catch {
     throw new Error("スクール情報の取得に失敗しました");
@@ -108,53 +105,56 @@ export async function getSchoolHeader(id: string): Promise<SchoolCoverData> {
       throw new Error(`スクールが見つかりません`);
     }
 
-    const reviewsCount = school.courses.reduce(
-      (total, course) => total + course._count.reviews,
-      0
-    );
-
-    return { ...school, reviewsCount };
+    return {
+      id: school.id,
+      name: school.name,
+      logo: school.logo,
+      rating: school.rating,
+      description: school.description,
+      reviewsCount: school.courses.reduce(
+        (total, course) => total + course._count.reviews,
+        0
+      ),
+    };
   } catch {
     throw new Error("スクールの情報の取得に失敗しました");
   }
 }
 
-//チャートセクション用データの取得
+// チャートセクション用データの取得
 export async function getRadarChartData(
   schoolId: string
 ): Promise<RadarChartData> {
   try {
-    const school = await prisma.school.findUnique({
-      where: { id: schoolId },
-      select: {
-        rating: true,
-      },
-    });
+    const [school, ratings] = await prisma.$transaction([
+      prisma.school.findUnique({
+        where: { id: schoolId },
+        select: {
+          rating: true,
+        },
+      }),
+      prisma.rating.findMany({
+        where: { schoolId },
+        select: {
+          category: true,
+          score: true,
+        },
+      }),
+    ]);
+
     if (!school) {
       throw new Error(`スクールが見つかりません`);
     }
 
-    const rating = await prisma.rating.findMany({
-      where: { schoolId },
-      select: {
-        category: true,
-        score: true,
-      },
-    });
-
-    const sortedRating = rating.sort((a, b) =>
-      a.category.localeCompare(b.category, "ja")
-    );
-
-    const radarChartData: RadarChartData = {
+    return {
       schoolRating: school.rating,
-      categories: sortedRating.map((rating: RatingData) => ({
-        category: rating.category,
-        score: rating.score,
-      })),
+      categories: ratings
+        .sort((a, b) => a.category.localeCompare(b.category, "ja"))
+        .map((rating: RatingData) => ({
+          category: rating.category,
+          score: Number(rating.score), // 明示的に `number` に変換
+        })),
     };
-
-    return radarChartData;
   } catch {
     throw new Error("スクールの情報の取得に失敗しました");
   }
