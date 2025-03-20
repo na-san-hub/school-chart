@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ChartSection from "@/schools/[id]/components/ChartSection";
 import { getSchoolWithCourses, getRadarChartData } from "@/lib/school";
 import SchoolDetail from "@/schools/[id]/components/SchoolDetail";
