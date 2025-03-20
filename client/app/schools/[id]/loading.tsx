@@ -2,36 +2,7 @@ export default function Loading() {
   return (
     <div className="w-full mx-auto">
       {/* スクールヘッダー部分のスケルトン */}
-      <div className="w-full bg-gray-100">
-        <div className="flex max-w-4xl mx-auto items-center space-x-6 px-6 py-11">
-          {/* ロゴ部分 */}
-          <div className="w-24 h-24 bg-gray-300 animate-pulse rounded-md"></div>
-
-          {/* スクール情報部分 */}
-          <div className="flex flex-col w-full">
-            <div className="h-8 bg-gray-300 animate-pulse rounded-md w-2/3 mb-3"></div>
-            <div className="h-5 bg-gray-300 animate-pulse rounded-md w-1/3 mb-4"></div>
-            <div className="h-4 bg-gray-300 animate-pulse rounded-md w-full mb-2"></div>
-            <div className="h-4 bg-gray-300 animate-pulse rounded-md w-5/6"></div>
-          </div>
-        </div>
-
-        {/* メニュータブ部分 */}
-        <div className="flex max-w-5xl mx-auto bg-gray-100 px-16">
-          {[1, 2, 3].map((_, i) => (
-            <div
-              key={i}
-              className={`text-sm px-5 py-3 mx-1 rounded-t-lg w-36 text-center ${
-                i === 0
-                  ? "border border-gray-400 bg-white border-b-0"
-                  : "bg-gray-200"
-              }`}
-            >
-              <div className="h-4 bg-gray-300 animate-pulse rounded-md w-full"></div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <div className="w-full bg-gray-100"></div>
 
       {/* コンテンツ部分 */}
       <div className="border-t border-t-gray-400 w-full">
