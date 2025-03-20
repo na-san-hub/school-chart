@@ -1,6 +1,8 @@
 import { searchSchools } from "@/lib/search";
 import type { SchoolCoverData } from "@/types/school";
 import SearchResults from "./components/SearchResults";
+import SearchLoading from "./components/SearchLoading";
+import { Suspense } from "react";
 
 export default async function SearchPage({
   searchParams: searchParamsPromise,
@@ -41,7 +43,9 @@ export default async function SearchPage({
 
   return (
     <div className="w-full mx-auto border-t border-t-gray-400">
-      <SearchResults results={results} />
+      <Suspense fallback={<SearchLoading />}>
+        <SearchResults results={results} />
+      </Suspense>
     </div>
   );
 }
