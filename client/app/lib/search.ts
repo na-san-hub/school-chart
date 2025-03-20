@@ -139,11 +139,16 @@ export async function searchSchools(filters: {
 
     // Course 関連の条件は、少なくとも1つの Course が条件を満たす必要がある
     if (courseConditions.length > 0) {
-      whereClause.courses = { some: { AND: courseConditions } };
+      whereClause.courses = {
+        some:
+          courseConditions.length === 1
+            ? courseConditions[0]
+            : { AND: courseConditions },
+      };
     }
     // School 自体の条件（フリーワード検索）がある場合
     if (schoolConditions.length > 0) {
-      Object.assign(whereClause, { AND: schoolConditions });
+      whereClause.OR = schoolConditions;
     }
 
     // ソート条件の設定
