@@ -52,13 +52,13 @@ export async function getSchoolWithCourses(
       ),
 
       // カテゴリの重複を排除（スクール全体）
-      categories: Array.from(
-        new Map(
-          school.courses.flatMap((c: CourseAllData) =>
-            c.courseCategories.map((cc) => [cc.category.id, cc.category.name])
+      categories: [
+        ...new Set(
+          school.courses.flatMap((c) =>
+            c.courseCategories.map((cc) => cc.category.name)
           )
-        ).values()
-      ),
+        ),
+      ],
 
       // 特徴の重複を排除（スクール全体）
       features: Array.from(
@@ -124,25 +124,27 @@ export async function getRadarChartData(
   schoolId: string
 ): Promise<RadarChartData> {
   try {
-    const school = await prisma.school.findUnique({
-      where: { id: schoolId },
-      select: {
-        rating: true,
-      },
-    });
+    const [school, ratings] = await prisma.$transaction([
+      prisma.school.findUnique({
+        where: { id: schoolId },
+        select: {
+          rating: true,
+        },
+      }),
+      prisma.rating.findMany({
+        where: { schoolId },
+        select: {
+          category: true,
+          score: true,
+        },
+      }),
+    ]);
+
     if (!school) {
       throw new Error(`スクールが見つかりません`);
     }
 
-    const rating = await prisma.rating.findMany({
-      where: { schoolId },
-      select: {
-        category: true,
-        score: true,
-      },
-    });
-
-    const sortedRating = rating.sort((a, b) =>
+    const sortedRating = ratings.sort((a, b) =>
       a.category.localeCompare(b.category, "ja")
     );
 
