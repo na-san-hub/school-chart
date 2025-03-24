@@ -34,9 +34,9 @@ const SelectModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-md w-1/2 h-2/3 overflow-y-auto">
-        <p className="text-lg font-bold mb-4 ">{title}</p>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-md w-auto h-auto overflow-y-auto">
+        <p className="text-lg font-bold mb-4">{title}</p>
         {/* 🔹 選択肢リスト */}
         <div className="gap-2 grid grid-cols-3">
           {options.map((item) => (
@@ -46,22 +46,22 @@ const SelectModal = ({
                 checked={tempSelection.includes(item.name)}
                 onChange={() => handleCheckboxChange(item.name)}
               />
-              <span className="text-sm">{item.name}</span>
+              <span className="text-base">{item.name}</span>
             </label>
           ))}
         </div>
 
         {/* 🔹 決定・閉じるボタン */}
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex gap-2 justify-center">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-300 rounded-md"
+            className="w-24 px-4 py-2 bg-gray-300 rounded-md"
           >
             閉じる
           </button>
           <button
             onClick={handleConfirm}
-            className="px-4 py-2 bg-cyan-600 text-white rounded-md"
+            className="w-24 px-4 py-1 bg-cyan-600 text-white rounded-md"
           >
             追加
           </button>
