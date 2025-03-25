@@ -40,6 +40,7 @@ export async function getSchoolWithCourses(
       id: school.id,
       name: school.name,
       logo: school.logo,
+      website: school.website,
       rating: school.rating,
       description: school.description,
       courses: courses.map(
