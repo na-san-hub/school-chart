@@ -73,19 +73,19 @@ export default function SchoolDetail({
         </div>
       </div>
 
-      {/* 学べるスキル */}
+      {/* カテゴリー一覧 */}
       <div className="items-center py-2 flex gap-2 border-b border-b-gray-300 min-h-[80px]">
         <h2 className="min-w-20 text-sm font-semibold text-gray-500">
-          学べる <span className="block">スキル</span>
+          学べる <span className="block">ジャンル</span>
         </h2>
         <div className="flex flex-wrap gap-2 text-sm">
-          {school.skills?.length ? (
-            school.skills.map((skill, index) => (
+          {school.categories?.length ? (
+            school.categories.map((category, index) => (
               <button
                 key={index}
                 className="px-2 py-1 rounded-md text-gray-500 border border-gray-500 cursor-default"
               >
-                {skill}
+                {category}
               </button>
             ))
           ) : (
