@@ -27,6 +27,12 @@ model CategoryProfession {
   @@map("category_profession")
 }
 
+enum DeliveryMethod {
+  IN_PERSON
+  ONLINE
+  HYBRID
+}
+
 model Course {
   id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   schoolId           String           @db.Uuid @map("school_id")
@@ -149,9 +155,26 @@ model Skill {
   @@map("skill")
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum AgeGroup {
+  TEENS     // 10代
+  TWENTIES  // 20代
+  THIRTIES  // 30代
+  FORTIES   // 40代
+  FIFTIES   // 50代
+  SIXTIES   // 60代以上
+}
+
 model User {
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   authId     String   @unique @map("auth_id")
+  gender    Gender
+  ageGroup  AgeGroup
   name       String
   createdAt  DateTime @default(now()) @map("created_at")
   reviews    Review[]
@@ -159,8 +182,4 @@ model User {
   @@map("user")
 }
 
-enum DeliveryMethod {
-  IN_PERSON
-  ONLINE
-  HYBRID
-}
+
