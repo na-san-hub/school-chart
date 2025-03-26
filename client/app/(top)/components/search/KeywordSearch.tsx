@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { locations } from "@/lib/staticLists";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 const KeywordSearch = () => {
   const router = useRouter();
@@ -67,10 +68,11 @@ const KeywordSearch = () => {
           検索
         </button>
       </form>
-      <div className="mt-3 mb-5">
+      <div className="mt-3 mb-5 flex justify-center">
         <Link href="/search">
-          <button className="text-base py-2 px-5 text-gray-700 hover:opacity-75">
-            ▼ 詳しい条件を設定する
+          <button className="text-base py-2 px-5 text-gray-700 hover:opacity-75 flex justify-center items-center gap-1">
+            詳しい条件を設定する
+            <ChevronRight className="w-4 h-4" />
           </button>
         </Link>
       </div>

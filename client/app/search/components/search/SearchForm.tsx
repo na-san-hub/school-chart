@@ -6,6 +6,7 @@ import SelectModal from "./SelectModal";
 import SearchFilter from "./SearchFilter";
 import SearchKeyword from "./SearchKeyword";
 import SearchDropdown from "./SearchDropdown";
+import { ChevronDown, ChevronUp, Search } from "lucide-react";
 
 interface SearchOptionProps {
   skills: { name: string }[];
@@ -133,9 +134,19 @@ const SearchForm = ({
         {/* 🔹 折りたたみ可能な部分 */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full text-sm py-2 my-2 bg-gray-100 text-gray-700 hover:bg-gray-200 font-bold"
+          className="w-full text-sm py-2 my-2 bg-gray-100 text-gray-700 hover:bg-gray-200 font-bold flex items-center justify-center gap-1 "
         >
-          {isExpanded ? "▲ 一部の条件を隠す" : "▼ さらに条件を表示"}
+          {isExpanded ? (
+            <>
+              <ChevronUp className="w-4 h-4" />
+              一部の条件を隠す
+            </>
+          ) : (
+            <>
+              <ChevronDown className="w-4 h-4" />
+              さらに条件を表示
+            </>
+          )}
         </button>
         <div className={`${isExpanded ? "block" : "hidden"}`}>
           {/* 複数選択フィルタ */}
@@ -175,12 +186,14 @@ const SearchForm = ({
         </div>
 
         {/* 検索ボタン */}
-        <button
-          onClick={handleSearch}
-          className="px-6 py-3 mb-5 mt-3 bg-cyan-600 text-white hover:opacity-75 rounded-md font-bold"
-        >
-          この条件で検索する
-        </button>
+        <div className="flex justify-center">
+          <button
+            onClick={handleSearch}
+            className="px-6 py-3 mb-5 mt-3 bg-cyan-600 text-white hover:opacity-75 rounded-md font-bold flex justify-center items-center gap-1"
+          >
+            この条件で検索する <Search className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {modalType && (
