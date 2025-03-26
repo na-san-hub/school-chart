@@ -12,7 +12,7 @@ export default function SchoolDetail({
 
   return (
     <div className="py-3 px-1 mr-5 max-w-[470px] w-full">
-      <h1 className="py-2 text-base font-bold text-gray-700 border-b border-b-gray-300">
+      <h1 className="py-2 text-lg font-bold text-gray-700 border-b border-b-gray-300">
         スクール情報
       </h1>
 
