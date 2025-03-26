@@ -10,7 +10,7 @@ const Header = () => {
         <div className="flex items-end space-x-3">
           <Link href="/" className="flex items-end">
             <Image
-              src="/headerlogo.png"
+              src="/logo.png"
               alt="スクチャIT"
               width={115}
               height={40}
