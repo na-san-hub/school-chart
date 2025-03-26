@@ -16,7 +16,7 @@ export default function ReviewCardList({
           <ReviewCard key={review.id} review={review} />
         ))}
       </div>
-      <button className="my-5 max-w-5xl text-sm w-full px-3 py-3 bg-gray-100 text-gray-700 rounded-sm">
+      <button className="my-5 max-w-5xl text-sm w-full px-3 py-3 bg-gray-100 text-gray-700 rounded-sm hover:bg-gray-200">
         受講者の口コミ一覧を見る
       </button>
     </section>
