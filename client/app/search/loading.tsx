@@ -2,9 +2,6 @@ export default function Loading() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-start pt-12">
       <div className="max-w-4xl w-full">
-        {/* ヘッダー部分のスケルトン */}
-        <div className="w-full h-12 bg-gray-200 animate-pulse rounded-md mb-8"></div>
-
         {/* 検索結果のスケルトン */}
         <div className="space-y-7">
           {[...Array(5)].map((_, index) => (
