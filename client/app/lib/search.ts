@@ -40,6 +40,7 @@ export async function searchSchools(filters: {
   price_min?: string;
   price_max?: string;
   sort?: string;
+  page?: number;
 }) {
   try {
     // 既存の条件：スキル・職種・特徴（DBからID取得）
@@ -167,11 +168,14 @@ export async function searchSchools(filters: {
         break;
     }
 
-    // 検索実行（条件がなければ全件取得）
+    const pageNumber = filters.page ?? 1;
+
+    // 検索実行
     const schools = await prisma.school.findMany({
       where: Object.keys(whereClause).length > 0 ? whereClause : {},
       orderBy, // ソート条件を適用
-      take: 20,
+      skip: (pageNumber - 1) * 15,
+      take: 15,
       select: {
         id: true,
         name: true,
@@ -204,9 +208,17 @@ export async function searchSchools(filters: {
       };
     });
 
-    return schoolsWithReviewCount;
+    return {
+      schools: schoolsWithReviewCount,
+      totalCount: await prisma.school.count({
+        where: Object.keys(whereClause).length > 0 ? whereClause : {},
+      }),
+    };
   } catch (error) {
     console.error("検索エラー:", error);
-    return [];
+    return {
+      schools: [],
+      totalCount: 0,
+    };
   }
 }
