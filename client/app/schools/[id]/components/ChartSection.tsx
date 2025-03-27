@@ -9,11 +9,21 @@ interface ChartSectionProps {
 export default function ChartSection({
   chartData: { schoolRating, categories },
 }: ChartSectionProps) {
+  const safeCategories = categories.length
+    ? categories
+    : [
+        { category: "カリキュラム", score: 0 },
+        { category: "講師", score: 0 },
+        { category: "価格", score: 0 },
+        { category: "サポート", score: 0 },
+        { category: "コミュニティ", score: 0 },
+      ];
+
   return (
     <section className="my-5 ml-5 py-3 flex justify-center items-center rounded-md border border-gray-200">
       {/* チャートエリア */}
       <div className="text-cyan-600">
-        <RadarChartComponent data={categories} />
+        <RadarChartComponent data={safeCategories} />
       </div>
       {/* スコアエリア */}
       <div>
