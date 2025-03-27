@@ -1,6 +1,6 @@
 # スクチャ IT - IT スクール口コミサイト
 
-![スクチャIT](/headerlogo.png)
+![スクチャIT](/logo.png)
 
 ## 📝 プロジェクト概要
 
