@@ -10,6 +10,12 @@ export default function SchoolDetail({
     ? Array.from(new Set(school.courses.map((course) => course.deliveryMethod)))
     : [];
 
+  const deliveryMethodLabels: { [key: string]: string } = {
+    ONLINE: "オンライン",
+    HYBRID: "ハイブリッド",
+    IN_PERSON: "対面",
+  };
+
   return (
     <div className="py-3 px-1 mr-5 max-w-[470px] w-full">
       <h1 className="py-2 text-lg font-bold text-gray-700 border-b border-b-gray-300">
@@ -45,7 +51,7 @@ export default function SchoolDetail({
                 key={index}
                 className="px-2 py-1 rounded-md text-gray-500 border border-gray-500 cursor-default"
               >
-                {method}
+                {deliveryMethodLabels[method] ?? method}
               </button>
             ))
           ) : (
