@@ -159,7 +159,7 @@ const SearchForm = ({
             />
           ))}
           {/* 最低価格、最高価格 */}
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex items-center gap-2 px-4 text-gray-600">
             <label className="text-base text-gray-700 font-bold mx-2 min-w-[90px] ">
               受講料金
             </label>
