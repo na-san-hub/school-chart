@@ -24,6 +24,7 @@ export async function getPickupCoursesForSchool(
       orderBy: { createdAt: "desc" },
     });
   } catch (error) {
+    console.error("ピックアップコース取得エラー:", error);
     return [];
   }
 }

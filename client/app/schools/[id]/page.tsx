@@ -7,7 +7,6 @@ import { getReviewsForSchool } from "@/lib/reviews";
 import PickupReviews from "./components/reviews/PickupReviews";
 import { getPickupCoursesForSchool } from "@/lib/courses";
 import PickupCourses from "./components/courses/PickupCourses";
-import { CourseDetail } from "@/types/school";
 
 export default async function SchoolPage(props: {
   params: Promise<{ id: string }>;
