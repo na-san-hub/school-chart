@@ -1,7 +1,7 @@
-import ReviewCard from "./ReviewCard";
+import PickupReviewCard from "./PickupReviewCard";
 import { ReviewWithUser } from "@/types/review";
 
-export default function ReviewCardList({
+export default function PickupReviews({
   reviews,
 }: {
   reviews: ReviewWithUser[];
@@ -13,7 +13,7 @@ export default function ReviewCardList({
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {reviews.map((review) => (
-          <ReviewCard key={review.id} review={review} />
+          <PickupReviewCard key={review.id} review={review} />
         ))}
       </div>
       <button className="my-5 max-w-5xl text-sm w-full px-3 py-3 bg-gray-100 text-gray-700 rounded-sm hover:bg-gray-200">
