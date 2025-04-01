@@ -123,7 +123,7 @@ model Review {
   ratingCost       Int      @map("rating_cost")
   ratingSupport    Int      @map("rating_support")
   ratingCommunity  Int      @map("rating_community")
-  comment          String?
+  comment          String
   createdAt        DateTime @default(now()) @map("created_at")
   course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
