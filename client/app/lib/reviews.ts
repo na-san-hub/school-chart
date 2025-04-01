@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-//レビュー取得関数
+//pickupレビュー取得関数
 export const getReviewsForSchool = async (schoolId: string) => {
   const reviews = await prisma.review.findMany({
     where: {
@@ -9,7 +9,12 @@ export const getReviewsForSchool = async (schoolId: string) => {
       },
     },
     include: {
-      user: true,
+      user: {
+        select: {
+          gender: true,
+          ageGroup: true,
+        },
+      },
       course: {
         select: {
           name: true,
