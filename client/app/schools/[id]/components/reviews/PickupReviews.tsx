@@ -8,7 +8,7 @@ export default function PickupReviews({
 }) {
   return (
     <section className="mt-5 max-w-5xl w-full mx-auto px-4">
-      <h2 className="text-lg font-bold mb-4 text-gray-700">
+      <h2 className="text-xl font-bold mb-4 text-gray-700">
         ピックアップ口コミ
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
