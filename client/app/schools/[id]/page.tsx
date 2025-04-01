@@ -34,7 +34,7 @@ export default async function SchoolPage(props: {
       <div className="mt-5 flex flex-wrap max-w-5xl mx-auto justify-between items-center">
         <ChartSection chartData={chartData} />
         <SchoolDetail school={school} />
-        <PickupReviews reviews={reviews} />
+        <PickupReviews reviews={reviews} schoolId={schoolId} />
         <PickupCourses school={schoolWithPickupCourses} />
       </div>
     </div>

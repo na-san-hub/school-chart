@@ -1,10 +1,13 @@
+import Link from "next/link";
 import PickupReviewCard from "./PickupReviewCard";
 import { ReviewWithUser } from "@/types/review";
 
 export default function PickupReviews({
   reviews,
+  schoolId,
 }: {
   reviews: ReviewWithUser[];
+  schoolId: string;
 }) {
   return (
     <section className="mt-5 max-w-5xl w-full mx-auto px-4">
@@ -19,7 +22,7 @@ export default function PickupReviews({
           </button>
         </div>
       ) : (
-        <>
+        <Link href={`/schools/${schoolId}/reviews`} className="block">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {reviews.map((review) => (
               <PickupReviewCard key={review.id} review={review} />
@@ -27,8 +30,8 @@ export default function PickupReviews({
           </div>
           <button className="my-5 max-w-5xl text-sm w-full px-3 py-3 bg-gray-100 text-gray-700 rounded-sm hover:bg-gray-200">
             受講者の口コミ一覧を見る
-          </button>
-        </>
+          </button>{" "}
+        </Link>
       )}
     </section>
   );
