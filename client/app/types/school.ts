@@ -67,3 +67,14 @@ export interface RatingData {
   category: string;
   score: number;
 }
+
+// ピックアップコース表示用の詳細型
+export interface CourseDetail {
+  id: string;
+  name: string;
+  description: string;
+  price: number | null;
+  duration: string | null;
+  deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
+  locationPrefecture: string;
+}

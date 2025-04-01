@@ -18,7 +18,11 @@ const ageGroupMap: Record<AgeGroup, string> = {
   SIXTIES: "60代以上",
 };
 
-export default function ReviewCard({ review }: { review: ReviewWithUser }) {
+export default function PickupReviewCard({
+  review,
+}: {
+  review: ReviewWithUser;
+}) {
   const avgRating =
     (review.ratingCurriculum +
       review.ratingInstructor +
