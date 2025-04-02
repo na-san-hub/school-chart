@@ -36,11 +36,10 @@ export const getReviewsForSchool = async (
     orderBy: {
       createdAt: "desc",
     },
-    take: 4, // 最新の4件だけ
+    take: 4,
   });
 
-  // ReviewWithUser型に変換
-  return reviews as unknown as ReviewWithUser[];
+  return reviews;
 };
 
 // 特定のスクールのすべてのレビューを取得（フィルタリング機能付き）

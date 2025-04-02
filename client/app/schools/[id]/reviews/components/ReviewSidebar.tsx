@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Heart, PenSquare } from "lucide-react";
 import { SchoolWithCourses } from "@/types/school";
 
