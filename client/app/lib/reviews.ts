@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, Gender, AgeGroup } from "@prisma/client";
+import { Gender, AgeGroup } from "@prisma/client";
 import { ReviewWithUser } from "@/types/review";
 
 // 安全な型定義を追加
