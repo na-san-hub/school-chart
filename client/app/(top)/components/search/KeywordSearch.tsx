@@ -39,7 +39,7 @@ const KeywordSearch = () => {
           id="keyword"
           name="keyword"
           placeholder="スクール名・資格などで検索"
-          className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full"
+          className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 h-full"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
         />
@@ -48,7 +48,7 @@ const KeywordSearch = () => {
         <select
           name="location_prefecture"
           id="prefecture"
-          className="text-gray-500 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 h-full"
+          className="text-gray-500 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 h-full"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
         >
@@ -63,7 +63,7 @@ const KeywordSearch = () => {
         {/* 検索ボタン */}
         <button
           type="submit"
-          className="p-3 bg-cyan-600 text-white rounded-lg shadow-sm hover:opacity-75 transition"
+          className="p-3 bg-cyan-600 text-white rounded-lg hover:opacity-75 transition"
         >
           検索
         </button>
