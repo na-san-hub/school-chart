@@ -191,7 +191,8 @@ const SearchForm = ({
             onClick={handleSearch}
             className="px-6 py-3 mb-5 mt-3 bg-cyan-600 text-white hover:opacity-75 rounded-md font-bold flex justify-center items-center gap-1"
           >
-            この条件で検索する <Search className="w-4 h-4" />
+            <Search className="w-4 h-4" />
+            この条件で検索する
           </button>
         </div>
       </div>

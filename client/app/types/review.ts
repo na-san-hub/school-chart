@@ -9,7 +9,7 @@ export type AgeGroup =
 
 export interface ReviewWithUser {
   id: string;
-  comment: string;
+  comment: string | null;
   createdAt: Date;
   ratingCurriculum: number;
   ratingInstructor: number;

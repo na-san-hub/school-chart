@@ -116,17 +116,23 @@ model Rating {
 
 model Review {
   id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId           String   @db.Uuid @map("user_id")
-  courseId         String   @db.Uuid @map("course_id")
-  ratingCurriculum Int      @map("rating_curriculum")
-  ratingInstructor Int      @map("rating_instructor")
-  ratingCost       Int      @map("rating_cost")
-  ratingSupport    Int      @map("rating_support")
-  ratingCommunity  Int      @map("rating_community")
-  comment          String
-  createdAt        DateTime @default(now()) @map("created_at")
-  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  userId            String   @db.Uuid @map("user_id")
+  courseId          String   @db.Uuid @map("course_id")
+  ratingCurriculum  Int      @map("rating_curriculum")
+  commentCurriculum String   @map("comment_curriculum")
+  ratingInstructor  Int      @map("rating_instructor")
+  commentInstructor String   @map("comment_instructor")
+  ratingCost        Int      @map("rating_cost")
+  commentCost       String   @map("comment_cost")
+  ratingSupport     Int      @map("rating_support")
+  commentSupport    String   @map("comment_support")
+  ratingCommunity   Int      @map("rating_community")
+  commentCommunity  String   @map("comment_community")
+  comment           String?  
+  isApproved        Boolean  @default(false) @map("is_approved")
+  createdAt         DateTime @default(now()) @map("created_at")
+  course            Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([userId, courseId])
   @@map("review")
