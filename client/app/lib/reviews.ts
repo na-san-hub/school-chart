@@ -1,15 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { ReviewWithUser } from "@/types/review";
 
 // 特定のスクールのピックアップレビュー（最新4件）取得
-export const getReviewsForSchool = async (schoolId: string) => {
+export const getReviewsForSchool = async (
+  schoolId: string
+): Promise<ReviewWithUser[]> => {
   const reviews = await prisma.review.findMany({
     where: {
       course: {
         schoolId,
       },
     },
-    include: {
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      ratingCurriculum: true,
+      ratingInstructor: true,
+      ratingCost: true,
+      ratingSupport: true,
+      ratingCommunity: true,
       user: {
         select: {
           gender: true,
@@ -28,7 +39,8 @@ export const getReviewsForSchool = async (schoolId: string) => {
     take: 4, // 最新の4件だけ
   });
 
-  return reviews;
+  // ReviewWithUser型に変換
+  return reviews as unknown as ReviewWithUser[];
 };
 
 // 特定のスクールのすべてのレビューを取得（フィルタリング機能付き）
@@ -40,7 +52,7 @@ export const getAllReviewsForSchool = async (
     keyword?: string;
     sort?: "latest" | "rating_high" | "rating_low";
   }
-) => {
+): Promise<ReviewWithUser[]> => {
   // フィルタリング条件の構築
   const whereCondition: Prisma.ReviewWhereInput = {
     course: {
@@ -92,7 +104,15 @@ export const getAllReviewsForSchool = async (
 
   const reviews = await prisma.review.findMany({
     where: whereCondition,
-    include: {
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      ratingCurriculum: true,
+      ratingInstructor: true,
+      ratingCost: true,
+      ratingSupport: true,
+      ratingCommunity: true,
       user: {
         select: {
           gender: true,
@@ -108,5 +128,6 @@ export const getAllReviewsForSchool = async (
     orderBy,
   });
 
-  return reviews;
+  // ReviewWithUser型に変換
+  return reviews as unknown as ReviewWithUser[];
 };
