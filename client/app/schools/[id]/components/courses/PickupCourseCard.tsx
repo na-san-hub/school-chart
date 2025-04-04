@@ -20,8 +20,9 @@ const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
       : course.description;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-md overflow-hidden hover:bg-gray-50 hover:opacity-75 transition-shadow">
-      <div className="p-5">
+    <div className="bg-white border border-gray-200 rounded-md overflow-hidden hover:bg-gray-50 hover:opacity-75 transition-shadow flex flex-col h-full">
+      {/* コンテンツ部分 - flex-growを使用して空きスペースを埋める */}
+      <div className="p-5 flex-grow">
         <h3 className="text-base font-semibold text-gray-700 mb-2">
           {course.name}
         </h3>
@@ -51,7 +52,8 @@ const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
         </p>
       </div>
 
-      <div className="px-5 py-3 bg-gray-50 border-t border-gray-200">
+      {/* ボタン部分 - 常に下部に固定 */}
+      <div className="px-5 py-3 bg-gray-50 border-t border-gray-200 mt-auto">
         <button className="w-full text-cyan-600 text-sm font-medium hover:underline">
           コース詳細を見る
         </button>
