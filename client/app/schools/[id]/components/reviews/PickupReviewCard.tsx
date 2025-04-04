@@ -107,9 +107,9 @@ export default function PickupReviewCard({
           </p>
 
           {hasLongComment && (
-            <span className="relative inline-block">
+            <span className="relative block w-full">
               <span
-                className={`text-sm whitespace-pre-wrap ${
+                className={`text-sm whitespace-pre-wrap block w-full ${
                   isLoggedIn || isExpanded
                     ? "text-gray-700"
                     : "blur-sm select-none text-gray-700"
@@ -119,7 +119,7 @@ export default function PickupReviewCard({
               </span>
 
               {!isLoggedIn && !isExpanded && (
-                <span className="absolute inset-0 flex items-center justify-center bg-white/70">
+                <span className="absolute inset-0 flex items-center justify-center bg-white/70 w-full">
                   <Lock className="w-4 h-4 text-gray-400 mr-1" />
                   <button
                     onClick={() => setIsExpanded(true)}
