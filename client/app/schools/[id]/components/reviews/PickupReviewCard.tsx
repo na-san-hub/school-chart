@@ -20,6 +20,15 @@ const ageGroupMap: Record<AgeGroup, string> = {
   SIXTIES: "60代以上",
 };
 
+// カテゴリーラベル
+const categoryLabels = {
+  curriculum: "カリキュラム",
+  instructor: "講師",
+  cost: "料金",
+  support: "サポート",
+  community: "コミュニティ",
+};
+
 export default function PickupReviewCard({
   review,
 }: {
@@ -36,11 +45,41 @@ export default function PickupReviewCard({
       review.ratingCommunity) /
     5;
 
-  const comment = review.comment?.trim() || "";
+  // すべてのコメントを集約して一つのテキストにする
+  const generateCombinedCommentText = () => {
+    // 利用可能なコメントを収集
+    const comments = [];
+
+    // 総合コメントがあれば最初に追加
+    if (review.comment) {
+      comments.push(review.comment.trim());
+    }
+
+    // 各カテゴリのコメントを追加
+    const categoryComments = [
+      { label: categoryLabels.curriculum, text: review.commentCurriculum },
+      { label: categoryLabels.instructor, text: review.commentInstructor },
+      { label: categoryLabels.cost, text: review.commentCost },
+      { label: categoryLabels.support, text: review.commentSupport },
+      { label: categoryLabels.community, text: review.commentCommunity },
+    ];
+
+    // 空でないカテゴリコメントを追加
+    categoryComments.forEach(({ label, text }) => {
+      if (text && text.trim() !== "") {
+        comments.push(`【${label}】${text.trim()}`);
+      }
+    });
+
+    // すべてのコメントを結合
+    return comments.join("\n\n");
+  };
+
+  const combinedComment = generateCombinedCommentText();
   const visibleLength = 60;
-  const hasLongComment = comment.length > visibleLength;
-  const visibleText = comment.slice(0, visibleLength);
-  const hiddenText = comment.slice(visibleLength);
+  const hasLongComment = combinedComment.length > visibleLength;
+  const visibleText = combinedComment.slice(0, visibleLength);
+  const hiddenText = combinedComment.slice(visibleLength);
 
   return (
     <div className="border rounded-md p-4 bg-white hover:bg-gray-50 hover:opacity-75 transition-all">
@@ -60,7 +99,7 @@ export default function PickupReviewCard({
         </p>
       </div>
 
-      {comment && (
+      {combinedComment && (
         <div className="mt-3 border-t pt-3">
           <p className="text-sm text-gray-700 whitespace-pre-wrap inline">
             {visibleText}

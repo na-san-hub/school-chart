@@ -61,18 +61,66 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
         </div>
       </div>
 
-      {/* 各評価項目 */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
-        <RatingItem label="カリキュラム" rating={review.ratingCurriculum} />
-        <RatingItem label="講師" rating={review.ratingInstructor} />
-        <RatingItem label="料金" rating={review.ratingCost} />
-        <RatingItem label="サポート" rating={review.ratingSupport} />
-        <RatingItem label="コミュニティ" rating={review.ratingCommunity} />
-      </div>
-
       {/* 口コミ内容 */}
       <div className="border-t border-gray-100 pt-4 mt-2">
-        <p className="text-gray-700 whitespace-pre-line">{review.comment}</p>
+        {/* 各カテゴリのコメント（横にレーティングを表示） */}
+        <div className="space-y-4">
+          {review.commentCurriculum &&
+            review.commentCurriculum.trim() !== "" && (
+              <CategoryComment
+                title="カリキュラム"
+                comment={review.commentCurriculum}
+                rating={review.ratingCurriculum}
+              />
+            )}
+
+          {review.commentInstructor &&
+            review.commentInstructor.trim() !== "" && (
+              <CategoryComment
+                title="講師"
+                comment={review.commentInstructor}
+                rating={review.ratingInstructor}
+              />
+            )}
+
+          {review.commentCost && review.commentCost.trim() !== "" && (
+            <CategoryComment
+              title="料金"
+              comment={review.commentCost}
+              rating={review.ratingCost}
+            />
+          )}
+
+          {review.commentSupport && review.commentSupport.trim() !== "" && (
+            <CategoryComment
+              title="サポート"
+              comment={review.commentSupport}
+              rating={review.ratingSupport}
+            />
+          )}
+
+          {review.commentCommunity && review.commentCommunity.trim() !== "" && (
+            <CategoryComment
+              title="コミュニティ"
+              comment={review.commentCommunity}
+              rating={review.ratingCommunity}
+            />
+          )}
+
+          {/* 総合感想（最下部に移動） */}
+          {review.comment && review.comment.trim() !== "" && (
+            <div className="mt-6 pt-4 border-t border-gray-100">
+              <div className="flex items-center mb-1">
+                <h3 className="text-sm font-semibold text-gray-700">
+                  総合感想
+                </h3>
+              </div>
+              <p className="text-gray-700 whitespace-pre-line">
+                {review.comment}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* フッター */}
@@ -86,16 +134,29 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   );
 };
 
-// 評価項目コンポーネント
-const RatingItem = ({ label, rating }: { label: string; rating: number }) => (
-  <div className="flex flex-col items-center">
-    <div className="text-xs text-gray-600 mb-1">{label}</div>
-    <div className="flex items-center">
-      <span className="font-medium text-gray-700 mr-1">
-        {rating.toFixed(1)}
-      </span>
-      <StarRating rating={rating} size="xs" />
+// カテゴリーコメントコンポーネント（レーティングを含む）
+const CategoryComment = ({
+  title,
+  comment,
+  rating,
+}: {
+  title: string;
+  comment: string;
+  rating: number;
+}) => (
+  <div>
+    <div className="flex items-center mb-1">
+      <h3 className="text-sm font-semibold text-gray-700 mr-2">
+        {title}の評価
+      </h3>
+      <div className="flex items-center">
+        <span className="text-sm font-medium text-gray-700 mr-1">
+          {rating.toFixed(1)}
+        </span>
+        <StarRating rating={rating} size="xs" />
+      </div>
     </div>
+    <p className="text-gray-700 whitespace-pre-line text-sm">{comment}</p>
   </div>
 );
 
