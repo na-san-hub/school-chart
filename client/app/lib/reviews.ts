@@ -51,17 +51,28 @@ export const getReviewsForSchool = async (
   }
 };
 
-// 特定のスクールのすべてのレビューを取得（フィルタリング機能付き）
+// 特定のスクールのすべてのレビューを取得（ページネーション機能付き）
 export const getAllReviewsForSchool = async (
-  schoolId: string
-): Promise<ReviewWithUser[]> => {
+  schoolId: string,
+  page = 1,
+  perPage = 10
+): Promise<{ reviews: ReviewWithUser[]; totalCount: number }> => {
   try {
-    const reviews = await prisma.review.findMany({
-      where: {
-        course: {
-          schoolId,
-        },
+    // 検索条件
+    const whereCondition = {
+      course: {
+        schoolId,
       },
+    };
+
+    // 総件数を取得
+    const totalCount = await prisma.review.count({
+      where: whereCondition,
+    });
+
+    // レビューを取得（ページネーション付き）
+    const reviews = await prisma.review.findMany({
+      where: whereCondition,
       select: {
         id: true,
         comment: true,
@@ -71,7 +82,6 @@ export const getAllReviewsForSchool = async (
         ratingCost: true,
         ratingSupport: true,
         ratingCommunity: true,
-        // カテゴリごとのコメントフィールド (スキーマでは必須)
         commentCurriculum: true,
         commentInstructor: true,
         commentCost: true,
@@ -92,11 +102,19 @@ export const getAllReviewsForSchool = async (
       orderBy: {
         createdAt: "desc",
       },
+      skip: (page - 1) * perPage,
+      take: perPage,
     });
 
-    return reviews as ReviewWithUser[];
+    return {
+      reviews: reviews as ReviewWithUser[],
+      totalCount,
+    };
   } catch (error) {
     console.error("レビュー一覧取得エラー:", error);
-    return [];
+    return {
+      reviews: [],
+      totalCount: 0,
+    };
   }
 };
