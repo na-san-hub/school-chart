@@ -15,7 +15,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:bg-gray-50 transition-shadow">
+    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
       <div className="p-6">
         {/* ヘッダー部分 */}
         <div className="mb-3">

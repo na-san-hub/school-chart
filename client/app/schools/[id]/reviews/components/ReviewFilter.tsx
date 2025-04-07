@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useCallback } from "react";
 import { Gender, AgeGroup } from "@prisma/client";
-import { ReviewWithUser } from "@/types/review";
-import { filterReviewsWithForm, FilterState } from "../actions";
-import { useFormState } from "react-dom";
 import { Search } from "lucide-react";
 
 // 年齢グループの表示名マッピング
@@ -17,42 +15,46 @@ const ageGroupLabels: { [key in AgeGroup]: string } = {
   SIXTIES: "60代以上",
 };
 
-const initialState: FilterState = {
-  gender: "all",
-  ageGroup: "all",
-  keyword: "",
-  reviews: [],
-};
+export default function ReviewFilterForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-interface ReviewFilterFormProps {
-  schoolId: string;
-  initialReviews: ReviewWithUser[];
-  onReviewsUpdate: (reviews: ReviewWithUser[]) => void;
-}
+  const currentGender = searchParams.get("gender") || "all";
+  const currentAgeGroup = searchParams.get("ageGroup") || "all";
+  const currentKeyword = searchParams.get("keyword") || "";
 
-export default function ReviewFilterForm({
-  schoolId,
-  initialReviews,
-  onReviewsUpdate,
-}: ReviewFilterFormProps) {
-  // useFormStateを使用して、フォーム状態を管理
-  const [state, formAction] = useFormState(filterReviewsWithForm, {
-    ...initialState,
-    reviews: initialReviews,
-  });
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-  useEffect(() => {
-    // フィルター結果が変更されたら親コンポーネントに通知
-    onReviewsUpdate(state.reviews);
-  }, [state.reviews, onReviewsUpdate]);
+      // フォームデータからクエリパラメータを作成
+      const formData = new FormData(e.currentTarget);
+      const params = new URLSearchParams();
+
+      // 選択された値のみクエリパラメータに追加
+      const gender = formData.get("gender")?.toString();
+      if (gender && gender !== "all") params.set("gender", gender);
+
+      const ageGroup = formData.get("ageGroup")?.toString();
+      if (ageGroup && ageGroup !== "all") params.set("ageGroup", ageGroup);
+
+      const keyword = formData.get("keyword")?.toString();
+      if (keyword) params.set("keyword", keyword);
+
+      // 常にページは1に戻す
+      params.set("page", "1");
+
+      // URLを更新
+      router.push(`?${params.toString()}`);
+    },
+    [router]
+  );
 
   return (
     <form
-      action={formAction}
+      onSubmit={handleSubmit}
       className="bg-white rounded-lg border border-gray-200 p-5 mb-8"
     >
-      <input type="hidden" name="schoolId" value={schoolId} />
-
       <h2 className="text-base font-semibold text-gray-700 mb-2">
         絞り込み検索
       </h2>
@@ -67,7 +69,7 @@ export default function ReviewFilterForm({
                 type="radio"
                 name="gender"
                 value="all"
-                defaultChecked={state.gender === "all"}
+                defaultChecked={currentGender === "all"}
                 className="mr-1.5"
               />
               <span className="text-sm">すべて</span>
@@ -77,7 +79,7 @@ export default function ReviewFilterForm({
                 type="radio"
                 name="gender"
                 value={Gender.MALE}
-                defaultChecked={state.gender === Gender.MALE}
+                defaultChecked={currentGender === Gender.MALE}
                 className="mr-1.5"
               />
               <span className="text-sm">男性</span>
@@ -87,7 +89,7 @@ export default function ReviewFilterForm({
                 type="radio"
                 name="gender"
                 value={Gender.FEMALE}
-                defaultChecked={state.gender === Gender.FEMALE}
+                defaultChecked={currentGender === Gender.FEMALE}
                 className="mr-1.5"
               />
               <span className="text-sm">女性</span>
@@ -100,7 +102,7 @@ export default function ReviewFilterForm({
           <label className="text-xs font-medium text-gray-600">年代：</label>
           <select
             name="ageGroup"
-            defaultValue={state.ageGroup}
+            defaultValue={currentAgeGroup}
             className="px-3 py-1.5 border border-gray-300 rounded-md text-gray-700 text-sm ml-2"
           >
             <option value="all">すべて</option>
@@ -119,7 +121,7 @@ export default function ReviewFilterForm({
           <input
             type="text"
             name="keyword"
-            defaultValue={state.keyword}
+            defaultValue={currentKeyword}
             placeholder="キーワードで口コミを検索"
             className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
           />

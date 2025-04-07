@@ -1,17 +1,19 @@
 import { ReviewWithUser } from "@/types/review";
 import ReviewCard from "./ReviewCard";
+import ReviewPagination from "./ReviewPagination";
 
 interface ReviewListProps {
   reviews: ReviewWithUser[];
+  totalCount: number;
 }
 
-const ReviewList = ({ reviews }: ReviewListProps) => {
+const ReviewList = ({ reviews, totalCount }: ReviewListProps) => {
+  const perPage = 10; // 1ページあたりの表示件数
+
   if (reviews.length === 0) {
     return (
       <div className="text-center py-10 bg-gray-50 border border-gray-200 rounded-lg">
-        <p className="text-gray-500">
-          現在、このスクールの口コミはありません。
-        </p>
+        <p className="text-gray-500">条件に合う口コミはありません。</p>
         <button className="mt-4 bg-cyan-600 text-white px-4 py-2 rounded-md text-sm hover:opacity-90">
           口コミを投稿する
         </button>
@@ -23,7 +25,7 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-4">
         <p className="font-medium text-gray-700">
-          <span className="font-bold text-xl">{reviews.length}</span> 件の口コミ
+          <span className="font-bold text-xl">{totalCount}</span> 件の口コミ
         </p>
         <div className="flex gap-2">
           <select className="px-3 py-1 border text-gray-700 border-gray-300 rounded-md text-sm">
@@ -40,6 +42,9 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
           <ReviewCard key={review.id} review={review} />
         ))}
       </div>
+
+      {/* ページネーション */}
+      <ReviewPagination totalCount={totalCount} perPage={perPage} />
     </div>
   );
 };
