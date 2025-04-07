@@ -4,18 +4,18 @@ import ReviewsPageClient from "./client";
 
 export const dynamic = "force-dynamic";
 
-interface ReviewsPageProps {
+export default async function ReviewsPage({
+  params,
+}: {
   params: Promise<{ id: string }>;
-}
-
-export default async function ReviewsPage({ params }: ReviewsPageProps) {
-  // params を await してから利用する
+}) {
+  // params を await して id を取得
   const resolvedParams = await params;
   const schoolId = resolvedParams.id;
 
   const [school, initialReviews] = await Promise.all([
     getSchoolWithCourses(schoolId),
-    getAllReviewsForSchool(schoolId), // ← 最初はすべてのレビューを取得
+    getAllReviewsForSchool(schoolId),
   ]);
 
   return (
