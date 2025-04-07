@@ -1,4 +1,5 @@
 import { Gender, AgeGroup } from "@prisma/client";
+export type { Gender, AgeGroup };
 
 export interface ReviewWithUser {
   id: string;
