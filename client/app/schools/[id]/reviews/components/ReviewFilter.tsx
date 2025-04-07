@@ -15,11 +15,7 @@ const ageGroupLabels: { [key in AgeGroup]: string } = {
   SIXTIES: "60代以上",
 };
 
-interface ReviewFilterFormProps {
-  schoolId: string;
-}
-
-export default function ReviewFilterForm({ schoolId }: ReviewFilterFormProps) {
+export default function ReviewFilterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 

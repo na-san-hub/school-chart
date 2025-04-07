@@ -106,7 +106,6 @@ export default async function ReviewsPage({
 
   return (
     <ReviewsPageClient
-      schoolId={schoolId}
       school={school}
       reviews={reviews as ReviewWithUser[]}
       totalCount={totalCount}
