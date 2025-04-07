@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { id: "top", label: "TOP", path: "" },
   { id: "reviews", label: "口コミ", path: "/reviews" },
-  { id: "course", label: "コース一覧", path: "/course" },
+  { id: "course", label: "コース一覧", path: "/courses" },
 ];
 
 export default function SchoolMenuTabs({

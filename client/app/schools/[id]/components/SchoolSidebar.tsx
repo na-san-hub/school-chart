@@ -5,7 +5,7 @@ interface ReviewSidebarSectionProps {
   school: SchoolWithCourses;
 }
 
-const ReviewSidebarSection = ({ school }: ReviewSidebarSectionProps) => {
+const SchoolSidebar = ({ school }: ReviewSidebarSectionProps) => {
   // 受講形式を一意に取得
   const uniqueDeliveryMethods = school.courses
     ? Array.from(new Set(school.courses.map((course) => course.deliveryMethod)))
@@ -123,4 +123,4 @@ const ReviewSidebarSection = ({ school }: ReviewSidebarSectionProps) => {
   );
 };
 
-export default ReviewSidebarSection;
+export default SchoolSidebar;
