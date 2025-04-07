@@ -5,11 +5,13 @@ import ReviewsPageClient from "./client";
 export const dynamic = "force-dynamic";
 
 interface ReviewsPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function ReviewsPage({ params }: ReviewsPageProps) {
-  const schoolId = params.id;
+  // params を await してから利用する
+  const resolvedParams = await params;
+  const schoolId = resolvedParams.id;
 
   const [school, initialReviews] = await Promise.all([
     getSchoolWithCourses(schoolId),
