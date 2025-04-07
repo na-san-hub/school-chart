@@ -21,7 +21,6 @@ export const getReviewsForSchool = async (
         ratingCost: true,
         ratingSupport: true,
         ratingCommunity: true,
-        // カテゴリごとのコメントフィールド (スキーマでは必須)
         commentCurriculum: true,
         commentInstructor: true,
         commentCost: true,
@@ -45,16 +44,7 @@ export const getReviewsForSchool = async (
       take: 4,
     });
 
-    // prisma enumとカスタムenumの型変換
-    return reviews.map((review) => ({
-      ...review,
-      user: {
-        gender: review.user
-          .gender as unknown as import("@/types/review").Gender,
-        ageGroup: review.user
-          .ageGroup as unknown as import("@/types/review").AgeGroup,
-      },
-    })) as unknown as ReviewWithUser[];
+    return reviews as ReviewWithUser[];
   } catch (error) {
     console.error("ピックアップレビュー取得エラー:", error);
     return [];
@@ -104,16 +94,7 @@ export const getAllReviewsForSchool = async (
       },
     });
 
-    // prisma enumとカスタムenumの型変換
-    return reviews.map((review) => ({
-      ...review,
-      user: {
-        gender: review.user
-          .gender as unknown as import("@/types/review").Gender,
-        ageGroup: review.user
-          .ageGroup as unknown as import("@/types/review").AgeGroup,
-      },
-    })) as unknown as ReviewWithUser[];
+    return reviews as ReviewWithUser[];
   } catch (error) {
     console.error("レビュー一覧取得エラー:", error);
     return [];
