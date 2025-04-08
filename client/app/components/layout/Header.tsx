@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import AuthStatus from "./AuthStatus";
 
 const Header = () => {
   return (
@@ -24,12 +25,7 @@ const Header = () => {
 
         {/* メニュー */}
         <nav className="flex space-x-6 text-sm font-semibold tracking-wide">
-          <Link href="#" className="text-gray-500 hover:text-gray-700">
-            ユーザー登録
-          </Link>
-          <Link href="#" className="text-gray-500 hover:text-gray-700">
-            ログイン
-          </Link>
+          <AuthStatus />
         </nav>
       </div>
     </header>
