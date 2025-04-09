@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext/useAuth";
 
 export default function MypageTop() {
   const { user, isLoading, signOut } = useAuth();
