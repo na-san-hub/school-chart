@@ -6,6 +6,7 @@ import type { NextRequest } from "next/server";
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
+  const callbackUrl = requestUrl.searchParams.get("callbackUrl") || "/";
 
   if (code) {
     const cookieStore = cookies();
@@ -13,6 +14,6 @@ export async function GET(request: NextRequest) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  // ログイン後のリダイレクト先
-  return NextResponse.redirect(new URL("/", request.url));
+  // ログイン後リダイレクト
+  return NextResponse.redirect(new URL(callbackUrl, request.url));
 }
