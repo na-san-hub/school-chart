@@ -1,11 +1,12 @@
 import { supabase } from "@/lib/supabase";
+import { Session } from "@supabase/supabase-js";
 
 export type SignInFunction = (
   email: string,
   password: string
 ) => Promise<{
   error: Error | null;
-  data: any; // Session | null
+  data: Session | null;
 }>;
 
 export const signIn: SignInFunction = async (email, password) => {
