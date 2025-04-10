@@ -26,3 +26,24 @@ export interface ReviewWithUser {
     name: string;
   };
 }
+
+// マイページなどで使用する拡張されたレビュー型
+export interface ExtendedReviewWithUser extends ReviewWithUser {
+  course: {
+    name: string;
+    school?: {
+      id: string;
+      name: string;
+    };
+  };
+}
+
+// マイページでの表示用レビュー型
+export interface UserReviewDisplay {
+  id: string;
+  schoolId: string;
+  schoolName: string;
+  courseName: string;
+  rating: number;
+  createdAt: Date;
+}
