@@ -5,10 +5,8 @@ import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import {
   signIn,
-  signOut,
   signInWithOAuth,
   SignInFunction,
-  SignOutFunction,
   SignInWithOAuthFunction,
 } from "./authFunctions";
 
@@ -18,7 +16,6 @@ interface AuthContextType {
   userName: string | null;
   isLoading: boolean;
   signIn: SignInFunction;
-  signOut: SignOutFunction;
   signInWithOAuth: SignInWithOAuthFunction;
 }
 
@@ -58,6 +55,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } = await supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session);
         setUser(session?.user || null);
+
+        if (!session?.user) {
+          setUserName(null);
+        }
       });
 
       return () => subscription.unsubscribe();
@@ -74,7 +75,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         userName,
         isLoading,
         signIn,
-        signOut,
         signInWithOAuth,
       }}
     >
