@@ -6,7 +6,7 @@ import { UserCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const AuthStatus = () => {
-  const { user, isLoading } = useAuth();
+  const { user, userName, isLoading } = useAuth();
   const pathname = usePathname();
 
   if (isLoading) {
@@ -19,7 +19,7 @@ const AuthStatus = () => {
       <div className="items-center text-gray-500">
         <Link href="/mypage" className="hover:opacity-75 flex items-center">
           <UserCircle className="w-6 h-6 mr-1" />
-          <span>{user.email?.split("@")[0] || "ユーザー"}さん</span>
+          <span>{userName || "ユーザー"}さん</span>
         </Link>
       </div>
     );

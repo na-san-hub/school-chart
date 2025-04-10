@@ -15,6 +15,7 @@ import {
 interface AuthContextType {
   user: User | null;
   session: Session | null;
+  userName: string | null;
   isLoading: boolean;
   signIn: SignInFunction;
   signOut: SignOutFunction;
@@ -28,6 +29,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -38,6 +40,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } = await supabase.auth.getSession();
       setSession(session);
       setUser(session?.user || null);
+
+      if (session?.user) {
+        const { data, error } = await supabase
+          .from("user")
+          .select("name")
+          .eq("auth_id", session.user.id)
+          .single();
+
+        if (data && !error) {
+          setUserName(data.name);
+        }
+      }
 
       const {
         data: { subscription },
@@ -57,6 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         session,
+        userName,
         isLoading,
         signIn,
         signOut,
