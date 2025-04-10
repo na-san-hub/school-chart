@@ -1,12 +1,12 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext/useAuth";
 import { Heart, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function MypageSidebar() {
-  const { signOut } = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
 
   // パスからアクティブなタブを特定する
@@ -17,8 +17,7 @@ export default function MypageSidebar() {
   };
 
   const handleSignOut = async () => {
-    await signOut();
-    window.location.href = "/";
+    router.push("/logout");
   };
 
   const navItems = [
@@ -75,7 +74,7 @@ export default function MypageSidebar() {
       </div>
 
       {/* ヘルプ */}
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+      <div className="bg-white border border-gray-200 rounded-lg p-4">
         <div className="text-sm text-gray-600">
           <ul className="space-y-1">
             <li>
