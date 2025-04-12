@@ -2,13 +2,14 @@
 
 import { createContext, useState, useEffect } from "react";
 import { Session, User } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
+
 import {
   signIn,
   signInWithOAuth,
   SignInFunction,
   SignInWithOAuthFunction,
 } from "./authFunctions";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface AuthContextType {
   user: User | null;
@@ -29,43 +30,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [userName, setUserName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // createClientComponentClient を使用してSupabaseクライアントを初期化
+  const supabaseClient = createClientComponentClient();
+
   useEffect(() => {
     const initSession = async () => {
       setIsLoading(true);
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user || null);
+      try {
+        // supabase ではなく supabaseClient を使用
+        const {
+          data: { session },
+        } = await supabaseClient.auth.getSession();
 
-      if (session?.user) {
-        const { data, error } = await supabase
-          .from("user")
-          .select("name")
-          .eq("auth_id", session.user.id)
-          .single();
-
-        if (data && !error) {
-          setUserName(data.name);
-        }
-      }
-
-      const {
-        data: { subscription },
-      } = await supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session);
         setUser(session?.user || null);
 
-        if (!session?.user) {
-          setUserName(null);
-        }
-      });
+        if (session?.user) {
+          const { data, error } = await supabaseClient
+            .from("user")
+            .select("name")
+            .eq("auth_id", session.user.id)
+            .single();
 
-      return () => subscription.unsubscribe();
+          if (data && !error) {
+            setUserName(data.name);
+          }
+        }
+
+        const {
+          data: { subscription },
+        } = await supabaseClient.auth.onAuthStateChange((_event, session) => {
+          setSession(session);
+          setUser(session?.user || null);
+
+          if (!session?.user) {
+            setUserName(null);
+          }
+        });
+
+        return () => subscription.unsubscribe();
+      } catch (error) {
+        console.error("認証初期化エラー:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    initSession().finally(() => setIsLoading(false));
-  }, []);
+    initSession();
+  }, [supabaseClient]);
 
   return (
     <AuthContext.Provider

@@ -1,12 +1,12 @@
 "use client";
 import { useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default function LogoutPage() {
   useEffect(() => {
     const logout = async () => {
+      const supabase = createClientComponentClient();
       await supabase.auth.signOut();
-      // ブラウザのリダイレクトを使ってトップページへ移動（フルリロード）
       window.location.href = "/";
     };
     logout();
