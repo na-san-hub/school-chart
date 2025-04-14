@@ -54,19 +54,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user || null);
 
         if (session?.user) {
-          try {
-            const { data, error } = await supabaseClient
-              .from("user")
-              .select("name")
-              .eq("auth_id", session.user.id)
-              .single();
+          const { data: userData, error: userError } = await supabaseClient
+            .from("user")
+            .select("name")
+            .eq("auth_id", session.user.id)
+            .single();
 
-            if (data && !error) {
-              setUserName(data.name);
-            } else if (error) {
-              setAuthError("ユーザー情報の取得に問題が発生しました");
-            }
-          } catch (_) {
+          if (userData && !userError) {
+            setUserName(userData.name);
+          } else if (userError) {
             setAuthError("ユーザー情報の取得に問題が発生しました");
           }
         }
@@ -80,20 +76,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUser(currentSession?.user || null);
 
             if (currentSession?.user) {
-              try {
-                const { data, error } = await supabaseClient
-                  .from("user")
-                  .select("name")
-                  .eq("auth_id", currentSession.user.id)
-                  .single();
+              const { data, error } = await supabaseClient
+                .from("user")
+                .select("name")
+                .eq("auth_id", currentSession.user.id)
+                .single();
 
-                if (data && !error) {
-                  setUserName(data.name);
-                } else {
-                  // エラーはUIに表示せず、ただ処理を続行
-                  setUserName(null);
-                }
-              } catch (_) {
+              if (data && !error) {
+                setUserName(data.name);
+              } else {
                 // エラーはUIに表示せず、ただ処理を続行
                 setUserName(null);
               }
@@ -104,7 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
 
         return () => subscription.unsubscribe();
-      } catch (_) {
+      } catch {
         // UIにエラーを表示
         setAuthError("アプリケーションの初期化中にエラーが発生しました");
       } finally {
