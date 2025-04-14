@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             } else if (error) {
               setAuthError("ユーザー情報の取得に問題が発生しました");
             }
-          } catch (err) {
+          } catch (_error) {
             setAuthError("ユーザー情報の取得に問題が発生しました");
           }
         }
@@ -93,7 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                   // エラーはUIに表示せず、ただ処理を続行
                   setUserName(null);
                 }
-              } catch (err) {
+              } catch (_error) {
                 // エラーはUIに表示せず、ただ処理を続行
                 setUserName(null);
               }
@@ -104,7 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
 
         return () => subscription.unsubscribe();
-      } catch (error) {
+      } catch (_error) {
         // UIにエラーを表示
         setAuthError("アプリケーションの初期化中にエラーが発生しました");
       } finally {
