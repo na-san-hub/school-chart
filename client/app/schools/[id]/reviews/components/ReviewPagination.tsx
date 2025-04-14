@@ -41,7 +41,7 @@ const ReviewPagination = ({ totalCount, perPage }: ReviewPaginationProps) => {
     }
 
     return pages;
-  }, [currentPage, totalPages, perPage]);
+  }, [currentPage, totalPages]);
 
   const handlePageChange = useCallback(
     (page: number) => {

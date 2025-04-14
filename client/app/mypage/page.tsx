@@ -1,7 +1,6 @@
 "use client";
-
 import { useAuth } from "@/context/AuthContext/useAuth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getUserReviews } from "./actions";
 import { UserReviewDisplay } from "@/types/review";
 import UserInformation from "./components/UserInformation";
@@ -12,19 +11,13 @@ export default function MypagePage() {
   const [reviews, setReviews] = useState<UserReviewDisplay[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Server Actionを使用して口コミデータを取得
-  const fetchUserReviews = async () => {
+  // useCallbackでメモ化
+  const fetchUserReviews = useCallback(async () => {
     if (!user) return;
-
     setIsLoading(true);
-
     try {
-      // Server Actionを呼び出し
       const { reviews } = await getUserReviews();
-
-      // 表示用にデータを整形
       const displayReviews = reviews.map((review) => {
-        // 5つの評価を平均して総合評価を計算
         const averageRating =
           (review.ratingCurriculum +
             review.ratingInstructor +
@@ -32,10 +25,7 @@ export default function MypagePage() {
             review.ratingSupport +
             review.ratingCommunity) /
           5;
-
-        // school情報がない場合のフォールバック
         const school = review.course.school || { id: "", name: "" };
-
         return {
           id: review.id,
           schoolId: school.id,
@@ -45,25 +35,22 @@ export default function MypagePage() {
           createdAt: new Date(review.createdAt),
         };
       });
-
       setReviews(displayReviews);
     } catch (error) {
       console.error("口コミデータの取得に失敗しました:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]); // userを依存配列に入れる
 
   useEffect(() => {
     if (user) {
       fetchUserReviews();
     }
-  }, [user]);
+  }, [user, fetchUserReviews]); // fetchUserReviewsも依存配列に追加
 
   if (!user) return null;
-
   const displayName = userName || "ユーザー";
-
   return (
     <div>
       <h1 className="text-xl font-bold text-gray-700 mb-5 flex items-center">

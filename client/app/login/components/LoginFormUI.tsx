@@ -120,7 +120,7 @@ export default function LoginFormUI({
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 ${
+            className={`w-full py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-cyan-600 hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 ${
               isLoading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >
