@@ -94,3 +94,86 @@ export async function getUserReviews(): Promise<{
     return { reviews: [], totalCount: 0, userId: null };
   }
 }
+
+/**
+ * お気に入り追加済みか確認
+ */
+export async function checkIsFavorite(schoolId: string): Promise<boolean> {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session?.user) return false;
+
+  const user = await prisma.user.findUnique({
+    where: { authId: session.user.id },
+    select: { id: true },
+  });
+
+  if (!user) return false;
+
+  const favorite = await prisma.favoriteSchool.findUnique({
+    where: {
+      userId_schoolId: {
+        userId: user.id,
+        schoolId,
+      },
+    },
+  });
+
+  return !!favorite;
+}
+
+/**
+ * お気に入りスクールを追加する
+ */
+export async function addFavoriteSchool(schoolId: string): Promise<void> {
+  try {
+    const cookieStore = cookies();
+    const supabase = createServerComponentClient({
+      cookies: () => cookieStore,
+    });
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session?.user) {
+      console.log("未ログインユーザーです");
+      return;
+    }
+
+    const userData = await prisma.user.findUnique({
+      where: { authId: session.user.id },
+      select: { id: true },
+    });
+
+    if (!userData) {
+      console.log("ユーザーが見つかりません");
+      return;
+    }
+
+    await prisma.favoriteSchool.upsert({
+      where: {
+        userId_schoolId: {
+          userId: userData.id,
+          schoolId,
+        },
+      },
+      update: {},
+      create: {
+        userId: userData.id,
+        schoolId,
+      },
+    });
+
+    console.log("お気に入り追加完了");
+  } catch (error) {
+    console.error("お気に入り追加エラー:", error);
+  }
+}
+/**
+ * お気に入りスクールを削除する
+ */
