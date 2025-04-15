@@ -1,4 +1,3 @@
-// app/mypage/favorites/page.tsx
 import { getFavoriteSchools } from "./actions";
 import FavoriteList from "./components/FavoriteList";
 import { FavoriteSchoolItem } from "@/types/mypage";

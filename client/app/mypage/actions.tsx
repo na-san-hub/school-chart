@@ -174,6 +174,3 @@ export async function addFavoriteSchool(schoolId: string): Promise<void> {
     console.error("お気に入り追加エラー:", error);
   }
 }
-/**
- * お気に入りスクールを削除する
- */

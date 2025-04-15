@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FavoriteSchoolItem } from "@/types/mypage";
 import StarRating from "@/components/schoolData/StarRating";
+import DeleteFavoriteButton from "./DeleteFavoriteButton";
 
 export default function FavoriteSchoolCard({
   school,
@@ -8,7 +9,7 @@ export default function FavoriteSchoolCard({
   school: FavoriteSchoolItem;
 }) {
   return (
-    <div className="flex max-w-4xl items-center space-x-6 px-6 py-6 text-gray-700 hover:opacity-80 border rounded-md bg-white">
+    <div className="flex max-w-4xl items-center space-x-6 px-6 py-6 text-gray-700 border rounded-md bg-white relative group">
       {/* ロゴ */}
       <div className="flex items-center justify-center w-24 h-24 rounded-md overflow-hidden">
         <Image
@@ -31,6 +32,9 @@ export default function FavoriteSchoolCard({
         </div>
         <p className="text-xs text-gray-500">{school.description}</p>
       </div>
+
+      {/* 削除ボタン - クライアントコンポーネント */}
+      <DeleteFavoriteButton schoolId={school.id} />
     </div>
   );
 }
