@@ -1,23 +1,26 @@
 import SchoolCover from "@/components/schoolData/SchoolCover";
 import Link from "next/link";
 import { SchoolCoverData } from "@/types/school";
-import { Heart } from "lucide-react";
+import FavoriteButton from "@/components/userData/FavoriteButton";
+import { checkIsFavorite } from "@/mypage/actions";
 
 interface SearchResultCardProps {
   school: SchoolCoverData;
 }
 
-const SearchResultCard = ({ school }: SearchResultCardProps) => {
+const SearchResultCard = async ({ school }: SearchResultCardProps) => {
+  const isFavorite = await checkIsFavorite(school.id);
   return (
     <section className="w-full max-w-4xl mx-auto border border-gray-300 rounded-md overflow-hidden">
       <Link href={`/schools/${school.id}`} className="block">
         <SchoolCover school={school} />
       </Link>
-      <div className="flex justify-center gap-4 bg-gray-100">
-        <button className="flex items-center py-3 px-6 my-4 rounded-md  border text-sm text-gray-700 border-gray-300 hover:opacity-70 bg-white">
-          <Heart className="text-gray-600 mr-1" size={14} />
-          気になるに追加
-        </button>
+      <div className="flex justify-center items-center gap-4 bg-gray-100">
+        <FavoriteButton
+          schoolId={school.id}
+          isInitiallyFavorite={isFavorite}
+          className=""
+        />
         <button className="py-3 px-6 my-4 border rounded-md bg-cyan-600 hover:opacity-75 text-white text-sm">
           コース一覧を見る
         </button>

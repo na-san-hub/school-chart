@@ -8,9 +8,9 @@ export default function FavoriteSchoolCard({
   school: FavoriteSchoolItem;
 }) {
   return (
-    <div className="flex max-w-4xl items-center space-x-6 px-6 py-6 text-gray-700 hover:opacity-80 border rounded-md bg-white shadow-sm">
+    <div className="flex max-w-4xl items-center space-x-6 px-6 py-6 text-gray-700 hover:opacity-80 border rounded-md bg-white">
       {/* ロゴ */}
-      <div className="flex items-center justify-center w-24 h-24 bg-gray-100 rounded-md overflow-hidden">
+      <div className="flex items-center justify-center w-24 h-24 rounded-md overflow-hidden">
         <Image
           src={school.logo || "/defaultLogo.png"}
           alt={school.name}

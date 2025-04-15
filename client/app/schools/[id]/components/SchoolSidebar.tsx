@@ -1,12 +1,13 @@
-import { Heart, PenSquare } from "lucide-react";
+import { PenSquare } from "lucide-react";
 import { SchoolWithCourses } from "@/types/school";
+import FavoriteButton from "@/components/userData/FavoriteButton";
+import { checkIsFavorite } from "@/mypage/actions";
 
 interface ReviewSidebarSectionProps {
   school: SchoolWithCourses;
 }
 
-const SchoolSidebar = ({ school }: ReviewSidebarSectionProps) => {
-  // 受講形式を一意に取得
+const SchoolSidebar = async ({ school }: ReviewSidebarSectionProps) => {
   const uniqueDeliveryMethods = school.courses
     ? Array.from(new Set(school.courses.map((course) => course.deliveryMethod)))
     : [];
@@ -17,15 +18,19 @@ const SchoolSidebar = ({ school }: ReviewSidebarSectionProps) => {
     IN_PERSON: "対面",
   };
 
+  // ✅ お気に入り済みか確認
+  const isFavorite = await checkIsFavorite(school.id);
+
   return (
     <div className="space-y-4">
       {/* アクションボタン */}
       <div className="bg-white border border-gray-200 rounded-lg p-4">
         <div className="space-y-3">
-          <button className="w-full py-3 bg-white border border-gray-300 text-sm text-gray-700 rounded-md flex items-center justify-center hover:bg-gray-50">
-            <Heart className="w-4 h-4 mr-2 text-gray-600" />
-            お気に入りに登録する
-          </button>
+          <FavoriteButton
+            schoolId={school.id}
+            isInitiallyFavorite={isFavorite}
+            className="w-full"
+          />
           <button className="w-full py-3 bg-cyan-600 text-white text-sm rounded-md flex items-center justify-center hover:opacity-90">
             <PenSquare className="w-4 h-4 mr-2" />
             口コミを投稿する
