@@ -1,20 +1,37 @@
 "use client";
-import { useEffect } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext/useAuth";
 
 export default function LogoutPage() {
+  const router = useRouter();
+  const { signOut } = useAuth();
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    const logout = async () => {
-      const supabase = createClientComponentClient();
-      await supabase.auth.signOut();
-      window.location.href = "/";
+    const performLogout = async () => {
+      try {
+        await signOut();
+        // 少し遅延してからリダイレクト
+        setTimeout(() => {
+          router.push("/");
+          router.refresh(); // 重要: キャッシュをクリアして再読み込み
+        }, 500);
+      } catch (err) {
+        setError("ログアウト中にエラーが発生しました");
+        console.error("ログアウトエラー:", err);
+      }
     };
-    logout();
-  }, []);
+
+    performLogout();
+  }, [signOut, router]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <p className="text-xl font-semibold text-gray-700">ログアウト中...</p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <p className="text-xl font-semibold text-gray-700 mb-4">
+        ログアウト中...
+      </p>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 }

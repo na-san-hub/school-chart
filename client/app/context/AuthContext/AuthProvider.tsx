@@ -6,6 +6,7 @@ import {
   signInWithOAuth,
   SignInFunction,
   SignInWithOAuthFunction,
+  signOut,
 } from "./authFunctions";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
@@ -17,6 +18,7 @@ interface AuthContextType {
   authError: string | null;
   signIn: SignInFunction;
   signInWithOAuth: SignInWithOAuthFunction;
+  signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -132,6 +134,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         authError,
         signIn,
         signInWithOAuth,
+        signOut,
       }}
     >
       {authError && renderErrorBanner()}
