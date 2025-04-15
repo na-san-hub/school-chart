@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { removeFavoriteSchool } from "../actions";
+import { removeFavoriteSchool } from "../../../actions/userPage";
 import { useRouter } from "next/navigation";
 
 export default function FavoriteDeleteButton({

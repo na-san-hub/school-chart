@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/context/AuthContext/useAuth";
 import { useState, useEffect, useCallback } from "react";
-import { getUserReviews } from "./actions";
+import { getUserReviews } from "../actions/userPage";
 import { UserReviewDisplay } from "@/types/review";
 import UserInformation from "./components/UserInformation";
 import UserReview from "./components/UserReview";

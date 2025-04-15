@@ -1,4 +1,4 @@
-import { getFavoriteSchools } from "./actions";
+import { getFavoriteSchools } from "../../actions/userPage";
 import FavoriteList from "./components/FavoriteList";
 import { FavoriteSchoolItem } from "@/types/mypage";
 
