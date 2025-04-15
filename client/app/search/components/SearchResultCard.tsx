@@ -2,7 +2,7 @@ import SchoolCover from "@/components/schoolData/SchoolCover";
 import Link from "next/link";
 import { SchoolCoverData } from "@/types/school";
 import FavoriteButton from "@/components/userData/FavoriteButton";
-import { checkIsFavorite } from "@/mypage/actions";
+import { checkIsFavorite } from "@/actions/userPage";
 
 interface SearchResultCardProps {
   school: SchoolCoverData;

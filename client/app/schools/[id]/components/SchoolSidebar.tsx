@@ -1,7 +1,7 @@
 import { PenSquare } from "lucide-react";
 import { SchoolWithCourses } from "@/types/school";
 import FavoriteButton from "@/components/userData/FavoriteButton";
-import { checkIsFavorite } from "@/mypage/actions";
+import { checkIsFavorite } from "@/actions/userPage";
 
 interface ReviewSidebarSectionProps {
   school: SchoolWithCourses;
