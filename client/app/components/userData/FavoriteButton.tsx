@@ -54,7 +54,7 @@ export default function FavoriteButton({
           ? "気になる済み"
           : isPending
           ? "登録中..."
-          : "気になるに登録する"}
+          : "気になるに登録"}
       </button>
     </form>
   );

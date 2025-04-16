@@ -2,8 +2,9 @@
 
 import StarRating from "@/components/schoolData/StarRating";
 import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
-import { useState } from "react";
 import { Lock } from "lucide-react";
+import { useAuth } from "@/context/AuthContext/useAuth";
+import { useRouter } from "next/navigation";
 
 const genderMap: Record<Gender, string> = {
   MALE: "男性",
@@ -20,7 +21,6 @@ const ageGroupMap: Record<AgeGroup, string> = {
   SIXTIES: "60代以上",
 };
 
-// カテゴリーラベル
 const categoryLabels = {
   curriculum: "カリキュラム",
   instructor: "講師",
@@ -34,8 +34,9 @@ export default function PickupReviewCard({
 }: {
   review: ReviewWithUser;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const isLoggedIn = false; // 実際の認証状態と連携する場合はここを修正
+  const { user } = useAuth();
+  const router = useRouter();
+  const isLoggedIn = !!user;
 
   const avgRating =
     (review.ratingCurriculum +
@@ -47,7 +48,6 @@ export default function PickupReviewCard({
 
   // すべてのコメントを集約して一つのテキストにする
   const generateCombinedCommentText = () => {
-    // 利用可能なコメントを収集
     const comments = [];
 
     // 総合コメントがあれば最初に追加
@@ -77,12 +77,30 @@ export default function PickupReviewCard({
 
   const combinedComment = generateCombinedCommentText();
   const visibleLength = 60;
-  const hasLongComment = combinedComment.length > visibleLength;
   const visibleText = combinedComment.slice(0, visibleLength);
   const hiddenText = combinedComment.slice(visibleLength);
 
+  // ログインページへリダイレクト
+  const handleLoginRedirect = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const currentPath = window.location.pathname;
+    router.push(`/login?callbackUrl=${encodeURIComponent(currentPath)}`);
+  };
+
+  // 未ログイン時は、カードクリックでログインページへ
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      handleLoginRedirect(e);
+    }
+  };
+
   return (
-    <div className="border rounded-md p-4 bg-white hover:bg-gray-50 hover:opacity-75 transition-all">
+    <div
+      className={`border rounded-md p-4 bg-white hover:bg-gray-50 transition-all 
+        ${!isLoggedIn ? "cursor-pointer hover:opacity-75" : ""}`}
+      onClick={!isLoggedIn ? handleCardClick : undefined}
+    >
       <div className="text-base text-gray-500 mb-1">{review.course.name}</div>
 
       <div className="mb-2 flex items-center gap-1">
@@ -103,30 +121,28 @@ export default function PickupReviewCard({
         <div className="mt-3 border-t pt-3">
           <p className="text-sm text-gray-700 whitespace-pre-wrap inline">
             {visibleText}
-            {hasLongComment && "..."}
+            {hiddenText.length > 0 && "…"}
           </p>
 
-          {hasLongComment && (
-            <span className="relative block w-full">
+          {hiddenText.length > 0 && (
+            <span className="relative block w-full mt-1">
               <span
                 className={`text-sm whitespace-pre-wrap block w-full ${
-                  isLoggedIn || isExpanded
+                  isLoggedIn
                     ? "text-gray-700"
                     : "blur-sm select-none text-gray-700"
                 }`}
               >
-                {hiddenText}
+                {/* 👇 非ログイン時は長さを制限 */}
+                {isLoggedIn ? hiddenText : hiddenText.slice(0, 100)}
               </span>
 
-              {!isLoggedIn && !isExpanded && (
+              {!isLoggedIn && (
                 <span className="absolute inset-0 flex items-center justify-center bg-white/70 w-full">
                   <Lock className="w-4 h-4 text-gray-400 mr-1" />
-                  <button
-                    onClick={() => setIsExpanded(true)}
-                    className="text-xs text-cyan-600 hover:underline"
-                  >
+                  <span className="text-xs text-cyan-600">
                     続きを見るにはログインが必要です
-                  </button>
+                  </span>
                 </span>
               )}
             </span>
