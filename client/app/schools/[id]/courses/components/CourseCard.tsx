@@ -1,7 +1,6 @@
 import { formatPrice } from "@/lib/utils";
 import { CourseListData } from "@/types/school";
 import { MapPin } from "lucide-react";
-import { Span } from "next/dist/trace";
 import Link from "next/link";
 
 interface CourseCardProps {
