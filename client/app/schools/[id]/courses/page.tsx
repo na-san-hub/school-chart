@@ -1,5 +1,5 @@
 import { getSchoolWithCourses } from "@/lib/school";
-import { getAllCoursesForSchool } from "@/lib/courses";
+import { getAllCoursesForList } from "@/lib/courses";
 import CourseList from "./components/CourseList";
 import SchoolSidebar from "../components/SchoolSidebar";
 
@@ -17,7 +17,7 @@ export default async function CoursesPage({ params }: CoursesPageProps) {
   // スクール情報と全コースデータを並行して取得
   const [school, courses] = await Promise.all([
     getSchoolWithCourses(schoolId),
-    getAllCoursesForSchool(schoolId),
+    getAllCoursesForList(schoolId),
   ]);
 
   return (

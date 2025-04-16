@@ -78,3 +78,16 @@ export interface CourseDetail {
   deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
   locationPrefecture: string;
 }
+
+// コース一覧表示用の簡略化された型
+export interface CourseListData {
+  id: string;
+  schoolId: string;
+  name: string;
+  description: string;
+  price?: number | null;
+  duration?: string | null;
+  locationPrefecture: string;
+  deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
+  courseCategories: { category: { id: string; name: string } }[];
+}
