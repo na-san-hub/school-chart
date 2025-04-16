@@ -1,8 +1,8 @@
-import { CourseAllData } from "@/types/school";
+import { CourseListData } from "@/types/school";
 import CourseCard from "./CourseCard";
 
 interface CourseListProps {
-  courses: CourseAllData[];
+  courses: CourseListData[];
 }
 
 const CourseList = ({ courses }: CourseListProps) => {
