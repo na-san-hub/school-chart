@@ -20,7 +20,7 @@ const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
       : course.description;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-md overflow-hidden hover:bg-gray-50 hover:opacity-75 transition-shadow flex flex-col h-full">
+    <div className="bg-white border border-gray-200 rounded-md overflow-hidden flex flex-col h-full">
       {/* コンテンツ部分 - flex-growを使用して空きスペースを埋める */}
       <div className="p-5 flex-grow">
         <h3 className="text-base font-semibold text-gray-700 mb-2">
