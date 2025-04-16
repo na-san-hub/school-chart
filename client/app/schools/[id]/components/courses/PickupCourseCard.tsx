@@ -53,7 +53,7 @@ const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
       </div>
 
       {/* ボタン部分 - 常に下部に固定 */}
-      <div className="px-5 py-3 bg-gray-50 border-t border-gray-200 mt-auto">
+      <div className="px-5 py-3 bg-gray-50  mt-auto">
         <button className="w-full text-cyan-600 text-sm font-medium hover:underline">
           コース詳細を見る
         </button>
