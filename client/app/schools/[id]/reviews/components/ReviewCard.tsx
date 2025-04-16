@@ -1,8 +1,11 @@
+"use client";
+
 import StarRating from "@/components/schoolData/StarRating";
 import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
-import { ThumbsUp } from "lucide-react";
+import { ThumbsUp, Lock } from "lucide-react";
+import { useAuth } from "@/context/AuthContext/useAuth";
+import { useRouter } from "next/navigation";
 
-// 性別と年代のマッピング
 const genderMap: Record<Gender, string> = {
   MALE: "男性",
   FEMALE: "女性",
@@ -23,7 +26,17 @@ interface ReviewCardProps {
 }
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
-  // 総合評価（5つの評価の平均）
+  const router = useRouter();
+  const { user } = useAuth();
+  const isLoggedIn = !!user;
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      const currentPath = window.location.pathname;
+      router.push(`/login?callbackUrl=${encodeURIComponent(currentPath)}`);
+    }
+  };
+
   const averageRating =
     (review.ratingCurriculum +
       review.ratingInstructor +
@@ -32,7 +45,6 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
       review.ratingCommunity) /
     5;
 
-  // 日付フォーマット
   const formattedDate = new Date(review.createdAt).toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "long",
@@ -40,8 +52,13 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   });
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
-      {/* ヘッダー部分 */}
+    <div
+      className={`bg-white border border-gray-200 rounded-lg p-6 ${
+        !isLoggedIn ? "cursor-pointer hover:opacity-75" : ""
+      }`}
+      onClick={handleCardClick}
+    >
+      {/* ヘッダー */}
       <div className="flex justify-between items-start mb-4">
         <div>
           <div className="flex items-center mb-1">
@@ -61,66 +78,71 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
         </div>
       </div>
 
-      {/* 口コミ内容 */}
-      <div className="border-t border-gray-100 pt-4 mt-2">
-        {/* 各カテゴリのコメント（横にレーティングを表示） */}
-        <div className="space-y-4">
-          {review.commentCurriculum &&
-            review.commentCurriculum.trim() !== "" && (
-              <CategoryComment
-                title="カリキュラム"
-                comment={review.commentCurriculum}
-                rating={review.ratingCurriculum}
-              />
-            )}
-
-          {review.commentInstructor &&
-            review.commentInstructor.trim() !== "" && (
-              <CategoryComment
-                title="講師"
-                comment={review.commentInstructor}
-                rating={review.ratingInstructor}
-              />
-            )}
-
-          {review.commentCost && review.commentCost.trim() !== "" && (
+      {/* 口コミ内容（ぼかし対象） */}
+      <div className="border-t border-gray-100 pt-4 mt-2 relative">
+        <div
+          className={`space-y-4 ${
+            !isLoggedIn ? "blur-sm select-none pointer-events-none" : ""
+          }`}
+        >
+          {review.commentCurriculum?.trim() && (
+            <CategoryComment
+              title="カリキュラム"
+              comment={review.commentCurriculum}
+              rating={review.ratingCurriculum}
+            />
+          )}
+          {review.commentInstructor?.trim() && (
+            <CategoryComment
+              title="講師"
+              comment={review.commentInstructor}
+              rating={review.ratingInstructor}
+            />
+          )}
+          {review.commentCost?.trim() && (
             <CategoryComment
               title="料金"
               comment={review.commentCost}
               rating={review.ratingCost}
             />
           )}
-
-          {review.commentSupport && review.commentSupport.trim() !== "" && (
+          {review.commentSupport?.trim() && (
             <CategoryComment
               title="サポート"
               comment={review.commentSupport}
               rating={review.ratingSupport}
             />
           )}
-
-          {review.commentCommunity && review.commentCommunity.trim() !== "" && (
+          {review.commentCommunity?.trim() && (
             <CategoryComment
               title="コミュニティ"
               comment={review.commentCommunity}
               rating={review.ratingCommunity}
             />
           )}
-
-          {/* 総合感想（最下部に移動） */}
-          {review.comment && review.comment.trim() !== "" && (
+          {review.comment?.trim() && (
             <div className="mt-6 pt-4 border-t border-gray-100">
               <div className="flex items-center mb-1">
                 <h3 className="text-sm font-semibold text-gray-700">
                   総合感想
                 </h3>
               </div>
-              <p className="text-gray-700 whitespace-pre-line">
+              <p className="text-gray-700 whitespace-pre-line text-sm">
                 {review.comment}
               </p>
             </div>
           )}
         </div>
+
+        {/* ロックオーバーレイ（非ログイン時） */}
+        {!isLoggedIn && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10 rounded-lg">
+            <Lock className="w-4 h-4 text-gray-400 mr-1" />
+            <span className="text-sm text-cyan-600">
+              続きを見るにはログインが必要です
+            </span>
+          </div>
+        )}
       </div>
 
       {/* フッター */}
@@ -134,7 +156,6 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   );
 };
 
-// カテゴリーコメントコンポーネント（レーティングを含む）
 const CategoryComment = ({
   title,
   comment,

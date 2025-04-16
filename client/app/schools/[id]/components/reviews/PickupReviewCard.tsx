@@ -133,7 +133,7 @@ export default function PickupReviewCard({
                     : "blur-sm select-none text-gray-700"
                 }`}
               >
-                {/* 👇 非ログイン時は長さを制限 */}
+                {/* 非ログイン時は長さを制限 */}
                 {isLoggedIn ? hiddenText : hiddenText.slice(0, 100)}
               </span>
 
