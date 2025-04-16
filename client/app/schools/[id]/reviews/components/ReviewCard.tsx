@@ -30,7 +30,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   const { user } = useAuth();
   const isLoggedIn = !!user;
 
-  const handleCardClick = (e: React.MouseEvent) => {
+  const handleCardClick = () => {
     if (!isLoggedIn) {
       const currentPath = window.location.pathname;
       router.push(`/login?callbackUrl=${encodeURIComponent(currentPath)}`);
