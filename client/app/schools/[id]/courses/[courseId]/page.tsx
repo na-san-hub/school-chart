@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getCourseDetails } from "@/lib/courses";
 import { getSchoolWithCourses } from "@/lib/school";
-import SchoolSidebar from "../../components/SchoolSidebar";
+import SchoolSidebar from "../../components/Sidebar/SchoolSidebar";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import CourseDetail from "./components/CourseDetail";

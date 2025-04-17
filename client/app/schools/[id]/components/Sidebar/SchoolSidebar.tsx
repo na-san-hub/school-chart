@@ -1,7 +1,5 @@
-import { PenSquare } from "lucide-react";
 import { SchoolWithCourses } from "@/types/school";
-import FavoriteButton from "@/components/userData/FavoriteButton";
-import { checkIsFavorite } from "@/actions/userPage";
+import SchoolActionButtons from "./ActionButtons";
 
 interface ReviewSidebarSectionProps {
   school: SchoolWithCourses;
@@ -18,25 +16,10 @@ const SchoolSidebar = async ({ school }: ReviewSidebarSectionProps) => {
     IN_PERSON: "対面",
   };
 
-  // ✅ お気に入り済みか確認
-  const isFavorite = await checkIsFavorite(school.id);
-
   return (
     <div className="space-y-4">
       {/* アクションボタン */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
-        <div className="space-y-3">
-          <FavoriteButton
-            schoolId={school.id}
-            isInitiallyFavorite={isFavorite}
-            className="w-full"
-          />
-          <button className="w-full py-3 bg-cyan-600 border border-cyan-600 text-white text-sm rounded-md flex items-center justify-center hover:opacity-90">
-            <PenSquare className="w-4 h-4 mr-2" />
-            口コミを投稿する
-          </button>
-        </div>
-      </div>
+      <SchoolActionButtons schoolId={school.id} />
 
       {/* スクール情報 */}
       <div className="bg-white border border-gray-200 rounded-lg p-4">

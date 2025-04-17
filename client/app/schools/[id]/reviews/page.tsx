@@ -2,7 +2,7 @@ import { getSchoolWithCourses } from "@/lib/school";
 import { prisma } from "@/lib/prisma";
 import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
 import ReviewsPageClient from "./client";
-import SchoolSidebar from "../components/SchoolSidebar";
+import SchoolSidebar from "../components/Sidebar/SchoolSidebar";
 
 export const dynamic = "force-dynamic";
 
@@ -109,13 +109,13 @@ export default async function ReviewsPage({
       <div className="max-w-5xl mx-auto px-4 py-6">
         <h1 className="text-xl font-bold text-gray-700 mb-5">口コミ一覧</h1>
         <div className="flex flex-col md:flex-row gap-6">
-          {/* ✅ クライアントコンポーネント（左） */}
+          {/*  クライアントコンポーネント（左） */}
           <ReviewsPageClient
             school={school}
             reviews={reviews as ReviewWithUser[]}
             totalCount={totalCount}
           />
-          {/* ✅ サーバーコンポーネント（右） */}
+          {/*  サーバーコンポーネント（右） */}
           <div className="w-full md:w-1/4">
             <SchoolSidebar school={school} />
           </div>
