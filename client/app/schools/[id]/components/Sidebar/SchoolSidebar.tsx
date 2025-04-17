@@ -1,5 +1,5 @@
 import { SchoolWithCourses } from "@/types/school";
-import SchoolActionButtons from "./ActionButtons";
+import SchoolActionButtons from "./SchoolActionButtons";
 
 interface ReviewSidebarSectionProps {
   school: SchoolWithCourses;

@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { CourseDetail } from "@/types/school";
 import { CourseListData } from "@/types/school";
 
 /**
@@ -8,18 +7,29 @@ import { CourseListData } from "@/types/school";
  */
 export async function getPickupCoursesForSchool(
   schoolId: string
-): Promise<CourseDetail[]> {
+): Promise<CourseListData[]> {
   try {
     return await prisma.course.findMany({
       where: { schoolId },
       select: {
         id: true,
+        schoolId: true,
         name: true,
         description: true,
         price: true,
         duration: true,
         deliveryMethod: true,
         locationPrefecture: true,
+        courseCategories: {
+          select: {
+            category: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
       take: 2,
       orderBy: { createdAt: "desc" },
