@@ -23,7 +23,7 @@ export default function PickupReviews({
         </div>
       ) : (
         <Link href={`/schools/${schoolId}/reviews`} className="block">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             {reviews.map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}

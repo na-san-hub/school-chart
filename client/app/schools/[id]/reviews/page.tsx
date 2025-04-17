@@ -2,7 +2,7 @@ import { getSchoolWithCourses } from "@/lib/school";
 import { prisma } from "@/lib/prisma";
 import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
 import ReviewsPageClient from "./client";
-import SchoolSidebar from "../components/Sidebar/SchoolSidebar";
+import SchoolSidebar from "../components/sidebar/DetailSidebar";
 
 export const dynamic = "force-dynamic";
 
