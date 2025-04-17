@@ -1,6 +1,6 @@
 import FavoriteButton from "@/components/userData/FavoriteButton";
 import { checkIsFavorite } from "@/actions/userPage";
-import ReviewsButton from "./reviewsButton";
+import ReviewsButton from "./ReviewsButton";
 
 interface SchoolActionButtonsProps {
   schoolId: string;
