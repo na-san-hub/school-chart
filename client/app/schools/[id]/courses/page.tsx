@@ -1,7 +1,7 @@
 import { getSchoolWithCourses } from "@/lib/school";
 import { getAllCoursesForList } from "@/lib/courses";
 import CourseList from "./components/CourseList";
-import SchoolSidebar from "../components/sidebar/DetailSidebar";
+import DetailSidebar from "../components/sidebar/DetailSidebar";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +33,7 @@ export default async function CoursesPage({ params }: CoursesPageProps) {
 
           {/* 右側: スクール情報と操作ボタン */}
           <div className="w-full md:w-1/4">
-            <SchoolSidebar school={school} />
+            <DetailSidebar school={school} />
           </div>
         </div>
       </div>
