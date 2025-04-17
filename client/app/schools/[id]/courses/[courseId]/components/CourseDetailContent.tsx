@@ -39,7 +39,7 @@ export default function CourseDetailContent({
           </div>
         </div>
         <p className="text-xs text-gray-500 p-4">
-          ※価格変更やキャンペーンにより、掲載時の情報から変更されている場合がございます。
+          ※価格変更やキャンペーンにより、実際の情報と異なる場合がございます。
           <br />
           詳細は各スクールの公式サイトにてご確認ください。
         </p>

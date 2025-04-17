@@ -6,11 +6,14 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import CourseDetail from "./components/CourseDetail";
 
-export default async function CourseDetailPage({
-  params,
-}: {
-  params: { id: string; courseId: string };
-}) {
+type PageProps = {
+  params: {
+    id: string;
+    courseId: string;
+  };
+};
+
+export default async function CourseDetailPage({ params }: PageProps) {
   try {
     const schoolId = params.id;
 
