@@ -102,15 +102,53 @@ export default function Loading() {
               </div>
             </div>
           </div>
-
-          {/* サイドバーのローディング状態 */}
-          <div className="w-full md:w-1/4">
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="w-32 h-5 mb-3 bg-gray-200 animate-pulse rounded"></div>
+          {/* 右側: サイドバーのスケルトン */}
+          <div className="w-full md:w-1/4 space-y-4">
+            {/* アクションボタンスケルトン */}
+            <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm animate-pulse">
               <div className="space-y-3">
-                <div className="w-full h-20 bg-gray-200 animate-pulse rounded"></div>
-                <div className="w-full h-12 bg-gray-200 animate-pulse rounded"></div>
-                <div className="w-full h-36 bg-gray-200 animate-pulse rounded"></div>
+                <div className="h-10 bg-gray-200 w-full rounded"></div>
+                <div className="h-10 bg-gray-200 w-full rounded"></div>
+              </div>
+            </div>
+
+            {/* スクール情報スケルトン */}
+            <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm animate-pulse">
+              <div className="h-5 bg-gray-200 w-32 mb-3 rounded"></div>
+
+              {/* 公式サイトスケルトン */}
+              <div className="py-2 flex gap-2 border-b border-gray-200">
+                <div className="h-4 bg-gray-200 w-24 rounded"></div>
+                <div className="h-4 bg-gray-200 w-48 rounded"></div>
+              </div>
+
+              {/* 受講形式スケルトン */}
+              <div className="py-2 flex gap-2 border-b border-gray-200">
+                <div className="h-4 bg-gray-200 w-24 rounded"></div>
+                <div className="flex flex-wrap gap-1">
+                  <div className="h-6 bg-gray-200 w-20 rounded"></div>
+                  <div className="h-6 bg-gray-200 w-20 rounded"></div>
+                </div>
+              </div>
+
+              {/* 特徴スケルトン */}
+              <div className="py-2 flex gap-2 border-b border-gray-200">
+                <div className="h-4 bg-gray-200 w-24 rounded"></div>
+                <div className="flex flex-wrap gap-1">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-6 bg-gray-200 w-16 rounded"></div>
+                  ))}
+                </div>
+              </div>
+
+              {/* カテゴリースケルトン */}
+              <div className="py-2 flex gap-2">
+                <div className="h-8 bg-gray-200 w-24 rounded"></div>
+                <div className="flex flex-wrap gap-1">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-6 bg-gray-200 w-16 rounded"></div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
