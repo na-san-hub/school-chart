@@ -21,7 +21,7 @@ export default function SchoolHeader({ school }: { school: SchoolCoverData }) {
         {/* 右側: スクール情報 */}
         <div className="flex flex-col">
           {/* スクール名 */}
-          <h1 className="text-3xl font-bold text-gray-700">{school.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-800">{school.name}</h1>
 
           {/* 星評価 */}
           <StarRating rating={school.rating} size={"base"} />
