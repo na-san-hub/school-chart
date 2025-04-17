@@ -1,5 +1,6 @@
 import { formatPrice } from "@/lib/utils";
 import { MapPin } from "lucide-react";
+import Link from "next/link";
 
 interface PickupCourseCardProps {
   course: {
@@ -10,9 +11,10 @@ interface PickupCourseCardProps {
     duration: string | null;
     locationPrefecture: string;
   };
+  schoolId: string;
 }
 
-const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
+const PickupCourseCard = ({ course, schoolId }: PickupCourseCardProps) => {
   // 説明文は最大100文字に抑える
   const truncatedDescription =
     course.description.length > 100
@@ -22,7 +24,7 @@ const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
   return (
     <div className="bg-white border border-gray-200 rounded-md overflow-hidden flex flex-col h-full">
       {/* コンテンツ部分 - flex-growを使用して空きスペースを埋める */}
-      <div className="p-5 flex-grow">
+      <div className="p-6 flex-grow">
         <h3 className="text-base font-semibold text-gray-700 mb-2">
           {course.name}
         </h3>
@@ -54,9 +56,14 @@ const PickupCourseCard = ({ course }: PickupCourseCardProps) => {
 
       {/* ボタン部分 - 常に下部に固定 */}
       <div className="px-5 py-3 bg-gray-50  mt-auto">
-        <button className="w-full text-cyan-600 text-sm font-medium hover:underline">
-          コース詳細を見る
-        </button>
+        <Link
+          href={`/schools/${schoolId}/courses/${course.id}`}
+          className="block"
+        >
+          <button className="w-full text-cyan-600 text-sm font-medium hover:underline">
+            コース詳細を見る
+          </button>{" "}
+        </Link>
       </div>
     </div>
   );
