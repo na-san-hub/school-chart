@@ -59,7 +59,7 @@ export default function CourseDetailContent({
       <section className="mb-4">
         <h2 className="text-base font-bold text-gray-700 mb-3">コースの特徴</h2>
         <div className="flex flex-wrap gap-2 mb-2">
-          {course.courseFeatures?.map((item: any) => (
+          {course.courseFeatures?.map((item) => (
             <span
               key={item.feature.id}
               className="px-3 py-1 rounded-full text-gray-600 bg-gray-100 text-sm"
@@ -77,7 +77,7 @@ export default function CourseDetailContent({
             習得できるスキル
           </h2>
           <div className="flex flex-wrap gap-2">
-            {course.courseSkills.map((item: any) => (
+            {course.courseSkills.map((item) => (
               <span
                 key={item.skill.id}
                 className="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm"

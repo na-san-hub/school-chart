@@ -1,6 +1,3 @@
-import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
-
 export default function Loading() {
   return (
     <div className="border-t border-t-gray-400 w-full">

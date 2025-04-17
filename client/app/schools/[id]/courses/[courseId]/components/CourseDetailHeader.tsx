@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { CourseWithSchool } from "@/types/school";
-
 interface CourseDetailHeaderProps {
   course: CourseWithSchool;
 }
@@ -27,7 +26,7 @@ export default function CourseDetailHeader({
         {/* カテゴリー */}
         <div className="flex flex-col">
           <div className="flex gap-2">
-            {course.courseCategories?.map((item: any) => (
+            {course.courseCategories?.map((item) => (
               <span
                 key={item.category.id}
                 className="text-sm px-2 py-1 mb-1 rounded-md text-yellow-600 border border-yellow-600"

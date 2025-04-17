@@ -99,4 +99,23 @@ export interface CourseWithSchool extends Omit<CourseAllData, "school"> {
     name: string;
     logo: string | null;
   };
+
+  courseCategories: {
+    category: {
+      id: string;
+      name: string;
+    };
+  }[];
+  courseFeatures: {
+    feature: {
+      id: string;
+      name: string;
+    };
+  }[];
+  courseSkills: {
+    skill: {
+      id: string;
+      name: string;
+    };
+  }[];
 }
