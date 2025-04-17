@@ -68,17 +68,6 @@ export interface RatingData {
   score: number;
 }
 
-// ピックアップコース表示用の詳細型
-export interface CourseDetail {
-  id: string;
-  name: string;
-  description: string;
-  price: number | null;
-  duration: string | null;
-  deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
-  locationPrefecture: string;
-}
-
 // コース一覧表示用の簡略化された型
 export interface CourseListData {
   id: string;

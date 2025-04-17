@@ -1,5 +1,5 @@
 import { CourseListData } from "@/types/school";
-import CourseCard from "./CourseCard";
+import CourseCard from "../../components/courses/CourseCard";
 
 interface CourseListProps {
   courses: CourseListData[];

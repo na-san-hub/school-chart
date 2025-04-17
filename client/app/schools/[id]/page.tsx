@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import ChartSection from "@/schools/[id]/components/ChartSection";
 import { getSchoolWithCourses, getRadarChartData } from "@/lib/school";
 import SchoolDetail from "@/schools/[id]/components/SchoolDetail";
-import { getReviewsForSchool } from "@/lib/reviews";
+import { getPickupReviewsForSchool } from "@/lib/reviews";
 import PickupReviews from "./components/reviews/PickupReviews";
 import { getPickupCoursesForSchool } from "@/lib/courses";
 import PickupCourses from "./components/courses/PickupCourses";
@@ -19,7 +19,7 @@ export default async function SchoolPage(props: {
   const [chartData, school, reviews, pickupCourses] = await Promise.all([
     getRadarChartData(schoolId),
     getSchoolWithCourses(schoolId),
-    getReviewsForSchool(schoolId),
+    getPickupReviewsForSchool(schoolId),
     getPickupCoursesForSchool(schoolId),
   ]);
 

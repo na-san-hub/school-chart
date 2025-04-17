@@ -1,5 +1,5 @@
 import { ReviewWithUser } from "@/types/review";
-import ReviewCard from "./ReviewCard";
+import ReviewCard from "../../../[id]/components/reviews/ReviewCard";
 import ReviewPagination from "./ReviewPagination";
 
 interface ReviewListProps {

@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { ReviewWithUser } from "@/types/review";
 
-// 特定のスクールのピックアップレビュー（最新4件）取得
-export const getReviewsForSchool = async (
+// 特定のスクールのピックアップレビュー（最新2件）取得
+export const getPickupReviewsForSchool = async (
   schoolId: string
 ): Promise<ReviewWithUser[]> => {
   try {
@@ -41,7 +41,7 @@ export const getReviewsForSchool = async (
       orderBy: {
         createdAt: "desc",
       },
-      take: 4,
+      take: 2,
     });
 
     return reviews as ReviewWithUser[];
