@@ -91,3 +91,31 @@ export interface CourseListData {
   deliveryMethod: "IN_PERSON" | "ONLINE" | "HYBRID";
   courseCategories: { category: { id: string; name: string } }[];
 }
+
+// getCourseDetails関数の戻り値の型(コース詳細ページ用)
+export interface CourseWithSchool extends Omit<CourseAllData, "school"> {
+  school: {
+    id: string;
+    name: string;
+    logo: string | null;
+  };
+
+  courseCategories: {
+    category: {
+      id: string;
+      name: string;
+    };
+  }[];
+  courseFeatures: {
+    feature: {
+      id: string;
+      name: string;
+    };
+  }[];
+  courseSkills: {
+    skill: {
+      id: string;
+      name: string;
+    };
+  }[];
+}

@@ -23,7 +23,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
 
   return (
     <div className="bg-white border border-gray-200 rounded-md overflow-hidden flex flex-col h-full">
-      <div className="p-5 flex-grow">
+      <div className="p-6 flex-grow">
         {/* カテゴリー */}
         {course.courseCategories?.length > 0 && (
           <div className="mb-3">
@@ -31,7 +31,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
               {course.courseCategories.map((cat, index) => (
                 <button
                   key={index}
-                  className="px-2 py-1 rounded-md text-gray-500 border border-gray-300 cursor-default"
+                  className="px-2 py-1 rounded-md text-yellow-600 border border-yellow-600 cursor-default"
                 >
                   {cat.category.name}
                 </button>
@@ -40,7 +40,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           </div>
         )}
 
-        <h3 className="text-base font-semibold text-gray-700 mb-2">
+        <h3 className="text-lg font-semibold text-gray-700 mb-2">
           {course.name || "コース名なし"}
         </h3>
 
@@ -61,7 +61,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           {truncatedDescription}
         </p>
         {/* 期間と受講料 */}
-        <div className="my-3 flex flex-wrap gap-3 text-sm">
+        <div className="mt-3 flex flex-wrap gap-3 text-sm">
           {course.duration && (
             <div className="text-gray-600">
               <span className="font-medium">期間:</span> {course.duration}

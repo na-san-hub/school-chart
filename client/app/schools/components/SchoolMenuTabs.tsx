@@ -21,7 +21,14 @@ export default function SchoolMenuTabs({
   return (
     <div className="flex max-w-5xl mx-auto bg-gray-100 px-16 ">
       {tabs.map((tab) => {
-        const isActive = pathname === `/schools/${schoolID}${tab.path}`;
+        let isActive = pathname === `/schools/${schoolID}${tab.path}`;
+        // コース詳細ページの場合はコース一覧タブをアクティブにする
+        if (
+          tab.id === "course" &&
+          pathname.startsWith(`/schools/${schoolID}/courses/`)
+        ) {
+          isActive = true;
+        }
         return (
           <Link
             key={tab.id}

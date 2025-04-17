@@ -61,6 +61,7 @@ export default function Loading() {
             <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm animate-pulse">
               <div className="space-y-3">
                 <div className="h-10 bg-gray-200 w-full rounded"></div>
+                <div className="h-10 bg-gray-200 w-full rounded"></div>
               </div>
             </div>
 

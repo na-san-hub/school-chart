@@ -67,7 +67,9 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
               {averageRating.toFixed(1)}
             </span>
           </div>
-          <div className="text-gray-500 text-sm">{review.course.name}</div>
+          <div className="text-gray-700 text-base font-semibold">
+            {review.course.name}
+          </div>
         </div>
         <div className="text-sm text-gray-500 text-right">
           <div>{formattedDate}</div>

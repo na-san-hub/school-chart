@@ -101,7 +101,9 @@ export default function PickupReviewCard({
         ${!isLoggedIn ? "cursor-pointer hover:opacity-75" : ""}`}
       onClick={!isLoggedIn ? handleCardClick : undefined}
     >
-      <div className="text-base text-gray-500 mb-1">{review.course.name}</div>
+      <div className="text-base font-semibold text-gray-700 mb-1">
+        {review.course.name}
+      </div>
 
       <div className="mb-2 flex items-center gap-1">
         <StarRating rating={avgRating} size="sm" />
