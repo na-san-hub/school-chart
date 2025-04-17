@@ -6,14 +6,17 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import CourseDetail from "./components/CourseDetail";
 
-type PageProps = {
+// Next.jsはページコンポーネントのpropsの形式を定義しています
+// .next/types/app/...の中で自動生成された型定義に合わせる必要があります
+type Props = {
   params: {
     id: string;
     courseId: string;
   };
+  searchParams: Record<string, string | string[] | undefined>;
 };
 
-export default async function CourseDetailPage({ params }: PageProps) {
+export default async function CourseDetailPage({ params }: Props) {
   try {
     const schoolId = params.id;
 
