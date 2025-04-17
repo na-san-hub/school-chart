@@ -21,7 +21,7 @@ const SearchResultCard = async ({ school }: SearchResultCardProps) => {
           isInitiallyFavorite={isFavorite}
           className=""
         />
-        <button className="py-3 px-6 my-4 border rounded-md bg-cyan-600 hover:opacity-75 text-white text-sm">
+        <button className="py-3 px-6 my-4 rounded-md  bg-cyan-600 hover:opacity-75 text-white text-sm">
           コース一覧を見る
         </button>
       </div>
