@@ -1,7 +1,7 @@
 import { getSchoolWithCourses } from "@/lib/school";
 import { getAllCoursesForList } from "@/lib/courses";
 import CourseList from "./components/CourseList";
-import DetailSidebar from "../components/side_menu/DetailSidebar";
+import DetailSidebar from "../components/sidebar/DetailSidebar";
 
 export const dynamic = "force-dynamic";
 
