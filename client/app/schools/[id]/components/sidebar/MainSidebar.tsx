@@ -1,18 +1,20 @@
+import RelatedSchools from "./RelatedSchools";
 import SchoolActionButtons from "./SchoolActionButtons";
-// RelatedSchools は後で実装
+import { SchoolWithCourses } from "@/types/school";
 
 interface MainSidebarProps {
   schoolId: string;
+  school: SchoolWithCourses;
 }
 
-const MainSidebar = async ({ schoolId }: MainSidebarProps) => {
+const MainSidebar = async ({ schoolId, school }: MainSidebarProps) => {
   return (
     <div className="space-y-4">
       {/* アクションボタン */}
       <SchoolActionButtons schoolId={schoolId} />
 
-      {/* 関連スクール紹介は後で実装 */}
-      {/* <RelatedSchools schoolId={schoolId} /> */}
+      {/* 関連スクール紹介 */}
+      <RelatedSchools schoolId={schoolId} categories={school.categories} />
     </div>
   );
 };
