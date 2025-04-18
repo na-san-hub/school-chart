@@ -7,7 +7,7 @@ import { getPickupReviewsForSchool } from "@/lib/reviews";
 import PickupReviews from "./components/reviews/PickupReviews";
 import { getPickupCoursesForSchool } from "@/lib/courses";
 import PickupCourses from "./components/courses/PickupCourses";
-import MainSidebar from "./components/side_menu/MainSidebar";
+import MainSidebar from "./components/sidebar/MainSidebar";
 
 export default async function SchoolPage(props: {
   params: Promise<{ id: string }>;
