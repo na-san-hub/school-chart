@@ -160,3 +160,58 @@ export async function getRadarChartData(
     throw new Error("スクールの情報の取得に失敗しました");
   }
 }
+
+/**
+ * 関連スクールを取得する（同じカテゴリのスクール最大5件）
+ * 現在のスクールは除外する
+ */
+export async function getRelatedSchools(
+  schoolId: string,
+  categories: string[],
+  limit: number = 5
+): Promise<
+  Array<{ id: string; name: string; logo: string | null; rating: number }>
+> {
+  if (!categories || categories.length === 0) {
+    return [];
+  }
+
+  try {
+    // 同じカテゴリを持つコースがあるスクールを検索
+    const schools = await prisma.school.findMany({
+      where: {
+        id: {
+          not: schoolId, // 現在のスクールは除外
+        },
+        courses: {
+          some: {
+            courseCategories: {
+              some: {
+                category: {
+                  name: {
+                    in: categories,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        logo: true,
+        rating: true,
+      },
+      orderBy: {
+        rating: "desc",
+      },
+      take: limit,
+    });
+
+    return schools;
+  } catch (error) {
+    console.error("関連スクール取得エラー:", error);
+    return [];
+  }
+}

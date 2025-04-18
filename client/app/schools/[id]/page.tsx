@@ -48,7 +48,7 @@ export default async function SchoolPage(props: {
 
         {/* 右側：サイドバー */}
         <div className="w-full md:w-1/4 mt-5 md:mt-0">
-          <MainSidebar schoolId={schoolId} />
+          <MainSidebar schoolId={schoolId} school={school} />
         </div>
       </div>
     </div>
