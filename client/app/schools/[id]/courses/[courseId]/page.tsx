@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getCourseDetails } from "@/lib/courses";
 import { getSchoolWithCourses } from "@/lib/school";
-import SchoolSidebar from "../../components/Sidebar/SchoolSidebar";
+import DetailSidebar from "../../components/side_menu/DetailSidebar";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import CourseDetail from "./components/CourseDetail";
@@ -44,7 +44,7 @@ export default async function CourseDetailPage(props: {
 
             {/* スクールサイドバー */}
             <div className="w-full md:w-1/4">
-              <SchoolSidebar school={school} />
+              <DetailSidebar school={school} />
             </div>
           </div>
         </div>

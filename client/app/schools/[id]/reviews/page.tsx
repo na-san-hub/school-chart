@@ -2,7 +2,7 @@ import { getSchoolWithCourses } from "@/lib/school";
 import { prisma } from "@/lib/prisma";
 import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
 import ReviewsPageClient from "./client";
-import SchoolSidebar from "../components/Sidebar/SchoolSidebar";
+import DetailSidebar from "../components/side_menu/DetailSidebar";
 
 export const dynamic = "force-dynamic";
 
@@ -117,7 +117,7 @@ export default async function ReviewsPage({
           />
           {/*  サーバーコンポーネント（右） */}
           <div className="w-full md:w-1/4">
-            <SchoolSidebar school={school} />
+            <DetailSidebar school={school} />
           </div>
         </div>
       </div>
