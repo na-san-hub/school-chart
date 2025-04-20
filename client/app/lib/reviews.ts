@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
+import { Prisma } from "@prisma/client";
 
 // 特定のスクールのピックアップレビュー（最新2件）取得
 export const getPickupReviewsForSchool = async (
@@ -64,7 +65,7 @@ export const getAllReviewsForSchool = async (
 ): Promise<{ reviews: ReviewWithUser[]; totalCount: number }> => {
   try {
     // 検索条件
-    const whereCondition: any = {
+    const whereCondition: Prisma.ReviewWhereInput = {
       course: {
         schoolId,
       },
@@ -73,22 +74,20 @@ export const getAllReviewsForSchool = async (
 
     // フィルター条件を追加
     if (filters) {
-      if (filters.gender) {
-        whereCondition.user = {
-          ...whereCondition.user,
-          gender: {
-            equals: filters.gender as Gender,
-          },
-        };
-      }
+      // gender または ageGroup がある場合、userオブジェクトを初期化
+      if (filters.gender || filters.ageGroup) {
+        // userオブジェクトを初期化
+        whereCondition.user = {};
 
-      if (filters.ageGroup) {
-        whereCondition.user = {
-          ...whereCondition.user,
-          ageGroup: {
-            equals: filters.ageGroup as AgeGroup,
-          },
-        };
+        // gender条件を追加
+        if (filters.gender) {
+          whereCondition.user.gender = filters.gender as Gender;
+        }
+
+        // ageGroup条件を追加
+        if (filters.ageGroup) {
+          whereCondition.user.ageGroup = filters.ageGroup as AgeGroup;
+        }
       }
 
       if (filters.keyword) {
