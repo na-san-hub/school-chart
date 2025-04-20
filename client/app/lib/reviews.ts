@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { ReviewWithUser } from "@/types/review";
+import { ReviewWithUser, Gender, AgeGroup } from "@/types/review";
+import { Prisma } from "@prisma/client";
 
 // 特定のスクールのピックアップレビュー（最新2件）取得
 export const getPickupReviewsForSchool = async (
@@ -11,6 +12,7 @@ export const getPickupReviewsForSchool = async (
         course: {
           schoolId,
         },
+        isApproved: true, // 承認済みのレビューのみ
       },
       select: {
         id: true,
@@ -43,7 +45,6 @@ export const getPickupReviewsForSchool = async (
       },
       take: 2,
     });
-
     return reviews as ReviewWithUser[];
   } catch (error) {
     console.error("ピックアップレビュー取得エラー:", error);
@@ -55,15 +56,51 @@ export const getPickupReviewsForSchool = async (
 export const getAllReviewsForSchool = async (
   schoolId: string,
   page = 1,
-  perPage = 10
+  perPage = 10,
+  filters?: {
+    gender?: string;
+    ageGroup?: string;
+    keyword?: string;
+  }
 ): Promise<{ reviews: ReviewWithUser[]; totalCount: number }> => {
   try {
     // 検索条件
-    const whereCondition = {
+    const whereCondition: Prisma.ReviewWhereInput = {
       course: {
         schoolId,
       },
+      isApproved: true, // 承認済みのレビューのみ
     };
+
+    // フィルター条件を追加
+    if (filters) {
+      // gender または ageGroup がある場合、userオブジェクトを初期化
+      if (filters.gender || filters.ageGroup) {
+        // userオブジェクトを初期化
+        whereCondition.user = {};
+
+        // gender条件を追加
+        if (filters.gender) {
+          whereCondition.user.gender = filters.gender as Gender;
+        }
+
+        // ageGroup条件を追加
+        if (filters.ageGroup) {
+          whereCondition.user.ageGroup = filters.ageGroup as AgeGroup;
+        }
+      }
+
+      if (filters.keyword) {
+        whereCondition.OR = [
+          { comment: { contains: filters.keyword } },
+          { commentCurriculum: { contains: filters.keyword } },
+          { commentInstructor: { contains: filters.keyword } },
+          { commentCost: { contains: filters.keyword } },
+          { commentSupport: { contains: filters.keyword } },
+          { commentCommunity: { contains: filters.keyword } },
+        ];
+      }
+    }
 
     // 総件数を取得
     const totalCount = await prisma.review.count({

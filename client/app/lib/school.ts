@@ -95,7 +95,13 @@ export async function getSchoolHeader(id: string): Promise<SchoolCoverData> {
         courses: {
           select: {
             _count: {
-              select: { reviews: true },
+              select: {
+                reviews: {
+                  where: {
+                    isApproved: true, // 承認済みのレビューのみカウント
+                  },
+                },
+              },
             },
           },
         },
