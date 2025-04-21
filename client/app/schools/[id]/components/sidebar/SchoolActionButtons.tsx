@@ -18,7 +18,7 @@ const SchoolActionButtons = async ({ schoolId }: SchoolActionButtonsProps) => {
           isInitiallyFavorite={isFavorite}
           className="w-full"
         />
-        <ReviewsButton />
+        <ReviewsButton schoolId={schoolId} />
       </div>
     </div>
   );

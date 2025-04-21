@@ -47,3 +47,19 @@ export interface UserReviewDisplay {
   rating: number;
   createdAt: Date;
 }
+
+// レビュー投稿フォーム用の型
+export interface ReviewFormInput {
+  courseId: string;
+  ratingCurriculum: number;
+  commentCurriculum: string;
+  ratingInstructor: number;
+  commentInstructor: string;
+  ratingCost: number;
+  commentCost: string;
+  ratingSupport: number;
+  commentSupport: string;
+  ratingCommunity: number;
+  commentCommunity: string;
+  comment?: string;
+}
