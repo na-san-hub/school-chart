@@ -64,8 +64,7 @@ export default function LogoutPage() {
 
   // 強制リトライボタン
   const handleForceLogout = () => {
-    router.push("/?logout=forced");
-    router.refresh();
+    window.location.reload();
   };
 
   return (
