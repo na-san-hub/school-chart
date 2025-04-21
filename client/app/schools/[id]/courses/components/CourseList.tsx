@@ -17,13 +17,11 @@ const CourseList = ({ courses }: CourseListProps) => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* コースカードリスト */}
-      <div className="space-y-4">
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
-      </div>
+    //コースカードリスト
+    <div className="space-y-4">
+      {courses.map((course) => (
+        <CourseCard key={course.id} course={course} />
+      ))}
     </div>
   );
 };
