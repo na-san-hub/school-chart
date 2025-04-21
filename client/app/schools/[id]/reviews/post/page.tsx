@@ -8,8 +8,11 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 export default async function NewReviewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  // paramsをawaitで解決
+  const { id: schoolId } = await params;
+
   // Supabaseクライアントを作成して認証チェック
   const cookieStore = cookies();
   const supabase = createServerComponentClient({
@@ -21,10 +24,8 @@ export default async function NewReviewPage({
 
   if (!session?.user) {
     // ログインしていない場合はログインページにリダイレクト
-    redirect(`/login?callbackUrl=/schools/${params.id}/reviews/new`);
+    redirect(`/login?callbackUrl=/schools/${schoolId}/reviews/new`);
   }
-
-  const schoolId = params.id;
 
   // スクール情報とコース一覧を取得
   const [school, courses] = await Promise.all([
