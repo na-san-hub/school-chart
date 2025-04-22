@@ -64,3 +64,21 @@ export const priceRanges = [
   { label: "30万円", value: "300000" },
   { label: "50万円", value: "500000" },
 ];
+
+import { AgeGroup, Gender } from "@prisma/client";
+// 年齢グループの選択肢
+export const ageGroupOptions = [
+  { value: AgeGroup.TEENS, label: "10代" },
+  { value: AgeGroup.TWENTIES, label: "20代" },
+  { value: AgeGroup.THIRTIES, label: "30代" },
+  { value: AgeGroup.FORTIES, label: "40代" },
+  { value: AgeGroup.FIFTIES, label: "50代" },
+  { value: AgeGroup.SIXTIES, label: "60代以上" },
+];
+
+// 性別の選択肢
+export const genderOptions = [
+  { value: Gender.MALE, label: "男性" },
+  { value: Gender.FEMALE, label: "女性" },
+  { value: Gender.OTHER, label: "その他" },
+];

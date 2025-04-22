@@ -16,10 +16,7 @@ export default function PickupReviews({
       </h2>
       {reviews.length === 0 ? (
         <div className="w-full bg-gray-50 border border-gray-200 rounded-md p-6 text-center text-gray-500 mb-10">
-          <p className="text-sm">まだ口コミが投稿されていません。</p>
-          <button className="mt-2 text-sm border bg-cyan-600 hover:opacity-75 text-white rounded-md py-2 px-5">
-            ログインしてレビューを投稿する
-          </button>
+          <p className="text-sm py-5">まだ口コミが投稿されていません。</p>
         </div>
       ) : (
         <Link href={`/schools/${schoolId}/reviews`} className="block">

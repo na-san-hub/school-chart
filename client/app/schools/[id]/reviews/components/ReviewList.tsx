@@ -13,10 +13,7 @@ const ReviewList = ({ reviews, totalCount }: ReviewListProps) => {
   if (reviews.length === 0) {
     return (
       <div className="text-center py-10 bg-gray-50 border border-gray-200 rounded-lg">
-        <p className="text-gray-500">条件に合う口コミはありません。</p>
-        <button className="mt-4 bg-cyan-600 text-white px-4 py-2 rounded-md text-sm hover:opacity-90">
-          口コミを投稿する
-        </button>
+        <p className="text-sm text-gray-500">条件に合う口コミはありません。</p>
       </div>
     );
   }

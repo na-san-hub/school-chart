@@ -1,42 +1,52 @@
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// 環境変数から認証情報を取得（.env に設定する）
-const USERNAME = process.env.BASIC_AUTH_USER || "admin";
-const PASSWORD = process.env.BASIC_AUTH_PASS || "password";
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
 
-// Basic 認証の処理
-export function middleware(req: NextRequest) {
-  const authHeader = req.headers.get("authorization");
+  // セッション取得
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  // 認証情報がない場合、401 を返す
-  if (!authHeader) {
-    return new Response("Unauthorized", {
-      status: 401,
-      headers: { "WWW-Authenticate": 'Basic realm="Secure Area"' },
-    });
+  // 認証保護ルート
+  const protectedRoutes = ["/mypage"];
+  const currentPath = req.nextUrl.pathname;
+
+  // 認証が必要なページで未ログインの場合はログインページへリダイレクト
+  if (
+    protectedRoutes.some((route) => currentPath.startsWith(route)) &&
+    !session
+  ) {
+    const redirectUrl = new URL("/login", req.url);
+    redirectUrl.searchParams.set(
+      "callbackUrl",
+      encodeURIComponent(req.nextUrl.pathname)
+    );
+    return NextResponse.redirect(redirectUrl);
   }
 
-  // `Basic ユーザー名:パスワード` の形式で認証情報を取得
-  const base64Credentials = authHeader.split(" ")[1];
-  const credentials = atob(base64Credentials).split(":");
-
-  const username = credentials[0];
-  const password = credentials[1];
-
-  // ユーザー名とパスワードのチェック
-  if (username !== USERNAME || password !== PASSWORD) {
-    return new Response("Unauthorized", {
-      status: 401,
-      headers: { "WWW-Authenticate": 'Basic realm="Secure Area"' },
-    });
+  // ログイン済みでログインページやユーザー登録ページにアクセスした場合はマイページへリダイレクト
+  if ((currentPath === "/login" || currentPath === "/register") && session) {
+    return NextResponse.redirect(new URL("/mypage", req.url));
   }
 
-  // 認証成功ならリクエストを通過
-  return NextResponse.next();
+  return res;
 }
 
-// すべてのページで適用
+// ミドルウェアを適用するパス
 export const config = {
-  matcher: ["/(.*)"], // すべてのページを認証対象にする
+  matcher: [
+    /*
+     * マッチするパス:
+     * - /mypage, /mypage/favorites, etc.
+     * - /login
+     * - /register
+     */
+    "/mypage/:path*",
+    "/login",
+    "/register",
+  ],
 };
