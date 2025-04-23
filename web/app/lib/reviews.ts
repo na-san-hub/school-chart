@@ -61,6 +61,7 @@ export const getAllReviewsForSchool = async (
     gender?: string;
     ageGroup?: string;
     keyword?: string;
+    sort?: string;
   }
 ): Promise<{ reviews: ReviewWithUser[]; totalCount: number }> => {
   try {
@@ -107,6 +108,44 @@ export const getAllReviewsForSchool = async (
       where: whereCondition,
     });
 
+    // ソート条件の設定
+    let orderBy: Prisma.ReviewOrderByWithRelationInput[] = [];
+
+    if (filters?.sort) {
+      switch (filters.sort) {
+        case "rating_high":
+          // 評価の高い順（5つの評価の平均値が高いもの優先）
+          orderBy = [
+            { ratingCurriculum: "desc" },
+            { ratingInstructor: "desc" },
+            { ratingCost: "desc" },
+            { ratingSupport: "desc" },
+            { ratingCommunity: "desc" },
+            { createdAt: "desc" }, // 同点の場合は新しい順
+          ];
+          break;
+        case "rating_low":
+          // 評価の低い順（5つの評価の平均値が低いもの優先）
+          orderBy = [
+            { ratingCurriculum: "asc" },
+            { ratingInstructor: "asc" },
+            { ratingCost: "asc" },
+            { ratingSupport: "asc" },
+            { ratingCommunity: "asc" },
+            { createdAt: "desc" }, // 同点の場合は新しい順
+          ];
+          break;
+        case "latest":
+        default:
+          // デフォルトは新着順
+          orderBy = [{ createdAt: "desc" }];
+          break;
+      }
+    } else {
+      // ソート条件がない場合のデフォルト（新着順）
+      orderBy = [{ createdAt: "desc" }];
+    }
+
     // レビューを取得（ページネーション付き）
     const reviews = await prisma.review.findMany({
       where: whereCondition,
@@ -136,9 +175,7 @@ export const getAllReviewsForSchool = async (
           },
         },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: orderBy,
       skip: (page - 1) * perPage,
       take: perPage,
     });

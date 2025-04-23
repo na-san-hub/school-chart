@@ -12,6 +12,7 @@ interface ReviewsPageProps {
     gender?: string;
     ageGroup?: string;
     keyword?: string;
+    sort?: string;
   }>;
 }
 
@@ -27,13 +28,14 @@ export default async function ReviewsPage({
   const gender = resolvedSearchParams.gender;
   const ageGroup = resolvedSearchParams.ageGroup;
   const keyword = resolvedSearchParams.keyword || "";
+  const sort = resolvedSearchParams.sort || "latest";
 
   // getAllReviewsForSchool関数を使用
   const { reviews, totalCount } = await getAllReviewsForSchool(
     schoolId,
     page,
     10, // perPage
-    { gender, ageGroup, keyword } // フィルター
+    { gender, ageGroup, keyword, sort } // フィルター
   );
 
   const school = await getSchoolWithCourses(schoolId);
