@@ -42,3 +42,6 @@ next-env.d.ts
 
 # prisma
 prisma/migrations/migration_lock.toml
+
+# Playwright test result
+test-results/
