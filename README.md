@@ -2,93 +2,176 @@
 
 ![スクチャIT](/logo.png)
 
-## 📝 プロジェクト概要
+IT スクールの口コミを検索・閲覧できる Web アプリケーションです。ユーザーはスクールの情報を閲覧したり、口コミを投稿したりすることができます。
 
-スクチャ IT は、IT 系スクールの口コミを探せるサービスです。実際の受講生の声をもとに、ユーザーが自分に最適なスクール選びをするためのサポートを提供します。
+## 主な機能
 
-### 🌟 主な機能
+- **スクール検索**: キーワード、エリア、スキル、職種などの条件でスクールを検索
+- **スクール詳細表示**: 各スクールの詳細情報、評価、コース一覧、口コミの閲覧
+- **口コミ投稿**: 認証ユーザーによるスクール評価・口コミの投稿
+- **ユーザー認証**: 会員登録・ログイン機能（Email/Password, Google 認証）
+- **マイページ機能**: 投稿した口コミの管理、お気に入りスクールの保存
 
-- **詳細検索**: 職種、スキル、こだわり条件など様々な条件からスクールを検索
-- **スクール詳細**: スクールの基本情報、評価チャート、コース一覧など
-- **リアルな口コミ**: 実際の受講生による評価とコメント
+## 技術スタック
 
-## 🛠 技術スタック
+### フロントエンド
 
-- **フロントエンド**: Next.js 15, React 19, TypeScript
-- **スタイリング**: TailwindCSS
-- **データ管理**: Prisma ORM
-- **データベース**: PostgreSQL
-- **UI/UX コンポーネント**: Lucide React（アイコン）, Recharts（グラフ）
+- **Next.js 15**: React フレームワーク
+- **React 19**: UI ライブラリ
+- **TypeScript**: 型安全な JavaScript
+- **TailwindCSS**: スタイリング
+- **Prisma ORM**: データベースアクセス
 
-## ⚙️ セットアップ
+### バックエンド
 
-### 前提条件
+- **Next.js (App Router)**: サーバーサイドの処理
+- **Server Actions**: サーバーサイド処理の実装
 
-- Node.js (推奨: v18.18.0 以上)
-- PostgreSQL データベース
+### データベース
 
-### 環境変数
+- **PostgreSQL**: リレーショナルデータベース
+- **Supabase**: 認証・ストレージ管理
 
-プロジェクトのルートに`.env`ファイルを作成し、以下の環境変数を設定してください：
+### その他のライブラリ
 
-```
-DATABASE_URL="postgresql://username:password@localhost:5432/db_name"
-DIRECT_URL="postgresql://username:password@localhost:5432/db_name"
-```
+- **Lucide React**: アイコンコンポーネント
+- **Recharts**: データの可視化グラフ
 
-### インストール
+## インストール方法
 
 ```bash
-# パッケージをインストール
+# リポジトリのクローン
+git clone https://github.com/yourusername/it-school-review.git
+cd it-school-review/client
+
+# 依存パッケージのインストール
 npm install
 
-# Prismaクライアントを生成
-npx prisma generate
-```
-
-### 開発サーバーの起動
-
-```bash
+# 開発サーバーの起動
 npm run dev
 ```
 
-[http://localhost:3000](http://localhost:3000)をブラウザで開いて、アプリケーションを確認してください。
+## 環境構築
 
-### ビルド
+1. `.env.local` ファイルをプロジェクトルートに作成し、以下の環境変数を設定:
 
-```bash
-npm run build
+```
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
+DIRECT_URL="postgresql://username:password@localhost:5432/database_name"
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-### 本番環境での起動
+2. Prisma マイグレーションを実行してデータベースをセットアップ:
 
 ```bash
-npm run start
+npx prisma migrate dev
 ```
 
-## 📁 プロジェクト構造
+## ディレクトリ構造
 
-- `app/` - Next.js のアプリケーションソースコード
-  - `(top)/` - トップページ関連のコンポーネント
-  - `actions/` - サーバーアクション
-  - `components/` - 共通コンポーネント
-  - `lib/` - ユーティリティ関数
-  - `schools/` - スクール詳細ページ
-  - `search/` - 検索ページ
-  - `types/` - TypeScript の型定義
-- `prisma/` - Prisma スキーマとマイグレーション
-- `public/` - 静的アセット
+```
+client/
+├── app/                  # Next.js App Router
+│   ├── (top)/            # トップページ関連
+│   ├── actions/          # Server Actions
+│   ├── auth/             # 認証関連
+│   ├── components/       # 共有コンポーネント
+│   ├── context/          # Reactコンテキスト
+│   ├── lib/              # ユーティリティ関数
+│   ├── login/            # ログインページ
+│   ├── logout/           # ログアウトページ
+│   ├── mypage/           # マイページ
+│   ├── register/         # ユーザー登録ページ
+│   ├── schools/          # スクール詳細ページ
+│   ├── search/           # 検索ページ
+│   └── types/            # TypeScript型定義
+├── prisma/               # Prismaスキーマ・マイグレーション
+└── public/               # 静的ファイル
+```
 
-## 🔍 主要機能の説明
+## 主要コンポーネント
 
-### 検索機能
+### トップページ
 
-- **キーワード検索**: スクール名や資格などで検索
-- **なりたいから探す**: WEB デザイナー、エンジニア、動画クリエイターなどの職種カテゴリから検索
-- **こだわりから探す**: 給付金対象、フリーを目指せる、完全リモートなどの特徴から検索
+- `HeroSection`: ヒーローイメージとキャッチコピー
+- `TopSearchForm`: 検索フォーム
+  - `KeywordSearch`: キーワード検索
+  - `CareerSearch`: 職種から検索
+  - `DetailSearch`: こだわり条件から検索
 
-### スクール詳細表示
+### 検索ページ
 
-- **基本情報**: スクール名、ロゴ、説明文
-- **評価チャート**: レーダーチャートによる多角的な評価表示
-- **詳細情報**: 公式サイト、受講形式、特徴、学べるスキル
+- `SearchHeader`: 検索条件入力フォーム
+- `SearchResults`: 検索結果一覧
+- `SearchResultCard`: 検索結果カード
+
+### スクール詳細ページ
+
+- `SchoolHeader`: スクール基本情報
+- `ChartSection`: レーダーチャート評価表示
+- `SchoolDetail`: スクール詳細情報
+- `ReviewCard`: 口コミカード
+
+### マイページ
+
+- `UserInformation`: ユーザー情報表示
+- `UserReview`: 投稿した口コミ一覧
+- `FavoriteList`: お気に入りスクール一覧
+
+## 認証の仕組み
+
+このアプリは Supabase を使用した認証を実装しています：
+
+1. Email/Password 認証または Google OAuth 認証
+2. 認証後、`AuthContext`でユーザー状態を管理
+3. 認証情報は Supabase セッションとして保存
+4. Server Actions はサーバーサイドでセッションを検証
+
+## データモデル
+
+主要なデータモデルは以下の通りです：
+
+- `User`: ユーザー情報
+- `School`: スクール情報
+- `Course`: コース情報
+- `Review`: 口コミ評価
+- `Rating`: スクール評価
+- `FavoriteSchool`: お気に入りスクール
+
+詳細は`prisma/schema.prisma`ファイルを参照してください。
+
+## クライアントサイド・サーバーサイドの実装
+
+### Server Components
+
+- 静的な UI 要素
+- データ取得・表示ロジック
+
+### Client Components
+
+- ユーザーインタラクション処理
+- フォーム操作
+- 動的 UI 要素
+
+### Server Actions
+
+- データベース操作
+- 認証・認可処理
+- データ更新処理
+
+## パフォーマンス最適化
+
+- Suspense によるロード状態の管理
+- 動的レンダリングとキャッシュ戦略
+- クライアントサイドのステート最小化
+
+## 今後の拡張予定
+
+- レスポンシブデザインの改善
+- 検索機能の拡張（検索履歴、おすすめ機能など）
+- ランキングや特集ページ
+- より詳細なスクール比較機能
