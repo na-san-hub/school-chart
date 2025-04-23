@@ -42,7 +42,7 @@ IT スクールの口コミを検索・閲覧できる Web アプリケーショ
 ```bash
 # リポジトリのクローン
 git clone https://github.com/yourusername/it-school-review.git
-cd it-school-review/client
+cd it-school-review/web
 
 # 依存パッケージのインストール
 npm install
@@ -74,7 +74,7 @@ npx prisma migrate dev
 ## ディレクトリ構造
 
 ```
-client/
+web/
 ├── app/                  # Next.js App Router
 │   ├── (top)/            # トップページ関連
 │   ├── actions/          # Server Actions
@@ -90,7 +90,8 @@ client/
 │   ├── search/           # 検索ページ
 │   └── types/            # TypeScript型定義
 ├── prisma/               # Prismaスキーマ・マイグレーション
-└── public/               # 静的ファイル
+├── public/               # 静的ファイル
+└── tests/                # E2Eテスト（Playwright）
 ```
 
 ## 主要コンポーネント
@@ -162,6 +163,14 @@ client/
 - データベース操作
 - 認証・認可処理
 - データ更新処理
+
+## テスト
+
+このプロジェクトでは E2E テストに Playwright を使用しています。テストコードは `web/tests/` に格納されています。
+
+- 実行コマンド: `npm run test:e2e`
+- 実行環境: Chromium, Firefox, WebKit（Safari）
+- 設定ファイル: `playwright.config.ts`
 
 ## パフォーマンス最適化
 
