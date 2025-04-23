@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { addFavoriteSchool } from "@/actions/userPage";
+import { useAuth } from "@/context/AuthContext/useAuth";
 
 export default function FavoriteButton({
   schoolId,
@@ -16,6 +17,20 @@ export default function FavoriteButton({
   const [isFavorite, setIsFavorite] = useState(isInitiallyFavorite);
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
+  const { user, isLoading } = useAuth();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleClick = async () => {
+    if (!user && !isLoading) {
+      const currentPath = window.location.pathname;
+      router.push(`/login?callbackUrl=${encodeURIComponent(currentPath)}`);
+      return;
+    }
+
+    if (formRef.current) {
+      formRef.current.requestSubmit(); // フォーム送信
+    }
+  };
 
   // フォーム送信ハンドラ（Server Actionを呼び出す）
   const handleAddFavorite = async (formData: FormData) => {
@@ -41,7 +56,8 @@ export default function FavoriteButton({
     <form action={handleAddFavorite}>
       <input type="hidden" name="schoolId" value={schoolId} />
       <button
-        type="submit"
+        type="button"
+        onClick={handleClick}
         disabled={isDisabled}
         className={`py-3 px-6 bg-white border border-gray-300 text-sm text-gray-700 rounded-md flex items-center justify-center hover:bg-gray-50 disabled:hover:bg-white disabled:opacity-60 ${className}`}
       >
