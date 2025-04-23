@@ -1,4 +1,4 @@
-import CourseCard from "../courses/CourseCard";
+import CourseCard from "./CourseCard";
 import { CourseListData, SchoolWithCourses } from "@/types/school";
 import Link from "next/link";
 
