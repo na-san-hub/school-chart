@@ -184,3 +184,12 @@ web/
 - 検索機能の拡張（検索履歴、おすすめ機能など）
 - ランキングや特集ページ
 - より詳細なスクール比較機能
+- スクール事業者向け管理画面
+- 受講証明機能（レビュー投稿の信頼性向上）
+- キャリアパス提案機能
+
+## 詳細資料
+
+- [機能設計書（Notion）](https://www.notion.so/19082788f5fc8042a47ce0fb31c6134b)
+- [データ設計書（Notion）](https://www.notion.so/1e582788f5fc8084a2dafdb1f6d4861c)
+- [画面設計書（FigJam）](https://www.figma.com/design/ViglJ4U43dpIQ6vgVXxNUq/UI%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3?node-id=0-1&t=Mv)
