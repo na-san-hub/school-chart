@@ -200,4 +200,4 @@ web/
 
 - [機能設計書（Notion）](https://www.notion.so/19082788f5fc8042a47ce0fb31c6134b)
 - [データ設計書（Notion）](https://www.notion.so/1e582788f5fc8084a2dafdb1f6d4861c)
-- [画面設計書（FigJam）](https://www.figma.com/design/ViglJ4U43dpIQ6vgVXxNUq/UI%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3?node-id=0-1&t=Mv)
+- [画面設計書（Figma）](https://www.figma.com/design/ViglJ4U43dpIQ6vgVXxNUq/UI%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3?node-id=0-1&t=Mv)
